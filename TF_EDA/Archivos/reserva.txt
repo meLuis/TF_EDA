@@ -1,0 +1,11 @@
+6409|12/12/2025|Cajamarca (CJA)|Chiclayo (CIX)|1|Activo|07:45|09:15|1h30m|210
+1536|12/12/2025|Lima (LIM)|Tarapoto (TPP)|1|Activo|07:30|09:30|2h0m|320
+6742|12/12/2025|Chiclayo (CIX)|Tarapoto (TPP)|1|Activo|06:00|07:30|1h30m|260
+6742|12/12/2025|Chiclayo (CIX)|Tarapoto (TPP)|1|Activo|6495|12/12/2025|Chiclayo (CIX)|Piura (PIU)|1|Activo|09:00|09:45|0h45m|190
+6742|12/12/2025|Chiclayo (CIX)|Tarapoto (TPP)|1|Activo|6495|12/12/2025|Chiclayo (CIX)|Piura (PIU)|1|Activo|2828|12/12/2025|Cusco (CUZ)|Tarapoto (TPP)|2|Activo|07:15|09:30|2h15m|330
+1708|12/12/2025|Trujillo (TRU)|Chiclayo (CIX)|2|Activo|09:45|11:00|1h15m|235
+1371|12/12/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|07:45|08:30|0h45m|185
+1371|12/12/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|7470|12/12/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|09:00|09:45|0h45m|190
+1371|12/12/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|7470|12/12/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|4252|12/12/2025|Cajamarca (CJA)|Piura (PIU)|2|Activo|07:45|09:15|1h30m|230
+6820|01/06/2025|Chiclayo (CIX)|Tarapoto (TPP)|2|Anulada|07:00|08:40|1h40m|280
+6820|01/06/2025|Chiclayo (CIX)|Tarapoto (TPP)|2|Anulada|1041|17/06/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|09:00|09:45|0h45m|190
