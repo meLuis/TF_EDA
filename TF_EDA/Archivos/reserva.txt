@@ -9,3 +9,4 @@
 1371|12/12/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|7470|12/12/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|4252|12/12/2025|Cajamarca (CJA)|Piura (PIU)|2|Activo|07:45|09:15|1h30m|230
 6820|01/06/2025|Chiclayo (CIX)|Tarapoto (TPP)|2|Anulada|07:00|08:40|1h40m|280
 6820|01/06/2025|Chiclayo (CIX)|Tarapoto (TPP)|2|Anulada|1041|17/06/2025|Chiclayo (CIX)|Piura (PIU)|2|Activo|09:00|09:45|0h45m|190
+5327|12/12/2025|Buenos Aires (Argentina)|Antofagasta (Chile)|0|Activo||||0
