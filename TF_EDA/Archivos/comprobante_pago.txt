@@ -470,3 +470,22 @@
 
 
 
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 5327
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: 
+			Apellido: n
+			DNI: 
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Antofagasta (Chile)	 Destino: Buenos Aires (Argentina)
+			Hora Salida: 	Hora llegada: 
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Total a Pagar: S/. 0
+			Gracias por su compra!
+
+
+
