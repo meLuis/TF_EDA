@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <vector>
 #include <ctime>
 #include "ListaReservas.h"
 #include "Administrador.h"
-#include "GestorRutas.h"
+#include "GestorVuelos.h"
 #include "GestorPasajero.h"
 #include "Cliente.h"
 #include "ColaPagos.h"
@@ -17,13 +17,13 @@ private:
     ListaReservas<Reserva> listaReservas;
     string fecha;
     string opcionAdicionales;
-    int opcionRuta;
+    int opcionVuelo;
     int origen, destino;
     int cantPasajeros;
     string archivoReservas = "Archivos//reserva.txt";
     string archivoPasajeros = "Archivos//pasajeros.txt";
-    MapaRutas rutas;
-    GestorRutas gestorRutas;
+    MapaRutas vuelos;
+    GestorVuelos gestorVuelos;
     int diaActual, mesActual, anioActual;
     void obtenerFechaActual() {
         time_t tiempoActual = time(nullptr);
@@ -48,7 +48,7 @@ public:
         }
         archivo << user.getNombre() << "|" << user.getApellido() << "|"
             << user.getEmail() << "|"
-            << user.getContraseña() << "|"
+            << user.getContraseÃ±a() << "|"
             << user.getTipo() << endl;
         archivo.close();
         cout << "Usuario registrado con exito." << endl;
@@ -56,11 +56,11 @@ public:
 
 
     void registro() {
-        string nombre, apellido, email, dni, contraseña;
+        string nombre, apellido, email, dni, contraseÃ±a;
 
         cout << "\t\t\t----REGISTRO DE USUARIO----" << endl;
 
-        // Función lambda para validar campos
+        // FunciÃ³n lambda para validar campos
         auto leerCampo = [](const string& mensaje) -> string {
             string valor;
             do {
@@ -77,8 +77,8 @@ public:
         apellido = leerCampo("\t\t\tApellido: ");
         dni = leerCampo("\t\t\tDNI: ");
         email = leerCampo("\t\t\tEmail: ");
-        contraseña = leerCampo("\t\t\tContrasena: ");
-        Cliente cliente(nombre, apellido, email, contraseña);
+        contraseÃ±a = leerCampo("\t\t\tContrasena: ");
+        Cliente cliente(nombre, apellido, email, contraseÃ±a);
         guardarUsuarioArchivo(cliente);
 
     }
@@ -173,9 +173,9 @@ public:
             }
         }
 
-        // Procesar cada línea del archivo
+        // Procesar cada lÃ­nea del archivo
         for (const string& linea : todasLasLineas) {
-            // Verificar si esta línea es una reserva (contiene suficientes '|')
+            // Verificar si esta lÃ­nea es una reserva (contiene suficientes '|')
             int contadorDelimitadores = 0;
             for (char c : linea) {
                 if (c == '|') contadorDelimitadores++;
@@ -200,24 +200,24 @@ public:
                         }
 
                         if (debeAnular) {
-                            // Reconstruir la línea con el estado "Anulada"
+                            // Reconstruir la lÃ­nea con el estado "Anulada"
                             vector<string> campos;
                             string temp = linea;
                             size_t posTemp;
 
-                            // Dividir la línea en campos
+                            // Dividir la lÃ­nea en campos
                             while ((posTemp = temp.find('|')) != string::npos) {
                                 campos.push_back(temp.substr(0, posTemp));
                                 temp = temp.substr(posTemp + 1);
                             }
-                            campos.push_back(temp); // Último campo
+                            campos.push_back(temp); // Ãšltimo campo
 
-                            // Cambiar el campo de estado (6º elemento, índice 5)
+                            // Cambiar el campo de estado (6Âº elemento, Ã­ndice 5)
                             if (campos.size() > 5) {
                                 campos[5] = "Anulada";
                             }
 
-                            // Reconstruir la línea
+                            // Reconstruir la lÃ­nea
                             string nuevaLinea = "";
                             for (size_t i = 0; i < campos.size(); i++) {
                                 nuevaLinea += campos[i];
@@ -225,16 +225,16 @@ public:
                             }
 
                             archivoEscritura << nuevaLinea << endl;
-                            continue; // Pasar a la siguiente línea
+                            continue; // Pasar a la siguiente lÃ­nea
                         }
                     }
                     catch (const std::invalid_argument& e) {
-                        // No es un ID válido, mantener la línea original
+                        // No es un ID vÃ¡lido, mantener la lÃ­nea original
                     }
                 }
             }
 
-            // Si no es una reserva o no necesita ser modificada, escribir la línea original
+            // Si no es una reserva o no necesita ser modificada, escribir la lÃ­nea original
             archivoEscritura << linea << endl;
         }
 
@@ -271,14 +271,14 @@ public:
                     cout << "\t\t\t Reserva anulada correctamente." << endl;
                 }
                 else {
-                    cout << "\t\t\t La reserva ya está anulada." << endl;
+                    cout << "\t\t\t La reserva ya estÃ¡ anulada." << endl;
                 }
             }
             else if (opcion == 2) {
                 cout << "\t\t\t?? Retrocediendo..." << endl;
             }
             else {
-                cout << "\t\t\t Opción invalida." << endl;
+                cout << "\t\t\t OpciÃ³n invalida." << endl;
             }
 
         }
@@ -300,7 +300,7 @@ public:
             cout << "\t\t\t1. Buscar reserva" << endl;
             cout << "\t\t\t2. Salir" << endl;
             cout << "\t\t\t-------------------------------------------" << endl;
-            cout << "\t\t\tSeleccione una opción: ";
+            cout << "\t\t\tSeleccione una opciÃ³n: ";
 
             string input;
             getline(cin, input);
@@ -308,7 +308,7 @@ public:
                 opcion = stoi(input);
             }
             catch (...) {
-                opcion = -1; // Valor inválido
+                opcion = -1; // Valor invÃ¡lido
             }
 
             switch (opcion) {
@@ -359,13 +359,13 @@ public:
             }
         }
         cout << "\t\t\t   Seleccione ciudad de origen: " << endl;
-        origen = rutas.seleccionarOrigen();
+        origen = vuelos.seleccionarOrigen();
         if (origen == -1) {
             cout << "\t\t\t   Reserva cancelada. " << endl;
             return;
         }
         cout << "\t\t\t   Seleccione ciudad de destino:    " << endl;
-        destino = rutas.seleccionarDestino(origen);
+        destino = vuelos.seleccionarDestino(origen);
         if (destino == -1) {
             cout << "\t\t\t| Reserva cancelada." << endl;
             return;
@@ -378,14 +378,14 @@ public:
         system("pause>0");
         system("cls");
 
-        string claveRuta = rutas.getSiglasLugar(origen) + "-" + rutas.getSiglasLugar(destino);
-        gestorRutas.cargarDesdeArchivo("Archivos//rutas.txt", claveRuta);
-        gestorRutas.imprimirRutas();
+        string claveRuta = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
+        gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveRuta);
+        gestorVuelos.imprimirRutas();
 
-        cin >> opcionRuta;
-        Ruta rutaSeleccionada = gestorRutas.getRuta(opcionRuta - 1);
+        cin >> opcionVuelo;
+        Vuelo vueloSeleccionado = gestorVuelos.getVuelo(opcionVuelo - 1);
 
-        Reserva reserva(fecha, rutas.getNombreLugar(destino), rutas.getNombreLugar(origen), cantPasajeros);
+        Reserva reserva(fecha, vuelos.getNombreLugar(destino), vuelos.getNombreLugar(origen), cantPasajeros);
         listaReservas.agregarReserva(reserva);
 
         system("pause>0");
@@ -408,7 +408,7 @@ public:
             for (int i = 0; i < cantPasajeros; i++)
             {
                 cout << "\n\t\t\tPasajero " << i + 1 << ": " << endl;
-                Pasajero pasajero(rutaSeleccionada.getPrecio(), reserva.getIdReserva());
+                Pasajero pasajero(vueloSeleccionado.getPrecio(), reserva.getIdReserva());
                 pasajero.seleccionarEquipaje();
                 pasajero.seleccionarAsiento();
                 pasajeros.push_back(pasajero);
@@ -416,12 +416,12 @@ public:
         }
         else if (opcionAdicionales == "NO")
         {
-            Pasajero pasajero(rutaSeleccionada.getPrecio(), reserva.getIdReserva());
+            Pasajero pasajero(vueloSeleccionado.getPrecio(), reserva.getIdReserva());
             pasajero.seleccionarEquipaje();
             pasajero.seleccionarAsiento();
             pasajeros.push_back(pasajero);
             for (int i = 0; i < cantPasajeros - 1; i++) {
-                Pasajero clon(rutaSeleccionada.getPrecio(), pasajero.getPrecioCabina(), pasajero.getPrecioBodega(), pasajero.getPrecioAsiento(), pasajero.getIdReserva());
+                Pasajero clon(vueloSeleccionado.getPrecio(), pasajero.getPrecioCabina(), pasajero.getPrecioBodega(), pasajero.getPrecioAsiento(), pasajero.getIdReserva());
                 pasajeros.push_back(clon);
             }
         }
@@ -443,7 +443,7 @@ public:
             precioTotal += pasajero.calcularPrecioPasajero();
         }
 
-        Pago pago(precioTotal, pasajeros, reserva, rutaSeleccionada, reserva.getIdReserva());
+        Pago pago(precioTotal, pasajeros, reserva, vueloSeleccionado, reserva.getIdReserva());
 
         cout << "\t\t\t--------------------------------- PAGO -----------------------------------" << endl;
         pago.ingresarDatosPagador();
@@ -454,7 +454,7 @@ public:
         colaPagos.procesarPagos();
 
         listaReservas.guardarListaEnArchivo(archivoReservas);
-        gestorRutas.guardarRutaEnArchivo(opcionRuta - 1, archivoReservas);
+        gestorVuelos.guardarRutaEnArchivo(opcionVuelo - 1, archivoReservas);
         GestorPasajero gestorPasajero(pasajeros);
         gestorPasajero.guardarPasajerosEnArchivo(archivoPasajeros);
 
@@ -474,7 +474,7 @@ public:
         cout << "\t\t\t-----------------------------------------------------------------" << endl;
         cout << "\t\t\t| Deseas Registrarte?                                            |" << endl;
         cout << "\t\t\t| Recuerda que registrandote obtienes acceso a ofertas ademas de |" << endl;
-        cout << "\t\t\t| lo ultimo en vuelos, novedades, promociones y mucho más.       |" << endl;
+        cout << "\t\t\t| lo ultimo en vuelos, novedades, promociones y mucho mÃ¡s.       |" << endl;
         cout << "\t\t\t| Si no deseas registrarte, puedes continuar sin cuenta.         |" << endl;
         cout << "\t\t\t-----------------------------------------------------------------" << endl;
         cout << "\t\t\t      SI/NO: ";

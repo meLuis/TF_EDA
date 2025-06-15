@@ -470,3 +470,46 @@
 
 
 
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 2833
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: qwf
+			Apellido: fqw
+			DNI: fqw
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Calama (Chile)	 Destino: Bogota (Colombia)
+			Hora Salida: 21:00	Hora llegada: 1:24
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: qqf
+			Apellido: fqw
+			DNI: qfw
+			Asiento: 
+			Precio Ruta: S/. 367
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Impuesto General a la Venta (18%): S/. 101.984
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 743.564
+				--------------------------------------------------
+			Nombre: fqw
+			Apellido: fqw
+			DNI: fqw
+			Asiento: 
+			Precio Ruta: S/. 367
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Impuesto General a la Venta (18%): S/. 101.984
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 743.564
+				--------------------------------------------------
+			Total a Pagar: S/. 1487.13
+			Gracias por su compra!
+
+
+
