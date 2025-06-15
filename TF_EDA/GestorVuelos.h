@@ -49,7 +49,6 @@ public:
         return vuelos[indice];
     }
 
-    // Cargar vuelos desde el archivo vuelos.txt
     void cargarVuelosDesdeArchivo(const string& archivoNombre, const string& rutaCodigo) {
         vuelos.clear();
 
@@ -70,9 +69,23 @@ public:
         archivo.close();
     }
 
-    // Para compatibilidad con el código anterior
     void cargarDesdeArchivo(string archivoNombre, string origenDestinoID) {
         cargarVuelosDesdeArchivo("Archivos//vuelos.txt", origenDestinoID);
+    }
+
+    void guardarVuelosEnArchivo() {
+        string archivoNombre = "Archivos//vuelos.txt";
+        ofstream archivo(archivoNombre);
+        if (!archivo.is_open()) {
+            cout << "Error al abrir el archivo para guardar" << endl;
+            return;
+        }
+
+        for (const auto& vuelo : vuelos) {
+            archivo << vuelo.serializar() << endl;
+        }
+
+        archivo.close();
     }
 
     void mostrarVuelos(int index) {
@@ -113,30 +126,62 @@ public:
             });
     }
 
-    void guardarVueloEnArchivo(int indice, const string& nombreArchivo) {
-        Vuelo vuelo = getVuelo(indice);
-        ofstream archivo(nombreArchivo, ios::app);
-        if (!archivo.is_open()) {
+    void guardarVueloEnArchivo(const Vuelo& vuelo) {
+        string archivoNombre = "Archivos//vuelos.txt";
+
+        vector<string> lineas;
+        bool encontrado = false;
+
+        ifstream archivoLectura(archivoNombre);
+        if (archivoLectura.is_open()) {
+            string linea;
+            while (getline(archivoLectura, linea)) {
+                if (linea.find(vuelo.getID() + "|") == 0) {
+                    // Reemplazar con la nueva información
+                    lineas.push_back(vuelo.serializar());
+                    encontrado = true;
+                }
+                else {
+                    lineas.push_back(linea);
+                }
+            }
+            archivoLectura.close();
+        }
+
+        // Escribir todos los vuelos de vuelta
+        ofstream archivoEscritura(archivoNombre);
+        if (!archivoEscritura.is_open()) {
             cout << "Error al abrir el archivo para guardar" << endl;
             return;
         }
 
-        archivo << vuelo.getHoraInicio() << "|" << vuelo.getHoraFin() << "|"
-            << vuelo.getDuracion() << "|" << vuelo.getPrecio() << "\n";
-        archivo.close();
+        for (const auto& linea : lineas) {
+            archivoEscritura << linea << endl;
+        }
+
+        if (!encontrado) {
+            archivoEscritura << vuelo.serializar() << endl;
+        }
+
+        archivoEscritura.close();
     }
 
-    // Para compatibilidad con el código anterior
     void guardarRutaEnArchivo(int indice, const string& nombreArchivo) {
-        guardarVueloEnArchivo(indice, nombreArchivo);
+        Vuelo vuelo = getVuelo(indice);
+        guardarVueloEnArchivo(vuelo);
     }
 
-    // Nuevos métodos específicos para Vuelo
     bool reservarAsiento(int indiceVuelo, const string& numeroAsiento) {
         if (indiceVuelo < 0 || indiceVuelo >= vuelos.size()) {
             return false;
         }
 
-        return vuelos[indiceVuelo].reservarAsiento(numeroAsiento);
+        bool resultado = vuelos[indiceVuelo].reservarAsiento(numeroAsiento);
+
+        if (resultado) {
+            guardarVueloEnArchivo(vuelos[indiceVuelo]);
+        }
+
+        return resultado;
     }
 };
