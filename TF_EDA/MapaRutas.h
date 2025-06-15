@@ -441,8 +441,11 @@ public:
     
     int seleccionarPais(const vector<int>& paisesDisponibles = {}) {
         int opcion;
-        do {
+        
+        while (true) {
             cout << "\t\t\t\t\t";
+            
+            // Mostrar opciones
             if (!paisesDisponibles.empty()) {
                 for (size_t i = 0; i < paisesDisponibles.size(); ++i) {
                     int indicePais = paisesDisponibles[i];
@@ -454,24 +457,29 @@ public:
                     cout << (i + 1) << ". " << paises[i].nombre << endl << "\t\t\t\t\t";
                 }
             }
+            
             cout << "0. Volver" << endl << endl;
             cout << "\t\t\t\t\tSeleccione una opcion: ";
             cin >> opcion;
-
+            
             if (opcion == 0) return -1;
-
-            if (!paisesDisponibles.empty() && (opcion < 1 || opcion >(int)paisesDisponibles.size())) {
-                cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
-            }
-            else if (paisesDisponibles.empty() && (opcion < 1 || opcion >(int)paises.size())) {
-                cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
+            
+            // Validar opción
+            if (!paisesDisponibles.empty()) {
+                if (opcion < 1 || opcion > (int)paisesDisponibles.size()) {
+                    cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
+                    continue; // Volver al inicio del bucle
+                }
+                return paisesDisponibles[opcion - 1];
             }
             else {
-                break;
+                if (opcion < 1 || opcion > (int)paises.size()) {
+                    cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
+                    continue; // Volver al inicio del bucle
+                }
+                return opcion - 1;
             }
-        } while (true);
-
-        return !paisesDisponibles.empty() ? paisesDisponibles[opcion - 1] : opcion - 1;
+        }
     }
     
     int seleccionarCiudadDePais(int indicePais) {
