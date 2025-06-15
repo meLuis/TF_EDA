@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include "Pasajero.h"
-#include "Ruta.h"
+#include "Vuelo.h"
 
 using namespace std;
 
@@ -12,7 +12,7 @@ class Pago
 private:
     vector<Pasajero> pasajeros;
     Reserva reserva;
-    Ruta rutaSeleccionada;
+    Vuelo vueloSeleccionado;
 
     float total;
     int idReserva;
@@ -23,8 +23,8 @@ private:
     int numTarjeta;
 public:
     Pago() : total(0.0f), idReserva(0), numTarjeta(0) {}
-    Pago(float total, const vector<Pasajero>& pasajeros, const Reserva& reserva, const Ruta rutaSeleccionada, int idReserva)
-        : total(total), pasajeros(pasajeros), reserva(reserva), rutaSeleccionada(rutaSeleccionada), idReserva(idReserva) {
+    Pago(float total, const vector<Pasajero>& pasajeros, const Reserva& reserva, const Vuelo vueloSeleccionado, int idReserva)
+        : total(total), pasajeros(pasajeros), reserva(reserva), vueloSeleccionado(vueloSeleccionado), idReserva(idReserva) {
     }
 
     int getNumTarjeta() { return numTarjeta; }
@@ -53,7 +53,7 @@ public:
         cout << "\t\t\t\t--------------------------------------------------\n\n";
         cout << "\t\t\tFecha: " << reserva.getFecha() << "\n";
         cout << "\t\t\tOrigen: " << reserva.getOrigen() << "\t Destino: " << reserva.getDestino() << "\n";
-        cout << "\t\t\tHora Salida: " << rutaSeleccionada.getHoraInicio() << "\tHora llegada: " << rutaSeleccionada.getHoraFin() << "\n";
+        cout << "\t\t\tHora Salida: " << vueloSeleccionado.getHoraInicio() << "\tHora llegada: " << vueloSeleccionado.getHoraFin() << "\n";
         cout << "\t\t\tDetalles de Pasajeros:\n";
 
         for (auto& pasajero : pasajeros) {
@@ -101,7 +101,7 @@ public:
         archivo << "\t\t\t\t--------------------------------------------------\n\n";
         archivo << "\t\t\tFecha: " << reserva.getFecha() << "\n";
         archivo << "\t\t\tOrigen: " << reserva.getOrigen() << "\t Destino: " << reserva.getDestino() << "\n";
-        archivo << "\t\t\tHora Salida: " << rutaSeleccionada.getHoraInicio() << "\tHora llegada: " << rutaSeleccionada.getHoraFin() << "\n";
+        archivo << "\t\t\tHora Salida: " << vueloSeleccionado.getHoraInicio() << "\tHora llegada: " << vueloSeleccionado.getHoraFin() << "\n";
         archivo << "\t\t\tDetalles de Pasajeros:\n";
 
         for (auto& pasajero : pasajeros) {

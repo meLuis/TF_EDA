@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
@@ -441,6 +441,64 @@ public:
     
     int seleccionarPais(const vector<int>& paisesDisponibles = {}) {
         int opcion;
+        do {
+            cout << "\t\t\t\t\t";
+            if (!paisesDisponibles.empty()) {
+                for (size_t i = 0; i < paisesDisponibles.size(); ++i) {
+                    int indicePais = paisesDisponibles[i];
+                    cout << (i + 1) << ". " << paises[indicePais].nombre << endl << "\t\t\t\t\t";
+                }
+            }
+            else {
+                for (size_t i = 0; i < paises.size(); ++i) {
+                    cout << (i + 1) << ". " << paises[i].nombre << endl << "\t\t\t\t\t";
+                }
+            }
+            cout << "0. Volver" << endl << endl;
+            cout << "\t\t\t\t\tSeleccione una opcion: ";
+            cin >> opcion;
+
+            if (opcion == 0) return -1;
+
+            if (!paisesDisponibles.empty() && (opcion < 1 || opcion >(int)paisesDisponibles.size())) {
+                cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
+            }
+            else if (paisesDisponibles.empty() && (opcion < 1 || opcion >(int)paises.size())) {
+                cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
+            }
+            else {
+                break;
+            }
+        } while (true);
+
+        return !paisesDisponibles.empty() ? paisesDisponibles[opcion - 1] : opcion - 1;
+    }
+    
+    int seleccionarCiudadDePais(int indicePais) {
+        if (indicePais < 0 || indicePais >= (int)paises.size()) {
+            return -1;
+        }
+        
+        for (size_t i = 0; i < paises[indicePais].ciudades.size(); ++i) {
+            cout << "\t\t\t\t\t" << (i + 1) << ". " 
+                << paises[indicePais].ciudades[i].nombre << endl;
+        }
+        cout << "\t\t\t\t\t0. Volver" << endl << endl;
+        
+        int opcion;
+        cout << "\t\t\t\t\tSeleccione una opcion: ";
+        cin >> opcion;
+        
+        if (opcion == 0) return -2;
+        if (opcion < 1 || opcion > (int)paises[indicePais].ciudades.size()) {
+            cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
+            return seleccionarCiudadDePais(indicePais);
+        }
+        
+        return paises[indicePais].ciudades[opcion - 1].indice;
+    }
+    
+=======
         cout << "\t\t\t\t\t";
         
         if (!paisesDisponibles.empty()) {
