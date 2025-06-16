@@ -131,7 +131,7 @@
     <ClInclude Include="ColaPagos.h" />
     <ClInclude Include="GestorAsientos.h" />
     <ClInclude Include="GestorPasajero.h" />
-    <ClInclude Include="GestorRutas.h" />
+    <ClInclude Include="GestorVuelos.h" />
     <ClInclude Include="ListaReservas.h" />
     <ClInclude Include="MapaRutas.h" />
     <ClInclude Include="Menu.h" />
@@ -141,6 +141,7 @@
     <ClInclude Include="Reserva.h" />
     <ClInclude Include="Ruta.h" />
     <ClInclude Include="Usuario.h" />
+    <ClInclude Include="Vuelo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
