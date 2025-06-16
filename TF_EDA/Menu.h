@@ -58,7 +58,11 @@ public:
     void registro() {
         string nombre, apellido, email, dni, contraseña;
 
-        cout << "\t\t\t----REGISTRO DE USUARIO----" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t------------ REGISTRO DE USUARIO ------------" << endl;
+        cout << "" << endl;
 
         // Función lambda para validar campos
         auto leerCampo = [](const string& mensaje) -> string {
@@ -84,7 +88,10 @@ public:
     }
     Usuario* iniciarSesion() {
         string emailIngresado, contrasenaIngresada;
-        cout << "\t\t\t-----INICIO DE SESION----" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t------------ INICIO DE SESION ------------" << endl;
         cout << " " << endl;
 
         do {
@@ -293,14 +300,16 @@ public:
         int opcion;
         do {
             system("cls");
+            cout << "\t\t\t" << endl;
             user->mostrarBienvenida();
-
+            cout << "\t\t\t" << endl;
             cout << "\t\t\t------------ MENU ADMINISTRADOR ------------" << endl;
             cout << "  " << endl;
-            cout << "\t\t\t1. Buscar reserva" << endl;
-            cout << "\t\t\t2. Salir" << endl;
+            cout << "\t\t\t            [1] Buscar reserva               " << endl;
+            cout << "\t\t\t            [2] Salir                        " << endl;
+            cout << "\t\t\t " << endl;
             cout << "\t\t\t-------------------------------------------" << endl;
-            cout << "\t\t\tSeleccione una opción: ";
+            cout << "\t\t\t           Seleccione una opción: ";
 
             string input;
             getline(cin, input);
@@ -325,9 +334,114 @@ public:
         } while (opcion != 2);
     }
 
+    bool confirmarDatos(const string& mensaje) {
+        char confirmacion;
+        do {
+            cout << "\t\t\t" << mensaje << endl;
+            cout << "\t\t\t¿Son correctos? (S/N): ";
+            cin >> confirmacion;
+            confirmacion = toupper(confirmacion);
+        } while (confirmacion != 'S' && confirmacion != 'N');
+
+        return confirmacion == 'S';
+    }
 
     void realizarReservas() {
-        auto validarFecha = [this](string& fecha) {
+        string fecha;
+        Vuelo vueloSeleccionado;
+        vector<Pasajero> pasajeros;
+        int etapa = 0;
+        bool cd = false;
+        int origen, destino, cantPasajeros;
+
+        while (etapa < 5) {
+            switch (etapa) {
+            case 0:
+                cout << "\t\t\t----------------------------- RESERVA -----------------------------  " << endl;
+                if (!validarFecha(fecha)) return;
+
+                origen = seleccionarOrigen();
+                if (origen == -1) return;
+
+                destino = seleccionarDestino(origen);
+                if (destino == -1) return;
+
+                cantPasajeros = ingresarCantidadPasajeros();
+                if (cantPasajeros <= 0) return;
+
+                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                    cd = true;
+                    cout << "\t\t\t Buscar.... " << endl;
+                    system("pause>0");
+                    system("cls");
+                    etapa++;
+                }
+                else {
+                    cout << "\t\t\tPor favor, ingrese los datos nuevamente." << endl;
+                    system("pause>0");
+                    system("cls");
+                }
+                break;
+
+            case 1:
+                vueloSeleccionado = seleccionarVuelo(origen, destino);
+                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                    cd = true;
+                    system("pause>0");
+                    system("cls");
+                    etapa++;
+                }
+                else {
+                    cout << "\t\t\tPor favor, ingrese los datos nuevamente." << endl;
+                    system("pause>0");
+                    system("cls");
+                }
+                break;
+
+            case 2:
+                pasajeros = manejarEquipajeYAsientos(cantPasajeros, vueloSeleccionado);
+                if (pasajeros.empty()) return;
+
+                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                    cd = true;
+                    system("pause>0");
+                    system("cls");
+                    etapa++;
+                }
+                else {
+                    cout << "\t\t\tPor favor, ingrese los datos nuevamente." << endl;
+                    system("pause>0");
+                    system("cls");
+                }
+                break;
+
+            case 3:
+                registrarPasajeros(pasajeros);
+                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                    cd = true;
+                    system("pause>0");
+                    system("cls");
+                    etapa++;
+                }
+                else {
+                    cout << "\t\t\tPor favor, ingrese los datos nuevamente." << endl;
+                    system("pause>0");
+                    system("cls");
+                }
+                break;
+
+            case 4:
+                float precioTotal = calcularPrecioTotal(pasajeros);
+                procesarPago(precioTotal, pasajeros, vueloSeleccionado);
+                etapa++;
+                break;
+            }
+        }
+    }
+
+ 
+    bool validarFecha(string& fecha) {
+        auto validar = [this](string& fecha) {
             if (fecha.length() != 10 || fecha[2] != '/' || fecha[5] != '/') {
                 cout << "\t\t\tFecha invalida. Formato correcto: DD/MM/AAAA" << endl;
                 return false;
@@ -336,7 +450,7 @@ public:
             int mes = stoi(fecha.substr(3, 2));
             int anio = stoi(fecha.substr(6, 4));
 
-            if (dia < 1 || dia>31 || mes < 1 || mes>12 || anio < 2023 || anio>2026) {
+            if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || anio < 2023 || anio > 2026) {
                 cout << "\t\t\t\tFecha invalida. " << endl;
                 return false;
             }
@@ -348,103 +462,105 @@ public:
             }
             return true;
             };
-
-        cout << "\t\t\t----------------------------- RESERVA -----------------------------  " << endl;
-        cout << "   " << endl;
         while (true) {
             cout << "\t\t\t   Ingrese fecha del vuelo (DD/MM/AAAA): ";
             cin >> fecha;
-            if (validarFecha(fecha)) {
-                break;
+            if (validar(fecha)) {
+                return true;
             }
         }
+    }
+
+
+    int seleccionarOrigen() {
         cout << "\t\t\t   Seleccione ciudad de origen: " << endl;
-        origen = vuelos.seleccionarOrigen();
+        int origen = vuelos.seleccionarOrigen();
         if (origen == -1) {
             cout << "\t\t\t   Reserva cancelada. " << endl;
-            return;
         }
+        return origen;
+    }
+
+    int seleccionarDestino(int origen) {
         cout << "\t\t\t   Seleccione ciudad de destino:    " << endl;
-        destino = vuelos.seleccionarDestino(origen);
+        int destino = vuelos.seleccionarDestino(origen);
         if (destino == -1) {
             cout << "\t\t\t| Reserva cancelada." << endl;
-            return;
         }
-        cout << "\t\t\t   Ingrese la cantidad de pasajeros: ";
+        return destino;
+    }
+
+    int ingresarCantidadPasajeros() {
+        int cantPasajeros;
+        cout << "\t\t\t Ingrese la cantidad de pasajeros: ";
         cin >> cantPasajeros;
+        return cantPasajeros;
+    }
 
-        cout << "\t\t\t Buscar.... " << endl;
+    Vuelo seleccionarVuelo(int origen, int destino) {
+        string claveVuelo = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
+        gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
+        gestorVuelos.imprimirVuelos();
 
-        system("pause>0");
-        system("cls");
-
-        string claveRuta = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
-        gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveRuta);
-        gestorVuelos.imprimirRutas();
-
+        int opcionVuelo;
         cin >> opcionVuelo;
-        Vuelo vueloSeleccionado = gestorVuelos.getVuelo(opcionVuelo - 1);
+        return gestorVuelos.getVuelo(opcionVuelo - 1);
+    }
 
-        Reserva reserva(fecha, vuelos.getNombreLugar(destino), vuelos.getNombreLugar(origen), cantPasajeros);
-        listaReservas.agregarReserva(reserva);
+    vector<Pasajero> manejarEquipajeYAsientos(int cantPasajeros, Vuelo& vueloSeleccionado) {
+        vector<Pasajero> pasajeros;
+        string opcionAdicionales;
 
-        system("pause>0");
-        system("cls");
-
-        cin.ignore();
         cout << "\t\t\t----------------------------- Equipajes y Asientos -------------------------------\n";
         cout << "\t\t\t\t-----------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t| Deseas agregar equipaje personalizado por pasajero ?  |" << endl;
+        cout << "\t\t\t\t| Deseas agregar equipaje personalizado por pasajero ?\t\t\t|" << endl;
         cout << "\t\t\t\t-----------------------------------------------------------------" << endl;
         cout << "\t\t\t      SI/NO: ";
+        cin.ignore();
         getline(cin, opcionAdicionales);
 
-        for (int i = 0; i < opcionAdicionales.length(); i++) {
-            opcionAdicionales[i] = toupper(opcionAdicionales[i]);
-        }
-        vector<Pasajero> pasajeros;
-        if (opcionAdicionales == "SI")
-        {
-            for (int i = 0; i < cantPasajeros; i++)
-            {
+        for (char& c : opcionAdicionales) c = toupper(c);
+
+        if (opcionAdicionales == "SI") {
+            for (int i = 0; i < cantPasajeros; i++) {
                 cout << "\n\t\t\tPasajero " << i + 1 << ": " << endl;
-                Pasajero pasajero(vueloSeleccionado.getPrecio(), reserva.getIdReserva());
+                Pasajero pasajero(vueloSeleccionado.getPrecio(), 0);
                 pasajero.seleccionarEquipaje();
                 pasajero.seleccionarAsiento();
                 pasajeros.push_back(pasajero);
             }
         }
-        else if (opcionAdicionales == "NO")
-        {
-            Pasajero pasajero(vueloSeleccionado.getPrecio(), reserva.getIdReserva());
+        else if (opcionAdicionales == "NO") {
+            Pasajero pasajero(vueloSeleccionado.getPrecio(), 0);
             pasajero.seleccionarEquipaje();
             pasajero.seleccionarAsiento();
             pasajeros.push_back(pasajero);
             for (int i = 0; i < cantPasajeros - 1; i++) {
-                Pasajero clon(vueloSeleccionado.getPrecio(), pasajero.getPrecioCabina(), pasajero.getPrecioBodega(), pasajero.getPrecioAsiento(), pasajero.getIdReserva());
+                Pasajero clon(vueloSeleccionado.getPrecio(), pasajero.getIdReserva());
                 pasajeros.push_back(clon);
             }
         }
+        return pasajeros;
+    }
 
-        system("pause>0");
-        system("cls");
-
+    void registrarPasajeros(vector<Pasajero>& pasajeros) {
         cout << "\t\t\t----------------------------- Registro Pasajeros -------------------------------" << endl;
         for (int i = 0; i < pasajeros.size(); i++) {
             cout << "\n\t\t\tPasajero " << i + 1 << ": " << endl;
             pasajeros[i].pedirDatosPersonales();
         }
+    }
 
-        system("pause>0");
-        system("cls");
-
+    float calcularPrecioTotal(vector<Pasajero>& pasajeros) {
         float precioTotal = 0.0f;
         for (auto& pasajero : pasajeros) {
             precioTotal += pasajero.calcularPrecioPasajero();
         }
+        return precioTotal;
+    }
 
-        Pago pago(precioTotal, pasajeros, reserva, vueloSeleccionado, reserva.getIdReserva());
-
+    void procesarPago(float precioTotal, vector<Pasajero>& pasajeros, Vuelo& vueloSeleccionado) {
+        Pago pago(precioTotal, pasajeros, Reserva(), vueloSeleccionado, 0);
         cout << "\t\t\t--------------------------------- PAGO -----------------------------------" << endl;
         pago.ingresarDatosPagador();
         colaPagos.enqueue(pago);
@@ -454,30 +570,50 @@ public:
         colaPagos.procesarPagos();
 
         listaReservas.guardarListaEnArchivo(archivoReservas);
-        gestorVuelos.guardarRutaEnArchivo(opcionVuelo - 1, archivoReservas);
+        gestorVuelos.guardarVueloEnArchivo(vueloSeleccionado);
         GestorPasajero gestorPasajero(pasajeros);
-        gestorPasajero.guardarPasajerosEnArchivo(archivoPasajeros);
-
+        gestorPasajero.guardarPasajerosEnArchivo("archivoPasajeros");
     }
+
+
     void menuPricipal() {
         system("cls");
-        cout << "\t\t\t ----------------- MENU ----------------- " << endl;
-        cout << "\t\t\t|                                       |" << endl;
-        cout << "\t\t\t|1. Iniciar sesion                      |" << endl;
-        cout << "\t\t\t|2. Iniciar Reserva sin cuenta          |" << endl;
-        cout << "\t\t\t|3. Salir                               |" << endl;
-        cout << "\t\t\t|                                       |" << endl;
-        cout << "\t\t\t   Seleccione una opcion: ";
+        string titulo = R"(                     _         _     ___   __  __     _     ___   _____ 
+                  _ | |  ___  | |_  / __| |  \/  |   /_\   | _ \ |_   _|
+                 | || | / -_) |  _| \__ \ | |\/| |  / _ \  |   /   | |  
+                  \__/  \___|  \__| |___/ |_|  |_| /_/ \_\ |_|_\   |_|
+ )";
+
+        cout << "\t\t\t" << endl;
+        cout << titulo << endl;
+        cout << "\t\t\t  ------------------------------------ " << endl;
+        cout << "\t\t\t |                                    |" << endl;
+        cout << "\t\t\t |   [1] Iniciar sesion               |" << endl;
+        cout << "\t\t\t |   [2] Iniciar Reserva sin cuenta   |" << endl;
+        cout << "\t\t\t |   [3] Salir                        |" << endl;
+        cout << "\t\t\t |                                    |" << endl;
+        cout << "\t\t\t  ------------------------------------ " << endl;
+        cout << " " << endl;
+        cout << "\t\t\t      Seleccione una opcion: ";
     }
     void deseasRegistrarte() {
         system("cls");
-        cout << "\t\t\t-----------------------------------------------------------------" << endl;
-        cout << "\t\t\t| Deseas Registrarte?                                            |" << endl;
-        cout << "\t\t\t| Recuerda que registrandote obtienes acceso a ofertas ademas de |" << endl;
-        cout << "\t\t\t| lo ultimo en vuelos, novedades, promociones y mucho más.       |" << endl;
-        cout << "\t\t\t| Si no deseas registrarte, puedes continuar sin cuenta.         |" << endl;
-        cout << "\t\t\t-----------------------------------------------------------------" << endl;
-        cout << "\t\t\t      SI/NO: ";
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t" << endl;
+
+        cout << "\t\t\t  ------------------------------------------------------------ " << endl;
+        cout << "\t\t\t |  Deseas registrarte en JetSMART?                          |" << endl;
+        cout << "\t\t\t |  Al registrarte, podras acceder a ofertas exclusivas,     |" << endl;
+        cout << "\t\t\t |  recibir novedades sobre vuelos, promociones especiales   |" << endl;
+        cout << "\t\t\t |  y disfrutar de una experiencia personalizada.            |" << endl;
+        cout << "\t\t\t |  Si prefieres, tambien puedes continuar sin registrarse   |" << endl;
+        cout << "\t\t\t  ----------------------------------------------------------- " << endl;
+
+        cout << "\t\t\t    SI/NO: ";
     }
 
 };

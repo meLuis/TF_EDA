@@ -3,6 +3,7 @@
 
 int main()
 {
+    system("color 74");
     int opcion;
     string opcionRegistro;
     Menu menu;
