@@ -42,7 +42,7 @@ El sistema aprovecha estructuras de datos como tablas hash, árboles binarios, l
 
 ## 📌 Seguimiento del Proyecto
 
-Consulta nuestro [Project Board en GitHub](https://github.com/tu-usuario/TF_EDA/projects) para ver el progreso y distribución de tareas.
+Consulta nuestro [Project Board en GitHub](https://github.com/meLuis/TF_EDA/projects) para ver el progreso y distribución de tareas.
 
 ## ⚠️ Nota
 
