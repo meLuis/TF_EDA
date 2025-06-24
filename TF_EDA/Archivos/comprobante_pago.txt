@@ -381,3 +381,259 @@
 
 
 
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 0
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: qfeq
+			Apellido: qfe
+			DNI: 124
+				--------------------------------------------------
+
+			Fecha: 
+			Origen: 	 Destino: 
+			Hora Salida: 9:00	Hora llegada: 14:46
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: wefe
+			Apellido: wfe
+			DNI: 132351422
+			Asiento: 
+			Precio Ruta: S/. 455
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Impuesto General a la Venta (18%): S/. 117.824
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 847.404
+				--------------------------------------------------
+			Total a Pagar: S/. 847.404
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 0
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: qef
+			Apellido: qewfw
+			DNI: qwf
+				--------------------------------------------------
+
+			Fecha: 
+			Origen: 	 Destino: 
+			Hora Salida: 12:43	Hora llegada: 1h43m
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: fwq
+			Apellido: qwf
+			DNI: qwewf
+			Asiento: 
+			Precio Ruta: S/. -1.07374e+08
+			Equipaje de Cabina: S/. 97.04
+			Impuesto General a la Venta (18%): S/. -1.93273e+07
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. -1.26701e+08
+				--------------------------------------------------
+			Nombre: qwf
+			Apellido: qwf
+			DNI: qfw
+			Asiento: 
+			Precio Ruta: S/. -1.07374e+08
+			Impuesto General a la Venta (18%): S/. -1.93274e+07
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. -1.26701e+08
+				--------------------------------------------------
+			Total a Pagar: S/. -2.53403e+08
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 0
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: FE
+			Apellido: GWR
+			DNI: WEF
+				--------------------------------------------------
+
+			Fecha: 
+			Origen: 	 Destino: 
+			Hora Salida: 11:00	Hora llegada: 15:45
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: wefwew
+			Apellido: fqe
+			DNI: qwf
+			Asiento: 
+			Precio Ruta: S/. 482
+			Impuesto General a la Venta (18%): S/. 86.76
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 643.76
+				--------------------------------------------------
+			Total a Pagar: S/. 643.76
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 0
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: feq
+			Apellido: qfw
+			DNI: 124
+				--------------------------------------------------
+
+			Fecha: 
+			Origen: 	 Destino: 
+			Hora Salida: 11:00	Hora llegada: 15:45
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: qwfe
+			Apellido: qfw
+			DNI: 124
+			Asiento: 1B
+			Precio Ruta: S/. 482
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 131.684
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 938.264
+				--------------------------------------------------
+			Total a Pagar: S/. 938.264
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 0
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: qfew
+			Apellido: qfw
+			DNI: qfw
+				--------------------------------------------------
+
+			Fecha: 
+			Origen: Lima	 Destino: Cusco
+			Hora Salida: 11:00	Hora llegada: 13:43
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: qfew
+			Apellido: qwf
+			DNI: qfwe
+			Asiento: 1A
+			Precio Ruta: S/. 296
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 98.2044
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 718.784
+				--------------------------------------------------
+			Total a Pagar: S/. 718.784
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 0
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: fqe
+			Apellido: qfw
+			DNI: 124
+				--------------------------------------------------
+
+			Fecha: 
+			Origen: Lima	 Destino: Chiclayo
+			Hora Salida: 21:00	Hora llegada: 23:22
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: qwf
+			Apellido: qw
+			DNI: 124
+			Asiento: 4A
+			Precio Ruta: S/. 267
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 92.9844
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 684.564
+				--------------------------------------------------
+			Total a Pagar: S/. 684.564
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 0
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: etht
+			Apellido: egr
+			DNI: 134
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Lima	 Destino: Chiclayo
+			Hora Salida: 11:00	Hora llegada: 15:45
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: gwe
+			Apellido: ehtr
+			DNI: 214
+			Asiento: 
+			Precio Ruta: S/. 482
+			Impuesto General a la Venta (18%): S/. 86.76
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 643.76
+				--------------------------------------------------
+			Total a Pagar: S/. 643.76
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 2827
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: egr
+			Apellido: egr
+			DNI: 124
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Lima	 Destino: Cajamarca
+			Hora Salida: 8:00	Hora llegada: 11:12
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: gwfe
+			Apellido: egr
+			DNI: 124
+			Asiento: 
+			Precio Ruta: S/. 197
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Impuesto General a la Venta (18%): S/. 71.3844
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 542.964
+				--------------------------------------------------
+			Total a Pagar: S/. 542.964
+			Gracias por su compra!
+
+
+

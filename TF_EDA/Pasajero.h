@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <vector>
 #include "Reserva.h"
@@ -16,6 +16,7 @@ private:
 	float precioAsiento;
 	float precioRuta;
 	int idReserva;
+	string idVuelo; // Añadir ID del vuelo
 
 	bool pedirOpcion(string mensaje) {
 		char opcion;
@@ -25,14 +26,14 @@ private:
 
 public:
 
-	Pasajero(float precioRuta, int idReserva) : nombre(""), apellido(""), dni(""), numeroAsiento(""),
-		precioCabina(0.0f), precioBodega(0.0f), precioAsiento(0.0f), precioRuta(precioRuta), idReserva(idReserva) {
+	Pasajero(float precioRuta, int idReserva, const string& idVuelo) : nombre(""), apellido(""), dni(""), numeroAsiento(""),
+		precioCabina(0.0f), precioBodega(0.0f), precioAsiento(0.0f), precioRuta(precioRuta), idReserva(idReserva), idVuelo(idVuelo) {
 	}
 
-	Pasajero(float precioRuta, float precioCabina, float precioBodega, float precioAsiento, int idReserva)
+	Pasajero(float precioRuta, float precioCabina, float precioBodega, float precioAsiento, int idReserva, const string& idVuelo)
 		: nombre(""), apellido(""), dni(""), numeroAsiento(""),
 		precioCabina(precioCabina), precioBodega(precioBodega),
-		precioAsiento(precioAsiento), precioRuta(precioRuta), idReserva(idReserva) {
+		precioAsiento(precioAsiento), precioRuta(precioRuta), idReserva(idReserva), idVuelo(idVuelo) {
 	}
 
 	void setNombre(string nombre) { this->nombre = nombre; }
@@ -52,6 +53,7 @@ public:
 	float getPrecioAsiento() { return this->precioAsiento; }
 	float getPrecioRuta() { return this->precioRuta; }
 	int getIdReserva() { return this->idReserva; }
+	string getIdVuelo() const { return idVuelo; }
 
 	void seleccionarEquipaje() {
 		if (pedirOpcion("\t\t\t\t\tDesea agregar equipaje de cabina? (s/n): ")) this->precioCabina = 97.04f;
@@ -65,14 +67,14 @@ public:
 		getline(cin, respuesta);
 		for (auto& c : respuesta) c = toupper(c);
 
-		if (respuesta == "SI") {
+		if (respuesta == "SI" || respuesta == "S"){
 			string asiento;
 			while (true) {
-				cout << "\t\tAsientos:" << endl;
-				GestorAsientos::mostrarAsientos();
+				cout << "\t\tAsientos disponibles para el vuelo " << idVuelo << ":" << endl;
+				GestorAsientos::mostrarAsientosVuelo(idVuelo);
 				cout << "\t\t\t\tIngrese el numero de asiento (ej: 1A): ";
 				cin >> asiento;
-				if (GestorAsientos::ocuparAsiento(asiento)) {
+				if (GestorAsientos::ocuparAsientoVuelo(idVuelo, asiento)) {
 					this->numeroAsiento = asiento;
 					this->precioAsiento = 50.0f;
 					break;
@@ -80,7 +82,7 @@ public:
 			}
 		}
 		else {
-			cout << "\t\t\t\t\tSe asignara un asiento aleatorio m�s adelante." << endl;
+			cout << "\t\t\t\t\tSe asignara un asiento aleatorio más adelante." << endl;
 		}
 	}
 

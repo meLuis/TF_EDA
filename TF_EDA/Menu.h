@@ -347,7 +347,7 @@ public:
     }
 
     void realizarReservas() {
-        string fecha;
+        string _fecha;
         Vuelo vueloSeleccionado;
         vector<Pasajero> pasajeros;
         int etapa = 0;
@@ -358,8 +358,8 @@ public:
             switch (etapa) {
             case 0:
                 cout << "\t\t\t----------------------------- RESERVA -----------------------------  " << endl;
-                if (!validarFecha(fecha)) return;
-
+                if (!validarFecha(_fecha)) return;
+				this->fecha = _fecha;
                 origen = seleccionarOrigen();
                 if (origen == -1) return;
 
@@ -524,19 +524,21 @@ public:
         if (opcionAdicionales == "SI") {
             for (int i = 0; i < cantPasajeros; i++) {
                 cout << "\n\t\t\tPasajero " << i + 1 << ": " << endl;
-                Pasajero pasajero(vueloSeleccionado.getPrecio(), 0);
+                Pasajero pasajero(vueloSeleccionado.getPrecio(), 0, vueloSeleccionado.getID());
                 pasajero.seleccionarEquipaje();
+                
                 pasajero.seleccionarAsiento();
                 pasajeros.push_back(pasajero);
             }
         }
         else if (opcionAdicionales == "NO") {
-            Pasajero pasajero(vueloSeleccionado.getPrecio(), 0);
+            Pasajero pasajero(vueloSeleccionado.getPrecio(), 0, vueloSeleccionado.getID());
             pasajero.seleccionarEquipaje();
             pasajero.seleccionarAsiento();
             pasajeros.push_back(pasajero);
+            
             for (int i = 0; i < cantPasajeros - 1; i++) {
-                Pasajero clon(vueloSeleccionado.getPrecio(), pasajero.getIdReserva());
+                Pasajero clon(vueloSeleccionado.getPrecio(), pasajero.getIdReserva(), vueloSeleccionado.getID());
                 pasajeros.push_back(clon);
             }
         }
@@ -560,7 +562,9 @@ public:
     }
 
     void procesarPago(float precioTotal, vector<Pasajero>& pasajeros, Vuelo& vueloSeleccionado) {
-        Pago pago(precioTotal, pasajeros, Reserva(), vueloSeleccionado, 0);
+        Reserva nuevaReserva(fecha,vueloSeleccionado.getCiudadDestino(),vueloSeleccionado.getCiudadOrigen(),pasajeros.size());
+        listaReservas.agregarReserva(nuevaReserva);
+        Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado,nuevaReserva.getIdReserva());
         cout << "\t\t\t--------------------------------- PAGO -----------------------------------" << endl;
         pago.ingresarDatosPagador();
         colaPagos.enqueue(pago);

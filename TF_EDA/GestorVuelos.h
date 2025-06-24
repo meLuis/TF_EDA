@@ -3,6 +3,7 @@
 #include <fstream>
 #include <functional>
 #include <sstream>
+#include "GestorAsientos.h"
 
 class GestorVuelos {
 private:
@@ -176,11 +177,9 @@ public:
             return false;
         }
 
-        bool resultado = vuelos[indiceVuelo].reservarAsiento(numeroAsiento);
+        string idVuelo = vuelos[indiceVuelo].getID();
 
-        if (resultado) {
-            guardarVueloEnArchivo(vuelos[indiceVuelo]);
-        }
+        bool resultado = GestorAsientos::ocuparAsientoVuelo(idVuelo, numeroAsiento);
 
         return resultado;
     }
