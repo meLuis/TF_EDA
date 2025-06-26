@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <iostream>
 #include <vector>
+#include <algorithm>
+#include <cctype>
 #include "Reserva.h"
 #include "GestorAsientos.h"
 using namespace std;
@@ -19,9 +21,10 @@ private:
 	string idVuelo; // Añadir ID del vuelo
 
 	bool pedirOpcion(string mensaje) {
-		char opcion;
+		string opcion;
 		cout << mensaje; cin >> opcion;
-		return (opcion == 's' || opcion == 'S');
+		for (auto& c : opcion) c = toupper(c);
+		return (opcion == "SI");
 	}
 
 public:
@@ -56,8 +59,8 @@ public:
 	string getIdVuelo() const { return idVuelo; }
 
 	void seleccionarEquipaje() {
-		if (pedirOpcion("\t\t\t\t\tDesea agregar equipaje de cabina? (s/n): ")) this->precioCabina = 97.04f;
-		if (pedirOpcion("\t\t\t\t\tDesea agregar equipaje de bodega? (s/n): ")) this->precioBodega = 102.54f;
+		if (pedirOpcion("\t\t\t\t\tDesea agregar equipaje de cabina? (SI/NO): ")) this->precioCabina = 97.04f;
+		if (pedirOpcion("\t\t\t\t\tDesea agregar equipaje de bodega? (SI/NO): ")) this->precioBodega = 102.54f;
 	}
 
 	void seleccionarAsiento() {
@@ -67,7 +70,7 @@ public:
 		getline(cin, respuesta);
 		for (auto& c : respuesta) c = toupper(c);
 
-		if (respuesta == "SI" || respuesta == "S"){
+		if (respuesta == "SI" || respuesta == "S") {
 			string asiento;
 			while (true) {
 				cout << "\t\tAsientos disponibles para el vuelo " << idVuelo << ":" << endl;
@@ -101,11 +104,24 @@ public:
 	void pedirDatosPersonales() {
 		cout << "\t\t\tNombre: ";
 		cin >> nombre;
+		cin.ignore();
+
 		cout << "\t\t\tApellido: ";
 		cin >> apellido;
-		cout << "\t\t\tDNI: ";
-		cin >> dni;
+		cin.ignore();
 
+		do {
+			cout << "\t\t\tDNI (8 dígitos): ";
+			cin >> dni;
+
+			if (dni.length() != 8 || !all_of(dni.begin(), dni.end(), ::isdigit)) {
+				cout << "\t\t\tDNI inválido. Debe contener exactamente 8 dígitos numéricos.\n";
+			}
+			else {
+				break;
+			}
+
+		} while (true);
 	}
 	void mostrarResumen() {
 		cout << "\t\t\tNombre: " << this->nombre << endl;

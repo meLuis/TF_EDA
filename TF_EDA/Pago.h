@@ -36,11 +36,36 @@ public:
         getline(cin, nombrePagador);
         cout << "\t\t\tApellido: ";
         getline(cin, apellidoPagador);
-        cout << "\t\t\tDNI: ";
-        getline(cin, dniPagador);
-        cout << "\t\t\tTarjeta: ";
-        cin >> numTarjeta;
+
+        do {
+            cout << "\t\t\tDNI (8 dígitos): ";
+            cin >> dniPagador;
+
+            if (dniPagador.length() != 8 || !all_of(dniPagador.begin(), dniPagador.end(), ::isdigit)) {
+                cout << "\t\t\tDNI inválido. Debe contener exactamente 8 dígitos numéricos.\n";
+            }
+            else {
+                break;
+            }
+
+        } while (true);
+
+
+        do {
+            cout << "\t\t\tTarjeta (16 dígitos débito y 15 dígitos AMEX) ";
+            cin >> numTarjeta;
+
+            if (numTarjeta < 15 && numTarjeta >16) {
+                cout << "\t\t\tNumero de tarjeta inválido. Debe contener exactamente 16 dígitos numéricos 0 15 dígitos numéricos en el caso de AMEX.\n";
+            }
+            else {
+                break;
+            }
+
+        } while (true);
+
     }
+
     void mostrarComprobante() {
 
         cout << "\t\t\t--------------------- COMPROBANTE DE PAGO ---------------------\n";
@@ -131,6 +156,23 @@ public:
 
         archivo << "\t\t\tTotal a Pagar: S/. " << total << "\n";
         archivo << "\t\t\tGracias por su compra!\n\n\n\n";
+        archivo.close();
+    }
+    void guardarDatosPagador() {
+        ofstream archivo("Archivos//pagantes.txt", ios::app);
+        if (!archivo) {
+            cout << "Error al abrir archivo de pagantes." << endl;
+            return;
+        }
+
+        archivo << "ID Reserva: " << idReserva << "\n";
+        archivo << "Nombre del Pagador: " << nombrePagador << "\n";
+        archivo << "Apellido del Pagador: " << apellidoPagador << "\n";
+        archivo << "DNI del Pagador: " << dniPagador << "\n";
+        archivo << "Tarjeta (últimos 4 dígitos): **** **** **** " << to_string(numTarjeta).substr(to_string(numTarjeta).length() - 4) << "\n";
+        archivo << "Total Pagado: S/. " << total << "\n";
+        archivo << "-----------------------------------------------\n";
+
         archivo.close();
     }
 };

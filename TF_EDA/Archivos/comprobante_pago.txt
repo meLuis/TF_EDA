@@ -637,3 +637,32 @@
 
 
 
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			ID Reserva: 1832
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Andrea
+			Apellido: Correa
+			DNI: 70711923
+				--------------------------------------------------
+
+			Fecha: 18/09/2025
+			Origen: Piura	 Destino: Santiago
+			Hora Salida: 21:00	Hora llegada: 2:02
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Melody
+			Apellido: Correa
+			DNI: 12345678
+			Asiento: 
+			Precio Ruta: S/. 418
+			Impuesto General a la Venta (18%): S/. 75.24
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 568.24
+				--------------------------------------------------
+			Total a Pagar: S/. 568.24
+			Gracias por su compra!
+
+
+

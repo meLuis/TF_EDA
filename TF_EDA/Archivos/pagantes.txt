@@ -1,0 +1,7 @@
+ID Reserva: 1832
+Nombre del Pagador: Andrea
+Apellido del Pagador: Correa
+DNI del Pagador: 70711923
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 568.24
+-----------------------------------------------

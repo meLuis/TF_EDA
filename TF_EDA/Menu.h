@@ -7,6 +7,7 @@
 #include "GestorVuelos.h"
 #include "GestorPasajero.h"
 #include "Cliente.h"
+#include "ABBReserva.h"
 #include "ColaPagos.h"
 using namespace std;
 
@@ -255,13 +256,18 @@ public:
             return;
         }
 
+        ABBReserva arbol;
+        for (const auto& r : reservas) {
+            arbol.insertar(r);
+        }
+
         int id;
         cout << "\t\t\tIngrese el ID de la reserva a buscar: ";
         cin >> id;
         cin.ignore();
 
-        Reserva* encontrada = Reserva::buscarPorID(reservas, id);
-        if (encontrada != nullptr) {
+        Reserva* encontrada = arbol.buscar(id);
+        if (encontrada) {
             cout << "\n\t\t\tReserva encontrada:\n";
             encontrada->mostrar();
 
@@ -274,20 +280,19 @@ public:
             if (opcion == 1) {
                 if (encontrada->getEstado() != "Anulada") {
                     encontrada->setEstado("Anulada");
-                    anularReserva(reservas, archivoReservas);
-                    cout << "\t\t\t Reserva anulada correctamente." << endl;
+                    // Aquí puedes guardar los cambios si quieres reflejarlo en el archivo.
+                    cout << "\t\t\tReserva anulada correctamente." << endl;
                 }
                 else {
-                    cout << "\t\t\t La reserva ya está anulada." << endl;
+                    cout << "\t\t\tLa reserva ya esta anulada." << endl;
                 }
             }
             else if (opcion == 2) {
-                cout << "\t\t\t?? Retrocediendo..." << endl;
+                cout << "\t\t\tRetrocediendo..." << endl;
             }
             else {
-                cout << "\t\t\t Opción invalida." << endl;
+                cout << "\t\t\tOpción invalida." << endl;
             }
-
         }
         else {
             cout << "\t\t\tReserva no encontrada." << endl;
@@ -334,16 +339,20 @@ public:
         } while (opcion != 2);
     }
 
-    bool confirmarDatos(const string& mensaje) {
-        char confirmacion;
-        do {
-            cout << "\t\t\t" << mensaje << endl;
-            cout << "\t\t\t¿Son correctos? (S/N): ";
-            cin >> confirmacion;
-            confirmacion = toupper(confirmacion);
-        } while (confirmacion != 'S' && confirmacion != 'N');
 
-        return confirmacion == 'S';
+    bool confirmarDatos(const string& mensaje) {
+        string confirmacion;
+
+        do {
+            cout << "\t\t\t" << mensaje << " (Si/No): ";
+            cin >> confirmacion;
+
+
+            transform(confirmacion.begin(), confirmacion.end(), confirmacion.begin(), ::tolower);
+
+        } while (confirmacion != "s" && confirmacion != "n" && confirmacion != "si" && confirmacion != "no");
+
+        return (confirmacion == "s" || confirmacion == "si");
     }
 
     void realizarReservas() {
@@ -357,11 +366,13 @@ public:
         while (etapa < 5) {
             switch (etapa) {
             case 0:
-                cout << "\t\t\t----------------------------- RESERVA -----------------------------  " << endl;
+                cout << "\t\t\t------------------------- RESERVA -------------------------  " << endl;
                 if (!validarFecha(_fecha)) return;
 				this->fecha = _fecha;
                 origen = seleccionarOrigen();
                 if (origen == -1) return;
+                system("pause>0");
+                system("cls");
 
                 destino = seleccionarDestino(origen);
                 if (destino == -1) return;
@@ -369,10 +380,10 @@ public:
                 cantPasajeros = ingresarCantidadPasajeros();
                 if (cantPasajeros <= 0) return;
 
-                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                if (confirmarDatos("\t Los datos ingresados son correctos?")) {
                     cd = true;
                     cout << "\t\t\t Buscar.... " << endl;
-                    system("pause>0");
+                    this_thread::sleep_for(chrono::seconds(2));
                     system("cls");
                     etapa++;
                 }
@@ -385,7 +396,7 @@ public:
 
             case 1:
                 vueloSeleccionado = seleccionarVuelo(origen, destino);
-                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                if (confirmarDatos("\t Los datos ingresados son correctos?")){
                     cd = true;
                     system("pause>0");
                     system("cls");
@@ -402,7 +413,7 @@ public:
                 pasajeros = manejarEquipajeYAsientos(cantPasajeros, vueloSeleccionado);
                 if (pasajeros.empty()) return;
 
-                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                if (confirmarDatos("\t Los datos ingresados son correctos?")) {
                     cd = true;
                     system("pause>0");
                     system("cls");
@@ -417,7 +428,7 @@ public:
 
             case 3:
                 registrarPasajeros(pasajeros);
-                if (confirmarDatos("¿Los datos ingresados son correctos?")) {
+                 if (confirmarDatos("\t Los datos ingresados son correctos?")) {
                     cd = true;
                     system("pause>0");
                     system("cls");
@@ -492,7 +503,8 @@ public:
 
     int ingresarCantidadPasajeros() {
         int cantPasajeros;
-        cout << "\t\t\t Ingrese la cantidad de pasajeros: ";
+        cout << " " << endl;
+        cout << "\t\t\t           Ingrese la cantidad de pasajeros: ";
         cin >> cantPasajeros;
         return cantPasajeros;
     }
@@ -511,11 +523,14 @@ public:
         vector<Pasajero> pasajeros;
         string opcionAdicionales;
 
-        cout << "\t\t\t----------------------------- Equipajes y Asientos -------------------------------\n";
-        cout << "\t\t\t\t-----------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t| Deseas agregar equipaje personalizado por pasajero ?\t\t\t|" << endl;
-        cout << "\t\t\t\t-----------------------------------------------------------------" << endl;
-        cout << "\t\t\t      SI/NO: ";
+        cout << "" << endl;
+
+        cout << "\t\t\t------------------------- Equipajes y Asientos -------------------------";
+        cout << "" << endl;
+        cout << "\t\t\t    ----------------------------------------------------------------" << endl;
+        cout << "\t\t\t   |      Deseas agregar equipaje personalizado por pasajero ?      |" << endl;
+        cout << "\t\t\t    ----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t     Si/No: ";
         cin.ignore();
         getline(cin, opcionAdicionales);
 
@@ -562,12 +577,16 @@ public:
     }
 
     void procesarPago(float precioTotal, vector<Pasajero>& pasajeros, Vuelo& vueloSeleccionado) {
-        Reserva nuevaReserva(fecha,vueloSeleccionado.getCiudadDestino(),vueloSeleccionado.getCiudadOrigen(),pasajeros.size());
+        Reserva nuevaReserva(fecha, vueloSeleccionado.getCiudadDestino(), vueloSeleccionado.getCiudadOrigen(), pasajeros.size());
         listaReservas.agregarReserva(nuevaReserva);
-        Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado,nuevaReserva.getIdReserva());
-        cout << "\t\t\t--------------------------------- PAGO -----------------------------------" << endl;
+
+        Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado, nuevaReserva.getIdReserva());
+
+        cout << "\t\t\t--------------------------------- Pago -----------------------------------" << endl;
         pago.ingresarDatosPagador();
+        pago.guardarDatosPagador(); // <<--- AGREGA ESTA LÍNEA AQUÍ
         colaPagos.enqueue(pago);
+
         cout << "\t\t\tPago agregado a la cola." << endl;
 
         cout << "\t\t\t--------------------------------- PROCESANDO PAGOS -----------------------------------" << endl;
@@ -575,9 +594,11 @@ public:
 
         listaReservas.guardarListaEnArchivo(archivoReservas);
         gestorVuelos.guardarVueloEnArchivo(vueloSeleccionado);
+
         GestorPasajero gestorPasajero(pasajeros);
-        gestorPasajero.guardarPasajerosEnArchivo("archivoPasajeros");
+        gestorPasajero.guardarPasajerosEnArchivo(archivoPasajeros);
     }
+
 
 
     void menuPricipal() {

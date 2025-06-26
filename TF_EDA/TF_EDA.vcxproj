@@ -126,6 +126,7 @@
     <ClCompile Include="TF_EDA.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ABBReserva.h" />
     <ClInclude Include="Administrador.h" />
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="ColaPagos.h" />

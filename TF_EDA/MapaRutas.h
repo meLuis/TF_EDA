@@ -272,10 +272,12 @@ public:
     }
     
     int seleccionarOrigen() {
-        cout << "\t\t\t\t\t--- SELECCIONE ORIGEN ---" << endl;
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t   ----------------- SELECCIONE ORIGEN -----------------  " << endl;
+        cout << " " << endl;
         int paisOrigen = seleccionarPais();
         if (paisOrigen == -1) return -1;
-        
+        cout << " " << endl;
         int ciudadOrigen = seleccionarCiudadDePais(paisOrigen);
         while (ciudadOrigen == -2) {
             paisOrigen = seleccionarPais();
@@ -304,9 +306,11 @@ public:
             }
             if (nombreOrigen != "Desconocido") break;
         }
-        
-        cout << "\t\t\t\t\t--- SELECCIONE DESTINO ---" << endl;
-        cout << "\t\t\t\t\tOrigen: " << nombreOrigen << ", " << nombrePaisOrigen << endl << endl;
+
+        cout << "\t\t\t" << endl;
+        cout << "\t\t\t   ----------------- SELECCIONE DESTINO ----------------- " << endl;
+        cout << " " << endl;
+        cout << "\t\t\t\t\t   Origen: " << nombreOrigen << ", " << nombrePaisOrigen << endl << endl;
         
         vector<int> paisesDisponibles = obtenerPaisesConDestinosDisponibles(origen);
         
@@ -317,7 +321,7 @@ public:
         
         int paisDestino = seleccionarPais(paisesDisponibles);
         if (paisDestino == -1) return -1;
-        
+        cout << " " << endl;
         vector<int> ciudadesDisponibles;
         
         for (const auto& ciudad : paises[paisDestino].ciudades) {
@@ -339,6 +343,7 @@ public:
             cout << "\t\t\t\t\tOpcion invalida. Intente nuevamente." << endl;
             return seleccionarDestino(origen);
         }
+        cout << " " << endl;
         
         return ciudadesDisponibles[opcion - 1];
     }
