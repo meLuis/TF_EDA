@@ -129,7 +129,6 @@
     <ClInclude Include="ABBReserva.h" />
     <ClInclude Include="Administrador.h" />
     <ClInclude Include="AVLPagador.h" />
-    <ClInclude Include="AVLPagante.h" />
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="ColaPagos1.h" />
     <ClInclude Include="Comprobante.h" />

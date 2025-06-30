@@ -65,9 +65,6 @@
     <ClInclude Include="GestorPasajero.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="AVLPagante.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Pagador.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
