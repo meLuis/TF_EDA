@@ -1,0 +1,99 @@
+ID Reserva: 1832
+Nombre del Pagador: Andrea
+Apellido del Pagador: Correa
+DNI del Pagador: 70711923
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 568.24
+-----------------------------------------------
+ID Reserva: 3627
+Nombre del Pagador: Daniel
+Apellido del Pagador: Tirado
+DNI del Pagador: 72742570
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 628.42
+-----------------------------------------------
+ID Reserva: 4949
+Nombre del Pagador: Gabriela
+Apellido del Pagador: tirado
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 440.8
+-----------------------------------------------
+ID Reserva: 1144
+Nombre del Pagador: Daniel
+Apellido del Pagador: Tirado
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 440.8
+-----------------------------------------------
+ID Reserva: 4246
+Nombre del Pagador: Gabriela
+Apellido del Pagador: Tirado
+DNI del Pagador: 82371212
+Tarjeta (últimos 4 dígitos): **** **** **** 1234
+Total Pagado: S/. 1534.4
+-----------------------------------------------
+ID Reserva: 4978
+Nombre del Pagador: Gabriela
+Apellido del Pagador: Tirado
+DNI del Pagador: 12312312
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 1070.54
+-----------------------------------------------
+ID Reserva: 1598
+Nombre del Pagador: Gabriela
+Apellido del Pagador: Tirado
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 1751.45
+-----------------------------------------------
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 9192
+Nombre del Pagador: Luis
+Apellido del Pagador: ESPINOZA
+DNI del Pagador: 72732561
+Tarjeta (últimos 4 dígitos): **** **** **** 1212
+Total Pagado: S/. 594.2
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 1953
+Nombre del Pagador: Andrea
+Apellido del Pagador: Correa
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 673.92
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 2214
+Nombre del Pagador: Lui
+Apellido del Pagador: Espinoza
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 940.6
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 2606
+Nombre del Pagador: Gabriela
+Apellido del Pagador: Tirado
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 3647
+Total Pagado: S/. 732.92
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 2955
+Nombre del Pagador: Luis
+Apellido del Pagador: Tirado
+DNI del Pagador: 72742569
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 716.4
+-----------------------------------------------
+==========================================
+
