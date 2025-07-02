@@ -513,16 +513,84 @@ public:
         return cantPasajeros;
     }
 
+    //Vuelo seleccionarVuelo(int origen, int destino) {
+    //    string claveVuelo = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
+    //    gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
+    //    gestorVuelos.imprimirVuelos();
+
+    //    int opcionVuelo;
+    //    cin >> opcionVuelo;
+    //    return gestorVuelos.getVuelo(opcionVuelo - 1);
+    //}
     Vuelo seleccionarVuelo(int origen, int destino) {
         string claveVuelo = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
         gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
+
+        // Mostrar opciones de ordenamiento
+        cout << "\n\t\t\t==================== OPCIONES DE ORDENAMIENTO ====================" << endl;
+        cout << "\t\t\t[1] Ordenar por precio (ascendente)" << endl;
+        cout << "\t\t\t[2] Ordenar por precio (descendente)" << endl;
+        cout << "\t\t\t[3] Ordenar por duración (ascendente)" << endl;
+        cout << "\t\t\t[4] Ordenar por duración (descendente)" << endl;
+        cout << "\t\t\t[5] No ordenar (mostrar como están)" << endl;
+        cout << "\t\t\t===================================================================" << endl;
+        cout << "\t\t\tSelecciona una opción de ordenamiento: ";
+
+        int opcionOrdenamiento;
+        cin >> opcionOrdenamiento;
+
+
+        switch (opcionOrdenamiento) {
+        case 1:
+            gestorVuelos.selectionSegunCriterio([](Vuelo& a, Vuelo& b) {
+                return a.getPrecio() < b.getPrecio();
+                });
+            system("cls");
+            cout << "\t\t\t Vuelos ordenados por precio (menor a mayor)" << endl;
+            break;
+
+        case 2:
+            gestorVuelos.selectionSegunCriterio([](Vuelo& a, Vuelo& b) {
+                return a.getPrecio() > b.getPrecio();
+                });
+            system("cls");
+            cout << "\t\t\t Vuelos ordenados por precio (mayor a menor)" << endl;
+            break;
+
+        case 3: 
+            gestorVuelos.bubbleSegunCriterio([](Vuelo& a, Vuelo& b) {
+                return a.getDuracionEnMinutos() < b.getDuracionEnMinutos();
+                });
+            system("cls");
+            cout << "\t\t\t Vuelos ordenados por duración (menor a mayor)" << endl;
+            break;
+
+        case 4: 
+            gestorVuelos.bubbleSegunCriterio([](Vuelo& a, Vuelo& b) {
+                return a.getDuracionEnMinutos() > b.getDuracionEnMinutos();
+                });
+            system("cls");
+            cout << "\t\t\t Vuelos ordenados por duración (mayor a menor)" << endl;
+            break;
+
+        case 5:
+            system("cls");
+            cout << "\t\t\t Mostrando vuelos en orden original" << endl;
+            break;
+
+        default:
+            cout << "\t\t\t Opción no válida. Mostrando vuelos sin ordenar." << endl;
+            break;
+        }
+
         gestorVuelos.imprimirVuelos();
 
+   
         int opcionVuelo;
         cin >> opcionVuelo;
+
         return gestorVuelos.getVuelo(opcionVuelo - 1);
     }
-
     vector<Pasajero> manejarEquipajeYAsientos(int cantPasajeros, Vuelo& vueloSeleccionado) {
         vector<Pasajero> pasajeros;
         string opcionAdicionales;
