@@ -23,3 +23,13 @@
 2214|12/12/2025|Tarapoto|Quito|2|Activo|
 2606|12/12/2025|Lima|Tarapoto|2|Activo|
 2955|12/12/2025|Chiclayo|Cajamarca|2|Activo|
+3117|12/12/2025|Trujillo|Piura|2|Activo|
+3659|15/12/2025|Cajamarca|Trujillo|2|Activo|
+8433|14/12/2025|Chiclayo|Tarapoto|1|Activo|
+8433|14/12/2025|Chiclayo|Tarapoto|1|Activo|
+7150|12/12/2025|Santiago|Chiclayo|1|Activo|
+2302|15/12/2025|Chiclayo|Tarapoto|2|Activo|
+3053|12/12/2025|Chiclayo|Piura|2|Activo|
+3880|12/12/2025|Arequipa|Tarapoto|1|Activo|
+9385|12/12/2025|Cusco|Lima|2|Activo|
+1061|12/12/2025|Chiclayo|Tarapoto|1|Activo|

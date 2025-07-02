@@ -76,7 +76,7 @@ public:
 
 
 		if (tipoComprobante == "Boleta") {
-            cin.ignore();
+			cin.ignore();
             cout << "\n\t\t\tIngrese los datos del pagador:\n";
 
             cout << "\t\t\tNombre: ";
@@ -108,9 +108,10 @@ public:
                     break;
                 }
             } while (true);
-            pagador = Pagador(nombre, apellido, dni, numTarjeta, total, idReserva);
+            pagador = Pagador(nombre, apellido, dni, numTarjeta, total, idReserva,persona);
         }
 		else if (tipoComprobante == "Factura") {
+            cin.ignore();
 			apellido = ""; 
 			cout << "\n\t\t\tIngrese los datos del pagador:\n";
 			cout << "\t\t\tNombre de organización: ";
@@ -140,7 +141,7 @@ public:
 				}
 			} while (true);
 
-            pagador = Pagador(nombre, apellido, ruc, numTarjeta, total, idReserva);
+            pagador = Pagador(nombre, ruc, numTarjeta, total, idReserva,organizacion);
 		}
 
 

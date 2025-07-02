@@ -41,10 +41,16 @@ public:
         cout << "\t\t\tTipo: " << tipoComprobante << "\n";
         cout << "\t\t\tID Reserva: " << idReserva << "\n";
         cout << "\t\t\t\t--------------------------------------------------\n";
-        cout << "\t\t\tDatos del Pagador:\n";
-        cout << "\t\t\tNombre: " << pagador.getNombre() << "\n";
-        cout << "\t\t\tApellido: " << pagador.getApellido() << "\n";
-        cout << "\t\t\tDNI: " << pagador.getDni() << "\n";
+        cout << "\t\t\tDatos del Pagador: \n";
+		if (tipoComprobante == "Factura") {
+			cout << "\t\t\tRUC: " << pagador.getRuc() << "\n";
+			cout << "\t\t\tNombre de la organizacion: " << pagador.getNombre() << "\n";
+        }
+        else if (tipoComprobante == "Boleta") {
+            cout << "\t\t\tNombre: " << pagador.getNombre() << "\n";
+            cout << "\t\t\tApellido: " << pagador.getApellido() << "\n";
+            cout << "\t\t\tDNI: " << pagador.getDni() << "\n";
+        }
         cout << "\t\t\t\t--------------------------------------------------\n\n";
         cout << "\t\t\tFecha: " << reserva.getFecha() << "\n";
         cout << "\t\t\tOrigen: " << reserva.getOrigen() << "\t Destino: " << reserva.getDestino() << "\n";
@@ -91,9 +97,14 @@ public:
         archivo << "\t\t\tID Reserva: " << idReserva << "\n";
         archivo << "\t\t\t\t--------------------------------------------------\n";
         archivo << "\t\t\tDatos del Pagador:\n";
+        if (tipoComprobante == "Factura") {
+			archivo << "\t\t\tRUC: " << pagador.getRuc() << "\n";
+            archivo << "\t\t\tNombre de la organizacion: " << pagador.getNombre() << "\n";
+        }else {
         archivo << "\t\t\tNombre: " << pagador.getNombre() << "\n";
         archivo << "\t\t\tApellido: " << pagador.getApellido() << "\n";
         archivo << "\t\t\tDNI: " << pagador.getDni() << "\n";
+        }
         archivo << "\t\t\t\t--------------------------------------------------\n\n";
         archivo << "\t\t\tFecha: " << reserva.getFecha() << "\n";
         archivo << "\t\t\tOrigen: " << reserva.getOrigen() << "\t Destino: " << reserva.getDestino() << "\n";

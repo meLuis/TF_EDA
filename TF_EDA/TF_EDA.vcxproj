@@ -139,7 +139,6 @@
     <ClInclude Include="MapaRutas.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Nodo.h" />
-    <ClInclude Include="NodoAVL.h" />
     <ClInclude Include="Pagador.h" />
     <ClInclude Include="Pago1.h" />
     <ClInclude Include="Pasajero.h" />

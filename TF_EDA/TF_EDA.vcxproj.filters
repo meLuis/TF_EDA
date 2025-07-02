@@ -68,9 +68,6 @@
     <ClInclude Include="Pagador.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="NodoAVL.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="AVLPagador.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>

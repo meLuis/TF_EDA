@@ -1085,3 +1085,341 @@
 
 
 
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Boleta
+			ID Reserva: 3117
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Antonio
+			Apellido: Tirado
+			DNI: 82632451
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Piura	 Destino: Trujillo
+			Hora Salida: 9:00	Hora llegada: 11:22
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Mariella
+			Apellido: Carrera
+			DNI: 02804986
+			Asiento: 30A
+			Precio Ruta: S/. 365
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 110.624
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 800.204
+				--------------------------------------------------
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 72742561
+			Asiento: 30B
+			Precio Ruta: S/. 365
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 110.624
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 800.204
+				\--------------------------------------------------
+			Total a Pagar: S/. 1600.41
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Boleta
+			ID Reserva: 3659
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 72742571
+				--------------------------------------------------
+
+			Fecha: 15/12/2025
+			Origen: Trujillo	 Destino: Cajamarca
+			Hora Salida: 21:00	Hora llegada: 22:03
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Mariella
+			Apellido: Carrera
+			DNI: 16823245
+			Asiento: 10A
+			Precio Ruta: S/. 279
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 95.1444
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 698.724
+				--------------------------------------------------
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 72742571
+			Asiento: 
+			Precio Ruta: S/. 279
+			Impuesto General a la Venta (18%): S/. 50.22
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 404.22
+				\--------------------------------------------------
+			Total a Pagar: S/. 1102.94
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Boleta
+			ID Reserva: 8433
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Mariella
+			Apellido: Carrera
+			DNI: 72742571
+				--------------------------------------------------
+
+			Fecha: 14/12/2025
+			Origen: Tarapoto	 Destino: Chiclayo
+			Hora Salida: 13:00	Hora llegada: 16:01
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Mariella
+			Apellido: Carrera
+			DNI: 72742571
+			Asiento: 
+			Precio Ruta: S/. 440
+			Impuesto General a la Venta (18%): S/. 79.2
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 594.2
+				\--------------------------------------------------
+			Total a Pagar: S/. 594.2
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Factura
+			ID Reserva: 7150
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Pinguino.SAC
+			Apellido: 
+			DNI: 12341234123
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Chiclayo	 Destino: Santiago
+			Hora Salida: 13:00	Hora llegada: 17:28
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Mariella
+			Apellido: Carrera
+			DNI: 72742571
+			Asiento: 
+			Precio Ruta: S/. 623
+			Impuesto General a la Venta (18%): S/. 112.14
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 810.14
+				\--------------------------------------------------
+			Total a Pagar: S/. 810.14
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Boleta
+			ID Reserva: 2302
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Luis
+			Apellido: Espinoza
+			DNI: 12341234
+				--------------------------------------------------
+
+			Fecha: 15/12/2025
+			Origen: Tarapoto	 Destino: Chiclayo
+			Hora Salida: 22:00	Hora llegada: 3:42
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Gabriela
+			Apellido: Triado
+			DNI: 12341234
+			Asiento: 
+			Precio Ruta: S/. 356
+			Impuesto General a la Venta (18%): S/. 64.08
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 495.08
+				--------------------------------------------------
+			Nombre: Andrea
+			Apellido: Correa
+			DNI: 12341234
+			Asiento: 
+			Precio Ruta: S/. 356
+			Impuesto General a la Venta (18%): S/. 64.08
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 495.08
+				\--------------------------------------------------
+			Total a Pagar: S/. 990.16
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Boleta
+			ID Reserva: 3053
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 12341234
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Piura	 Destino: Chiclayo
+			Hora Salida: 17:00	Hora llegada: 19:35
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Andrea
+			Apellido: Correa
+			DNI: 12341234
+			Asiento: 30A
+			Precio Ruta: S/. 247
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 53.46
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 425.46
+				--------------------------------------------------
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 72742571
+			Asiento: 30C
+			Precio Ruta: S/. 247
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 89.3844
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 660.964
+				\--------------------------------------------------
+			Total a Pagar: S/. 1086.42
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Boleta
+			ID Reserva: 3880
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 72742571
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Tarapoto	 Destino: Arequipa
+			Hora Salida: 6:00	Hora llegada: 9:54
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 72742571
+			Asiento: 30A
+			Precio Ruta: S/. 186
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 42.48
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 353.48
+				\--------------------------------------------------
+			Total a Pagar: S/. 353.48
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Factura
+			ID Reserva: 9385
+				--------------------------------------------------
+			Datos del Pagador:
+			RUC: 
+			Nombre de la organizacion: UPC
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Lima	 Destino: Cusco
+			Hora Salida: 11:00	Hora llegada: 13:43
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Andrea
+			Apellido: Correa
+			DNI: 72742571
+			Asiento: 30A
+			Precio Ruta: S/. 296
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 62.28
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 483.28
+				--------------------------------------------------
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 82632571
+			Asiento: 29B
+			Precio Ruta: S/. 296
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 98.2044
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 718.784
+				\--------------------------------------------------
+			Total a Pagar: S/. 1202.06
+			Gracias por su compra!
+
+
+
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Factura
+			ID Reserva: 1061
+				--------------------------------------------------
+			Datos del Pagador:
+			RUC: 12312312312
+			Nombre de la organizacion: upc
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Tarapoto	 Destino: Chiclayo
+			Hora Salida: 15:00	Hora llegada: 17:20
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: Gabriela
+			Apellido: Tirado
+			DNI: 72742571
+			Asiento: 
+			Precio Ruta: S/. 469
+			Equipaje de Cabina: S/. 97.04
+			Equipaje de Bodega: S/. 102.54
+			Impuesto General a la Venta (18%): S/. 120.344
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 863.924
+				\--------------------------------------------------
+			Total a Pagar: S/. 863.924
+			Gracias por su compra!
+
+
+

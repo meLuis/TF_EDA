@@ -40,3 +40,17 @@ Luis|Espinoza|72732571||0|0|0|247|0
 Daniel|Tirado|72732570||0|0|0|247|0
 Gabriela|Tirado|72742571||0|0|0|240|0
 Daniel|Tirado|72732570||0|0|0|240|0
+Mariella|Carrera|02804986|30A|97.04|102.54|50|365|0
+Gabriela|Tirado|72742561|30B|97.04|102.54|50|365|0
+Mariella|Carrera|16823245|10A|97.04|102.54|50|279|0
+Gabriela|Tirado|72742571||0|0|0|279|0
+Mariella|Carrera|72742571||0|0|0|440|0
+Mariella|Carrera|72742571||0|0|0|623|0
+Gabriela|Triado|12341234||0|0|0|356|0
+Andrea|Correa|12341234||0|0|0|356|0
+Andrea|Correa|12341234|30A|0|0|50|247|0
+Gabriela|Tirado|72742571|30C|97.04|102.54|50|247|0
+Gabriela|Tirado|72742571|30A|0|0|50|186|0
+Andrea|Correa|72742571|30A|0|0|50|296|0
+Gabriela|Tirado|82632571|29B|97.04|102.54|50|296|0
+Gabriela|Tirado|72742571||97.04|102.54|0|469|0

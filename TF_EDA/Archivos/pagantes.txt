@@ -97,3 +97,98 @@ Total Pagado: S/. 716.4
 -----------------------------------------------
 ==========================================
 
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 3117
+Nombre del Pagador: Antonio
+Apellido del Pagador: Tirado
+DNI del Pagador: 82632451
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 1600.41
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 3659
+Nombre del Pagador: Gabriela
+Apellido del Pagador: Tirado
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 1102.94
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 8433
+Nombre del Pagador: Mariella
+Apellido del Pagador: Carrera
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 594.2
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 8433
+Nombre del Pagador: Mariella
+Apellido del Pagador: Carrera
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 594.2
+-----------------------------------------------
+ID Reserva: 7150
+Nombre del Pagador: Pinguino.SAC
+Apellido del Pagador: 
+DNI del Pagador: 12341234123
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 810.14
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 2302
+Nombre del Pagador: Luis
+Apellido del Pagador: Espinoza
+DNI del Pagador: 12341234
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 990.16
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 3053
+Nombre del Pagador: Gabriela
+Apellido del Pagador: Tirado
+DNI del Pagador: 12341234
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 1086.42
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 3880
+Nombre del Pagador: Gabriela
+Apellido del Pagador: Tirado
+DNI del Pagador: 72742571
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 353.48
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 9385
+Nombre de la organizacion: UPC
+RUC: 
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 1202.06
+-----------------------------------------------
+==========================================
+
+========== REGISTRO DE PAGADORES ==========
+ID Reserva: 1061
+Nombre de la organizacion: upc
+RUC: 12312312312
+Tarjeta (últimos 4 dígitos): **** **** **** 5998
+Total Pagado: S/. 863.924
+-----------------------------------------------
+==========================================
+

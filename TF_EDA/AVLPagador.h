@@ -1,160 +1,234 @@
 #pragma once
-#include "NodoAVL.h"
 #include "Pagador.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 using namespace std;
 
+struct NodoAVL {
+    Pagador* elemento;
+    NodoAVL* izq;
+    NodoAVL* der;
+    int altura;
+
+    NodoAVL(Pagador* pag) : elemento(pag), izq(nullptr), der(nullptr), altura(1) {}
+};
+
 class AVLPagadores {
 private:
-    NodoAVL<Pagador>* raiz;
+    NodoAVL* raiz;
 
-    int obtenerAltura(NodoAVL<Pagador>* nodo) {
+    // Métodos privados
+    int _altura(NodoAVL* nodo) {
         return nodo ? nodo->altura : 0;
     }
 
-    int obtenerBalance(NodoAVL<Pagador>* nodo) {
-        return nodo ? obtenerAltura(nodo->izquierda) - obtenerAltura(nodo->derecha) : 0;
+    void _rotarDerecha(NodoAVL*& nodo) {
+        NodoAVL* p = nodo->izq;
+        nodo->izq = p->der;
+        p->der = nodo;
+        nodo->altura = 1 + max(_altura(nodo->izq), _altura(nodo->der));
+        p->altura = 1 + max(_altura(p->izq), _altura(p->der));
+        nodo = p;
     }
 
-    void actualizarAltura(NodoAVL<Pagador>* nodo) {
-        if (nodo) {
-            nodo->altura = 1 + max(obtenerAltura(nodo->izquierda), obtenerAltura(nodo->derecha));
+    void _rotarIzquierda(NodoAVL*& nodo) {
+        NodoAVL* p = nodo->der;
+        nodo->der = p->izq;
+        p->izq = nodo;
+        nodo->altura = 1 + max(_altura(nodo->izq), _altura(nodo->der));
+        p->altura = 1 + max(_altura(p->izq), _altura(p->der));
+        nodo = p;
+    }
+
+    void _balanceo(NodoAVL*& nodo) {
+        int fb = _altura(nodo->der) - _altura(nodo->izq);
+
+        if (fb > 1) {
+            if (_altura(nodo->der->izq) > _altura(nodo->der->der)) {
+                _rotarDerecha(nodo->der);
+            }
+            _rotarIzquierda(nodo);
         }
-    }
-
-    NodoAVL<Pagador>* rotarDerecha(NodoAVL<Pagador>* y) {
-        NodoAVL<Pagador>* x = y->izquierda;
-        NodoAVL<Pagador>* T2 = x->derecha;
-
-        x->derecha = y;
-        y->izquierda = T2;
-
-        actualizarAltura(y);
-        actualizarAltura(x);
-
-        return x;
-    }
-
-    NodoAVL<Pagador>* rotarIzquierda(NodoAVL<Pagador>* x) {
-        NodoAVL<Pagador>* y = x->derecha;
-        NodoAVL<Pagador>* T2 = y->izquierda;
-
-        y->izquierda = x;
-        x->derecha = T2;
-
-        actualizarAltura(x);
-        actualizarAltura(y);
-
-        return y;
-    }
-
-    NodoAVL<Pagador>* insertar(NodoAVL<Pagador>* nodo, const Pagador& pagador) {
-        // Inserción normal del BST
-        if (!nodo) {
-            return new NodoAVL<Pagador>(pagador);
+        else if (fb < -1) {
+            if (_altura(nodo->izq->der) > _altura(nodo->izq->izq)) {
+                _rotarIzquierda(nodo->izq);
+            }
+            _rotarDerecha(nodo);
         }
+        nodo->altura = 1 + max(_altura(nodo->izq), _altura(nodo->der));
+    }
 
-        if (pagador < nodo->dato) {
-            nodo->izquierda = insertar(nodo->izquierda, pagador);
+    bool _insertar(NodoAVL*& nodo, Pagador* pagador) {
+        if (nodo == nullptr) {
+            nodo = new NodoAVL(pagador);
+            return true;
         }
-        else if (pagador > nodo->dato) {
-            nodo->derecha = insertar(nodo->derecha, pagador);
+        else if (pagador->getTotalPagado() < nodo->elemento->getTotalPagado()) {
+            _insertar(nodo->izq, pagador);
+        }
+        else if (pagador->getTotalPagado() > nodo->elemento->getTotalPagado()) {
+            _insertar(nodo->der, pagador);
         }
         else {
-            // Si el pagador ya existe (mismo DNI), actualizar el total pagado
-            nodo->dato.setTotalPagado(nodo->dato.getTotalPagado() + pagador.getTotalPagado());
-            return nodo;
-        }
-
-        // Actualizar altura
-        actualizarAltura(nodo);
-
-        // Obtener balance
-        int balance = obtenerBalance(nodo);
-
-        // Casos de rotación
-        // Izquierda Izquierda
-        if (balance > 1 && pagador < nodo->izquierda->dato) {
-            return rotarDerecha(nodo);
-        }
-
-        // Derecha Derecha
-        if (balance < -1 && pagador > nodo->derecha->dato) {
-            return rotarIzquierda(nodo);
-        }
-
-        // Izquierda Derecha
-        if (balance > 1 && pagador > nodo->izquierda->dato) {
-            nodo->izquierda = rotarIzquierda(nodo->izquierda);
-            return rotarDerecha(nodo);
-        }
-
-        // Derecha Izquierda
-        if (balance < -1 && pagador < nodo->derecha->dato) {
-            nodo->derecha = rotarDerecha(nodo->derecha);
-            return rotarIzquierda(nodo);
-        }
-
-        return nodo;
-    }
-
-    void inOrden(NodoAVL<Pagador>* nodo) const {
-        if (nodo) {
-            inOrden(nodo->izquierda);
-            cout << "\t\t\tNombre: " << nodo->dato.getNombre() << " " << nodo->dato.getApellido()
-                << " | DNI: " << nodo->dato.getDni()
-                << " | Total Pagado: S/. " << nodo->dato.getTotalPagado() << "\n";
-            inOrden(nodo->derecha);
+            // Si tienen el mismo total pagado, ordenar por DNI como criterio secundario
+            if (pagador->getDni() < nodo->elemento->getDni()) {
+                _insertar(nodo->izq, pagador);
+            }
+            else if (pagador->getDni() > nodo->elemento->getDni()) {
+                _insertar(nodo->der, pagador);
+            }
+            else {
+                // Mismo DNI, actualizar el total pagado
+                nodo->elemento->setTotalPagado(nodo->elemento->getTotalPagado() + pagador->getTotalPagado());
+                return false;
+            }
+            _balanceo(nodo);
+            return true;
         }
     }
-
-    void destruir(NodoAVL<Pagador>* nodo) {
-        if (nodo) {
-            destruir(nodo->izquierda);
-            destruir(nodo->derecha);
-            delete nodo;
+        void _inOrden(NodoAVL * nodo) {
+            if (nodo == nullptr) return;
+            _inOrden(nodo->izq);
+            cout << "\t\t\tTotal Pagado: S/. " << nodo->elemento->getTotalPagado()
+                << " | Nombre: " << nodo->elemento->getNombre() << " " << nodo->elemento->getApellido()
+                << " | DNI: " << nodo->elemento->getDni()
+                << " | ID Reserva: " << nodo->elemento->getIdReserva() << "\n";
+            _inOrden(nodo->der);
         }
-    }
 
-    void guardarEnArchivo(NodoAVL<Pagador>* nodo, ofstream& archivo) const {
-        if (nodo) {
-            guardarEnArchivo(nodo->izquierda, archivo);
-            archivo << "ID Reserva: " << nodo->dato.getIdReserva() << "\n";
-            archivo << "Nombre del Pagador: " << nodo->dato.getNombre() << "\n";
-            archivo << "Apellido del Pagador: " << nodo->dato.getApellido() << "\n";
-            archivo << "DNI del Pagador: " << nodo->dato.getDni() << "\n";
-            archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
-                << to_string(nodo->dato.getNumTarjeta()).substr(max(0, (int)to_string(nodo->dato.getNumTarjeta()).length() - 4)) << "\n";
-            archivo << "Total Pagado: S/. " << nodo->dato.getTotalPagado() << "\n";
-            archivo << "-----------------------------------------------\n";
-            guardarEnArchivo(nodo->derecha, archivo);
+        void _destruir(NodoAVL * nodo) {
+            if (nodo) {
+                _destruir(nodo->izq);
+                _destruir(nodo->der);
+                delete nodo->elemento;
+                delete nodo;
+            }
         }
-    }
+
+        void _guardarEnArchivo(NodoAVL * nodo, ofstream & archivo) {
+            if (nodo) {
+                _guardarEnArchivo(nodo->izq, archivo);
+                if (nodo->elemento->getTipoPagador() == persona) {
+                    archivo << "ID Reserva: " << nodo->elemento->getIdReserva() << "\n";
+                    archivo << "Nombre del Pagador: " << nodo->elemento->getNombre() << "\n";
+                    archivo << "Apellido del Pagador: " << nodo->elemento->getApellido() << "\n";
+                    archivo << "DNI del Pagador: " << nodo->elemento->getDni() << "\n";
+                    archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
+                        << to_string(nodo->elemento->getNumTarjeta()).substr(max(0, (int)to_string(nodo->elemento->getNumTarjeta()).length() - 4)) << "\n";
+                    archivo << "Total Pagado: S/. " << nodo->elemento->getTotalPagado() << "\n";
+                    archivo << "-----------------------------------------------\n";
+                }
+                else if (nodo->elemento->getTipoPagador() == organizacion) {
+                    archivo << "ID Reserva: " << nodo->elemento->getIdReserva() << "\n";
+                    archivo << "Nombre de la organizacion: " << nodo->elemento->getNombre() << "\n";
+                    archivo << "RUC: " << nodo->elemento->getRuc() << "\n";
+                    archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
+                        << to_string(nodo->elemento->getNumTarjeta()).substr(max(0, (int)to_string(nodo->elemento->getNumTarjeta()).length() - 4)) << "\n";
+                    archivo << "Total Pagado: S/. " << nodo->elemento->getTotalPagado() << "\n";
+                    archivo << "-----------------------------------------------\n";
+                }
+                _guardarEnArchivo(nodo->der, archivo);
+            }
+        }
+
+        Pagador* _buscarPorDNI(NodoAVL * nodo, const string & dni) {
+            if (nodo == nullptr) {
+                return nullptr;
+            }
+            if (dni < nodo->elemento->getDni()) {
+                return _buscarPorDNI(nodo->izq, dni);
+            }
+            else if (dni > nodo->elemento->getDni()) {
+                return _buscarPorDNI(nodo->der, dni);
+            }
+            else {
+                return nodo->elemento;
+            }
+        }
+
+        Pagador* _buscarPorCodigoReserva(NodoAVL * nodo, const string & codigoReserva) {
+            if (nodo == nullptr) {
+                return nullptr;
+            }
+
+
+            if (to_string(nodo->elemento->getIdReserva()) == codigoReserva) {
+                return nodo->elemento;
+            }
+
+
+            Pagador* encontradoIzq = _buscarPorCodigoReserva(nodo->izq, codigoReserva);
+            if (encontradoIzq != nullptr) {
+                return encontradoIzq;
+            }
+
+            return _buscarPorCodigoReserva(nodo->der, codigoReserva);
+        }
 
 public:
     AVLPagadores() : raiz(nullptr) {}
 
     ~AVLPagadores() {
-        destruir(raiz);
+        _destruir(raiz);
     }
 
-    void agregarPagador(const Pagador& pagador) {
-        raiz = insertar(raiz, pagador);
+    bool insertar(const Pagador & pagador) {
+        Pagador* nuevoPagador = new Pagador(pagador);
+        return _insertar(raiz, nuevoPagador);
     }
 
-    void mostrarPagadoresOrdenados() const {
+
+    void agregarPagador(const Pagador & pagador) {
+        insertar(pagador);
+    }
+
+    void inOrden() {
+        _inOrden(raiz);
+    }
+
+
+    void mostrar() {
         if (!raiz) {
             cout << "\t\t\tNo hay pagadores registrados.\n";
             return;
         }
         cout << "\t\t\t========== PAGADORES ORDENADOS POR TOTAL PAGADO ==========\n";
-        inOrden(raiz);
+        inOrden();
         cout << "\t\t\t=========================================================\n";
     }
 
-    void guardarPagadores() const {
+
+    void mostrarPagadoresOrdenados() {
+        mostrar();
+    }
+
+    int altura() {
+        return raiz ? raiz->altura : 0;
+    }
+
+    Pagador* buscarPorDNI(const string & dni) {
+        return _buscarPorDNI(raiz, dni);
+    }
+
+    Pagador* buscarPorCodigoReserva(const string & codigoReserva) {
+        return _buscarPorCodigoReserva(raiz, codigoReserva);
+    }
+
+
+    Pagador* buscar(const string & criterio, int tipoBusqueda = 1) {
+        switch (tipoBusqueda) {
+        case 1:
+            return buscarPorDNI(criterio);
+        case 2:
+            return buscarPorCodigoReserva(criterio);
+        default:
+            cout << "\t\t\tTipo de búsqueda no válido." << endl;
+            return nullptr;
+        }
+    }
+
+    void guardarPagadores() {
         ofstream archivo("Archivos//pagantes.txt", ios::app);
         if (!archivo) {
             cout << "Error al abrir archivo de pagantes." << endl;
@@ -162,8 +236,9 @@ public:
         }
 
         archivo << "========== REGISTRO DE PAGADORES ==========\n";
-        guardarEnArchivo(raiz, archivo);
+        _guardarEnArchivo(raiz, archivo);
         archivo << "==========================================\n\n";
         archivo.close();
     }
+
 };
