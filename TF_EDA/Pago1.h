@@ -167,9 +167,28 @@ public:
         }
     }
 
-    static void mostrarPagadoresOrdenados() {
+    void mostrarPagadoresOrdenados() {
         if (avlPagadores) {
             avlPagadores->mostrarPagadoresOrdenados();
+        }
+        else {
+            cout << "\t\t\tNo hay sistema de pagadores inicializado.\n";
+        }
+    }
+
+   
+    void mostrarSoloPersonas() {
+        if (avlPagadores) {
+            avlPagadores->mostrarPorTipo(persona);
+        }
+        else {
+            cout << "\t\t\tNo hay sistema de pagadores inicializado.\n";
+        }
+    }
+
+   void mostrarSoloOrganizaciones() {
+        if (avlPagadores) {
+            avlPagadores->mostrarPorTipo(organizacion);
         }
         else {
             cout << "\t\t\tNo hay sistema de pagadores inicializado.\n";

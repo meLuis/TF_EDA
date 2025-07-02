@@ -43,16 +43,4 @@ public:
     void setTotalPagado(float totalPagado) { this->totalPagado = totalPagado; }
     void setIdReserva(int idReserva) { this->idReserva = idReserva; }
 
-
-    //bool operator<(const Pagador& other) const {
-    //    return totalPagado < other.totalPagado;
-    //}
-
-    //bool operator>(const Pagador& other) const {
-    //    return totalPagado > other.totalPagado;
-    //}
-
-    //bool operator==(const Pagador& other) const {
-    //    return dni == other.dni;
-    //}
 };

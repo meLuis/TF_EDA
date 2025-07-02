@@ -94,12 +94,6 @@ private:
                 if (resultado) _balanceo(nodo);
                 return resultado;
             }
-            //else {
-            //    // Mismo identificador, actualizar el total pagado
-            //    nodo->elemento->setTotalPagado(nodo->elemento->getTotalPagado() + pagador->getTotalPagado());
-            //    delete pagador; // Liberar memoria del pagador duplicado
-            //    return false;
-            //}
         }
     }
 
@@ -327,18 +321,6 @@ public:
         }
     }
 
-	// Función para obtener pagadores por tipo
-    vector<Pagador*> obtenerPorTipo(TipoPagador tipo) {
-        vector<Pagador*> resultado;
-        _obtenerPorTipo(raiz, resultado, tipo);
-        return resultado;
-    }
-
-    // Función para contar pagadores por tipo
-    int contarPorTipo(TipoPagador tipo) {
-        return obtenerPorTipo(tipo).size();
-    }
-
     void guardarPagadores() {
         ofstream archivo("Archivos//pagantes.txt", ios::app);
         if (!archivo) {
@@ -352,16 +334,5 @@ public:
         archivo.close();
     }
 
-    // Nueva función para estadísticas
-    void mostrarEstadisticas() {
-        int totalPersonas = contarPorTipo(persona);
-        int totalOrganizaciones = contarPorTipo(organizacion);
-        int total = totalPersonas + totalOrganizaciones;
 
-        cout << "\t\t\t========== ESTADÍSTICAS DE PAGADORES ==========\n";
-        cout << "\t\t\tTotal de pagadores: " << total << "\n";
-        cout << "\t\t\tPersonas (Boletas): " << totalPersonas << "\n";
-        cout << "\t\t\tOrganizaciones (Facturas): " << totalOrganizaciones << "\n";
-        cout << "\t\t\t===============================================\n";
-    }
 };
