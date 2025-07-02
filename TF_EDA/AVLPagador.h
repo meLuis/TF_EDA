@@ -158,7 +158,7 @@ private:
                 archivo << "Apellido del Pagador: " << nodo->elemento->getApellido() << "\n";
                 archivo << "DNI del Pagador: " << nodo->elemento->getDni() << "\n";
                 archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
-                    << to_string(nodo->elemento->getNumTarjeta()).substr(max(0, (int)to_string(nodo->elemento->getNumTarjeta()).length() - 4)) << "\n";
+                    << nodo->elemento->getNumTarjeta().substr(nodo->elemento->getNumTarjeta().length() - 4) << "\n";
                 archivo << "Total Pagado: S/. " << nodo->elemento->getTotalPagado() << "\n";
                 archivo << "Tipo: Persona (Boleta)\n";
                 archivo << "-----------------------------------------------\n";
@@ -168,7 +168,7 @@ private:
                 archivo << "Nombre de la organización: " << nodo->elemento->getNombre() << "\n";
                 archivo << "RUC: " << nodo->elemento->getRuc() << "\n";
                 archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
-                    << to_string(nodo->elemento->getNumTarjeta()).substr(max(0, (int)to_string(nodo->elemento->getNumTarjeta()).length() - 4)) << "\n";
+                    << nodo->elemento->getNumTarjeta().substr(nodo->elemento->getNumTarjeta().length() - 4) << "\n";
                 archivo << "Total Pagado: S/. " << nodo->elemento->getTotalPagado() << "\n";
                 archivo << "Tipo: Organización (Factura)\n";
                 archivo << "-----------------------------------------------\n";

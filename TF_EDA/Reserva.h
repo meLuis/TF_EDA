@@ -16,7 +16,7 @@ private:
     string estado;
     int cantPasajeros;
 public:
-    Reserva() : fecha(""), destino(""), origen(""), cantPasajeros(0), estado("Activo") {}
+    Reserva() : fecha(""), origen (""), destino(""), cantPasajeros(0), estado("Activo") {}
     Reserva(string f, string d, string o, int c) : fecha(f), destino(d), origen(o), cantPasajeros(c), estado("Activo") {
         idReserva = 0;
     }
@@ -32,7 +32,7 @@ public:
     string getEstado() const { return estado; }
 
     void guardarEnArchivo(ofstream& archivo) const {
-        archivo << endl << idReserva << "|" << fecha << "|" << destino << "|" << origen << "|" << cantPasajeros << "|" << estado << "|";
+        archivo << endl << idReserva << "|" << fecha << "|" << origen << "|" << destino << "|" << cantPasajeros << "|" << estado << "|";
     }
     static vector<Reserva> leerReservasDesdeArchivo(const string& archivoReservas) {
         vector<Reserva> reservas;

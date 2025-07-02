@@ -2,14 +2,14 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <conio.h>
+#include <ctime>
 #include "ListaReservas.h"
 #include "Administrador.h"
-#include "GestorVuelos.h"/*
-#include "ArbolAVLPasajero.h"*/
+#include "GestorVuelos.h"
 #include "GestorPasajero.h"
 #include "Cliente.h"
-#include "ABBReserva.h"/*
-#include "ColaPagos.h"*/
+#include "ABBReserva.h"
 #include "ColaPagos1.h"
 using namespace std;
 
@@ -399,6 +399,7 @@ public:
 
             case 1:
                 vueloSeleccionado = seleccionarVuelo(origen, destino);
+
                 if (confirmarDatos("\t Los datos ingresados son correctos?")){
                     cd = true;
                     system("pause>0");
@@ -492,6 +493,7 @@ public:
         int origen = vuelos.seleccionarOrigen();
         if (origen == -1) {
             cout << "\t\t\t   Reserva cancelada. " << endl;
+			   
         }
         return origen;
     }
@@ -513,15 +515,7 @@ public:
         return cantPasajeros;
     }
 
-    //Vuelo seleccionarVuelo(int origen, int destino) {
-    //    string claveVuelo = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
-    //    gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
-    //    gestorVuelos.imprimirVuelos();
 
-    //    int opcionVuelo;
-    //    cin >> opcionVuelo;
-    //    return gestorVuelos.getVuelo(opcionVuelo - 1);
-    //}
     Vuelo seleccionarVuelo(int origen, int destino) {
         string claveVuelo = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
         gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
@@ -647,45 +641,38 @@ public:
         return precioTotal;
     }
 
-    //void procesarPago(float precioTotal, vector<Pasajero>& pasajeros, Vuelo& vueloSeleccionado) {
-    //    Reserva nuevaReserva(fecha, vueloSeleccionado.getCiudadDestino(), vueloSeleccionado.getCiudadOrigen(),pasajeros.size());
-    //    listaReservas.agregarReserva(nuevaReserva);
-
-    //    Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado, nuevaReserva.getIdReserva());
-
-    //    cout << "\t\t\t--------------------------------- Pago -----------------------------------" << endl;
-
-    //    pago.ingresarDatosPagador();
-    //    pago.guardarDatosPagador(); // <<--- AGREGA ESTA LÍNEA AQUÍ
-    //    colaPagos.enqueue(pago);
-
-    //    cout << "\t\t\tPago agregado a la cola." << endl;
-
-    //    cout << "\t\t\t--------------------------------- PROCESANDO PAGOS -----------------------------------" << endl;
-    //    colaPagos.procesarPagos();
-
-    //    listaReservas.guardarListaEnArchivo(archivoReservas);
-    //    gestorVuelos.guardarVueloEnArchivo(vueloSeleccionado);
-    //    GestorPasajero gestorPasajero(pasajeros);
-    //    gestorPasajero.guardarPasajerosEnArchivo(archivoPasajeros);
-    //}
-
-
     void procesarPago(float precioTotal, vector<Pasajero>& pasajeros, Vuelo& vueloSeleccionado) {
         Reserva nuevaReserva(fecha, vueloSeleccionado.getCiudadDestino(), vueloSeleccionado.getCiudadOrigen(), pasajeros.size());
         listaReservas.agregarReserva(nuevaReserva);
 
         Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado, nuevaReserva.getIdReserva());
 
-        cout << "\t\t\t--------------------------------- Pago -----------------------------------" << endl;
+        cout << "\t\t\t--------------------------------- PROMOCIONES -----------------------------------" << endl;
 
+
+        cout << "\t\t\tTiene un código de descuento (si/no): ";
+        string respuesta;
+        cin.ignore();
+        getline(cin, respuesta);
+
+        if (respuesta == "si") {
+            cout << "\t\t\tIngrese su código de descuento: ";
+            string codigoDescuento;
+            getline(cin, codigoDescuento);
+
+            if (!pago.aplicarDescuento(codigoDescuento)) {
+                cout << "\t\t\tCódigo de descuento no válido.\n";
+                system("pause");
+            }
+        }
+		system("cls");
+        cout << "\t\t\t--------------------------------- PAGO -----------------------------------" << endl;
         pago.ingresarDatosPagador();
-        //pago.guardarDatosPagador(); // <<--- AGREGA ESTA LÍNEA AQUÍ
+
         colaPagos.enqueue(pago);
 
         cout << "\t\t\tPago agregado a la cola." << endl;
 
-        cout << "\t\t\t--------------------------------- PROCESANDO PAGOS -----------------------------------" << endl;
         colaPagos.procesarPagos();
 
         listaReservas.guardarListaEnArchivo(archivoReservas);
@@ -693,6 +680,7 @@ public:
         GestorPasajero gestorPasajero(pasajeros);
         gestorPasajero.guardarPasajerosEnArchivo(archivoPasajeros);
     }
+
     void menuPricipal() {
         system("cls");
         string titulo = R"(                     _         _     ___   __  __     _     ___   _____ 
