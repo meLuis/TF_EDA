@@ -95,7 +95,7 @@ public:
                
             }
             else {
-                cout << "\t\t\tOpción inválida. Seleccione 1 o 2.\n";
+                cout << "\t\t\tSeleccione 1 o 2.\n";
             }
 
        
