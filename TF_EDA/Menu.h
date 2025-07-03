@@ -50,7 +50,7 @@ public:
             cout << "Error al abrir el archivo." << endl;
             return;
         }
-        archivo << user.getNombre() << "|" << user.getApellido() << "|"
+        archivo <<endl<< user.getNombre() << "|" << user.getApellido() << "|"
             << user.getEmail() << "|"
             << user.getContraseña() << "|"
             << user.getTipo() << endl;
@@ -303,7 +303,79 @@ public:
 
         system("pause>0");
     }
+    void menuConsultasPagadores() {
+        AVLPagadores arbol ("Archivos//pagantes.txt");
 
+        int opcion;
+        do {
+            system("cls");
+            cout << "  " << endl;
+            cout << "  " << endl;
+            cout << "\t\t\t------------ CONSULTAS DE PAGADORES ------------";
+            cout << "  " << endl;
+            cout << "\t\t\t       [1]. Mostrar todos los pagadores\n";
+            cout << "\t\t\t       [2]. Mostrar solo personas (Boletas)\n";
+            cout << "\t\t\t       [3]. Mostrar solo organizaciones (Facturas)\n";
+            cout << "\t\t\t       [4].Buscar pagador específico\n";
+            cout << "\t\t\t       [0]. Volver al menú anterior\n";
+            cout << "  " << endl;
+            cout << "\t\t\t        Seleccione opción: ";
+            cin >> opcion;
+            cin.ignore();
+
+            switch (opcion) {
+            case 1:
+                arbol.mostrar();
+                break;
+            case 2:
+                arbol.mostrarPorTipo(persona);
+                break;
+            case 3:
+                arbol.mostrarPorTipo(organizacion);
+                break;
+            case 4: {
+                int tipo;
+                string criterio;
+                cout << "\t\t\tBuscar por:\n";
+                cout << "\t\t\t1. DNI\n";
+                cout << "\t\t\t2. Código de reserva\n";
+                cout << "\t\t\t3. RUC\n";
+                cout << "\t\t\tSeleccione tipo de búsqueda: ";
+                cin >> tipo;
+                cin.ignore();
+                cout << "\t\t\tIngrese valor: ";
+                getline(cin, criterio);
+                Pagador* encontrado = arbol.buscar(criterio, tipo);
+                if (encontrado) {
+                    cout << "\n\t\t\tPagador encontrado:\n";
+                    cout << "\t\t\tNombre: " << encontrado->getNombre() << "\n";
+                    if (encontrado->getTipoPagador() == persona) {
+                        cout << "\t\t\tApellido: " << encontrado->getApellido() << "\n";
+                        cout << "\t\t\tDNI: " << encontrado->getDni() << "\n";
+                    }
+                    else {
+                        cout << "\t\t\tRUC: " << encontrado->getRuc() << "\n";
+                    }
+                    cout << "\t\t\tTotal pagado: S/. " << encontrado->getTotalPagado() << "\n";
+                    cout << "\t\t\tID Reserva: " << encontrado->getIdReserva() << "\n";
+                }
+                else {
+                    cout << "\t\t\tNo se encontró el pagador.\n";
+                }
+                break;
+            }
+            case 0:
+                break;
+            default:
+                cout << "\t\t\tOpción inválida.\n";
+            }
+
+            if (opcion != 0) {
+                system("pause");
+            }
+
+        } while (opcion != 0);
+    }
     void menuAdministrador(Usuario* user) {
         int opcion;
         do {
@@ -314,7 +386,8 @@ public:
             cout << "\t\t\t------------ MENU ADMINISTRADOR ------------" << endl;
             cout << "  " << endl;
             cout << "\t\t\t            [1] Buscar reserva               " << endl;
-            cout << "\t\t\t            [2] Salir                        " << endl;
+            cout << "\t\t\t            [2] Consultar pagadores" << endl;
+            cout << "\t\t\t            [3] Salir                        " << endl;
             cout << "\t\t\t " << endl;
             cout << "\t\t\t-------------------------------------------" << endl;
             cout << "\t\t\t           Seleccione una opción: ";
@@ -334,6 +407,9 @@ public:
                 system("pause>0");
                 break;
             case 2:
+                menuConsultasPagadores();
+                break;
+            case 3:
                 break;
             default:
                 cout << "\t\t\tOpcion invalida." << endl;
@@ -513,15 +589,7 @@ public:
         return cantPasajeros;
     }
 
-    //Vuelo seleccionarVuelo(int origen, int destino) {
-    //    string claveVuelo = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
-    //    gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
-    //    gestorVuelos.imprimirVuelos();
 
-    //    int opcionVuelo;
-    //    cin >> opcionVuelo;
-    //    return gestorVuelos.getVuelo(opcionVuelo - 1);
-    //}
     Vuelo seleccionarVuelo(int origen, int destino) {
         string claveVuelo = vuelos.getSiglasLugar(origen) + "-" + vuelos.getSiglasLugar(destino);
         gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
@@ -614,14 +682,14 @@ public:
                 Pasajero pasajero(vueloSeleccionado.getPrecio(), 0, vueloSeleccionado.getID());
                 pasajero.seleccionarEquipaje();
 
-                pasajero.seleccionarAsiento();
+                pasajero.seleccionarAsiento(cantPasajeros);
                 pasajeros.push_back(pasajero);
             }
         }
         else if (opcionAdicionales == "NO") {
             Pasajero pasajero(vueloSeleccionado.getPrecio(), 0, vueloSeleccionado.getID());
             pasajero.seleccionarEquipaje();
-            pasajero.seleccionarAsiento();
+            pasajero.seleccionarAsiento(cantPasajeros);
             pasajeros.push_back(pasajero);
 
             for (int i = 0; i < cantPasajeros - 1; i++) {
@@ -647,45 +715,35 @@ public:
         return precioTotal;
     }
 
-    //void procesarPago(float precioTotal, vector<Pasajero>& pasajeros, Vuelo& vueloSeleccionado) {
-    //    Reserva nuevaReserva(fecha, vueloSeleccionado.getCiudadDestino(), vueloSeleccionado.getCiudadOrigen(),pasajeros.size());
-    //    listaReservas.agregarReserva(nuevaReserva);
-
-    //    Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado, nuevaReserva.getIdReserva());
-
-    //    cout << "\t\t\t--------------------------------- Pago -----------------------------------" << endl;
-
-    //    pago.ingresarDatosPagador();
-    //    pago.guardarDatosPagador(); // <<--- AGREGA ESTA LÍNEA AQUÍ
-    //    colaPagos.enqueue(pago);
-
-    //    cout << "\t\t\tPago agregado a la cola." << endl;
-
-    //    cout << "\t\t\t--------------------------------- PROCESANDO PAGOS -----------------------------------" << endl;
-    //    colaPagos.procesarPagos();
-
-    //    listaReservas.guardarListaEnArchivo(archivoReservas);
-    //    gestorVuelos.guardarVueloEnArchivo(vueloSeleccionado);
-    //    GestorPasajero gestorPasajero(pasajeros);
-    //    gestorPasajero.guardarPasajerosEnArchivo(archivoPasajeros);
-    //}
-
-
     void procesarPago(float precioTotal, vector<Pasajero>& pasajeros, Vuelo& vueloSeleccionado) {
         Reserva nuevaReserva(fecha, vueloSeleccionado.getCiudadDestino(), vueloSeleccionado.getCiudadOrigen(), pasajeros.size());
         listaReservas.agregarReserva(nuevaReserva);
 
         Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado, nuevaReserva.getIdReserva());
 
-        cout << "\t\t\t--------------------------------- Pago -----------------------------------" << endl;
+        cout << "\t\t\t--------------------------------- PROMOCIONES -----------------------------------" << endl;
 
+
+        cout << "\t\t\tTiene un código de descuento (si/no): ";
+        string respuesta;
+        cin.ignore();
+        getline(cin, respuesta);
+
+        if (respuesta == "si") {
+            cout << "\t\t\tIngrese su código de descuento: ";
+            string codigoDescuento;
+            getline(cin, codigoDescuento);
+
+            pago.aplicarDescuento(codigoDescuento);
+        }
+        system("cls");
+        cout << "\t\t\t--------------------------------- PAGO -----------------------------------" << endl;
         pago.ingresarDatosPagador();
-        //pago.guardarDatosPagador(); // <<--- AGREGA ESTA LÍNEA AQUÍ
+
         colaPagos.enqueue(pago);
 
         cout << "\t\t\tPago agregado a la cola." << endl;
 
-        cout << "\t\t\t--------------------------------- PROCESANDO PAGOS -----------------------------------" << endl;
         colaPagos.procesarPagos();
 
         listaReservas.guardarListaEnArchivo(archivoReservas);
@@ -693,6 +751,7 @@ public:
         GestorPasajero gestorPasajero(pasajeros);
         gestorPasajero.guardarPasajerosEnArchivo(archivoPasajeros);
     }
+
     void menuPricipal() {
         system("cls");
         string titulo = R"(                     _         _     ___   __  __     _     ___   _____ 

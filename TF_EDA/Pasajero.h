@@ -63,15 +63,17 @@ public:
 		if (pedirOpcion("\t\t\t\t\tDesea agregar equipaje de bodega? (SI/NO): ")) this->precioBodega = 102.54f;
 	}
 
-	void seleccionarAsiento() {
+	void seleccionarAsiento(int cantpasajeros) {
 		cin.ignore(); // Limpiar buffer de entrada
 		cout << "\t\t\t\t\t Desea elegir un asiento? (SI/NO): ";
 		string respuesta;
 		getline(cin, respuesta);
 		for (auto& c : respuesta) c = toupper(c);
 
+		string asiento;
+
 		if (respuesta == "SI" || respuesta == "S") {
-			string asiento;
+
 			while (true) {
 				cout << "\t\tAsientos disponibles para el vuelo " << idVuelo << ":" << endl;
 				GestorAsientos::mostrarAsientosVuelo(idVuelo);
@@ -85,7 +87,17 @@ public:
 			}
 		}
 		else {
-			cout << "\t\t\t\t\tSe asignara un asiento aleatorio más adelante." << endl;
+			cout << "\t\t\t\t\tSe asignara un asiento:";
+
+			for (int i = 0; i < cantpasajeros; i++) {
+				asiento = GestorAsientos::asignarAsientoAleatorioVuelo(idVuelo);
+				if (GestorAsientos::ocuparAsientoVuelo(idVuelo, asiento)) {
+					this->numeroAsiento = asiento;
+					this->precioAsiento = 50.0f;
+				}
+				cout << asiento << " ";
+			}
+			cout << endl;
 		}
 	}
 

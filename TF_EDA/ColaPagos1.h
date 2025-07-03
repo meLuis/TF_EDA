@@ -17,7 +17,6 @@ public:
     ColaPagos() {
         inicio = nullptr;
         fin = nullptr;
-        T::inicializarAVL();
     }
 
     ~ColaPagos() {

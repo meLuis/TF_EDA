@@ -15,17 +15,20 @@ private:
     Vuelo vueloSeleccionado;
     Pagador pagador;
     float total;
+    float precioSinDescuento;
+    float montoDescuento;
+    string codigoDescuento;
     int idReserva;
     string tipoComprobante; // "Boleta" o "Factura"
 
 public:
-    Comprobante() : total(0.0f), idReserva(0), tipoComprobante("Boleta") {}
+    Comprobante() : total(0.0f), precioSinDescuento(0.0f), montoDescuento(0.0f), codigoDescuento(" "), idReserva(0), tipoComprobante("Boleta") {}
 
     Comprobante(const vector<Pasajero>& pasajeros, const Reserva& reserva,
-        const Vuelo& vuelo, const Pagador& pagador, float total,
+        const Vuelo& vuelo, const Pagador& pagador, float total, float precioSinDescuento, float montoDescuento, string codigoDescuento,
         int idReserva, const string& tipo = "Boleta")
         : pasajeros(pasajeros), reserva(reserva), vueloSeleccionado(vuelo),
-        pagador(pagador), total(total), idReserva(idReserva), tipoComprobante(tipo) {}
+        pagador(pagador), total(total), precioSinDescuento(precioSinDescuento), montoDescuento(montoDescuento), codigoDescuento(codigoDescuento), idReserva(idReserva), tipoComprobante(tipo) {}
 
     // Getters
     float getTotal() const { return total; }
@@ -42,9 +45,9 @@ public:
         cout << "\t\t\tID Reserva: " << idReserva << "\n";
         cout << "\t\t\t\t--------------------------------------------------\n";
         cout << "\t\t\tDatos del Pagador: \n";
-		if (tipoComprobante == "Factura") {
-			cout << "\t\t\tRUC: " << pagador.getRuc() << "\n";
-			cout << "\t\t\tNombre de la organizacion: " << pagador.getNombre() << "\n";
+        if (tipoComprobante == "Factura") {
+            cout << "\t\t\tRUC: " << pagador.getRuc() << "\n";
+            cout << "\t\t\tNombre de la organizacion: " << pagador.getNombre() << "\n";
         }
         else if (tipoComprobante == "Boleta") {
             cout << "\t\t\tNombre: " << pagador.getNombre() << "\n";
@@ -79,8 +82,13 @@ public:
             cout << "\t\t\tCargo Tarifa unificada de uso de aeropuerto: S/.30\n";
             cout << "\t\t\tPrecio Total: S/. " << pasajero.calcularPrecioPasajero() << "\n";
         }
-
         cout << "\t\t\t\t\\--------------------------------------------------\n";
+        if (montoDescuento > 0) {
+            cout << "\t\t\tSubtotal: S/. " << precioSinDescuento << "\n";
+            cout << "\t\t\tDescuento (" << codigoDescuento << "): -S/. "
+                << montoDescuento << "\n";
+            cout << "\t\t\t---------------------------------------------\n";
+        }
         cout << "\t\t\tTotal a Pagar: S/. " << total << "\n";
         cout << "\t\t\tGracias por su compra!\n";
     }
@@ -98,12 +106,13 @@ public:
         archivo << "\t\t\t\t--------------------------------------------------\n";
         archivo << "\t\t\tDatos del Pagador:\n";
         if (tipoComprobante == "Factura") {
-			archivo << "\t\t\tRUC: " << pagador.getRuc() << "\n";
+            archivo << "\t\t\tRUC: " << pagador.getRuc() << "\n";
             archivo << "\t\t\tNombre de la organizacion: " << pagador.getNombre() << "\n";
-        }else {
-        archivo << "\t\t\tNombre: " << pagador.getNombre() << "\n";
-        archivo << "\t\t\tApellido: " << pagador.getApellido() << "\n";
-        archivo << "\t\t\tDNI: " << pagador.getDni() << "\n";
+        }
+        else {
+            archivo << "\t\t\tNombre: " << pagador.getNombre() << "\n";
+            archivo << "\t\t\tApellido: " << pagador.getApellido() << "\n";
+            archivo << "\t\t\tDNI: " << pagador.getDni() << "\n";
         }
         archivo << "\t\t\t\t--------------------------------------------------\n\n";
         archivo << "\t\t\tFecha: " << reserva.getFecha() << "\n";
@@ -111,7 +120,7 @@ public:
         archivo << "\t\t\tHora Salida: " << vueloSeleccionado.getHoraInicio() << "\tHora llegada: " << vueloSeleccionado.getHoraFin() << "\n";
         archivo << "\t\t\tDetalles de Pasajeros:\n";
 
-        for ( auto& pasajero : pasajeros) {
+        for (auto& pasajero : pasajeros) {
             archivo << "\t\t\t\t--------------------------------------------------\n";
             archivo << "\t\t\tNombre: " << pasajero.getNombre() << "\n";
             archivo << "\t\t\tApellido: " << pasajero.getApellido() << "\n";
@@ -135,6 +144,12 @@ public:
         }
 
         archivo << "\t\t\t\t\\--------------------------------------------------\n";
+        if (montoDescuento > 0) {
+            archivo << "\t\t\tSubtotal: S/. " << precioSinDescuento << "\n";
+            archivo << "\t\t\tDescuento (" << codigoDescuento << "): -S/. "
+                << montoDescuento << "\n";
+            cout << "\t\t\t---------------------------------------------\n";
+        }
         archivo << "\t\t\tTotal a Pagar: S/. " << total << "\n";
         archivo << "\t\t\tGracias por su compra!\n\n\n\n";
         archivo.close();

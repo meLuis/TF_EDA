@@ -126,4 +126,54 @@ public:
 
         return true;
     }
+
+    static string asignarAsientoAleatorioVuelo(const string& idVuelo) {
+
+        string archivoRuta = "Archivos//asientos//" + idVuelo + ".txt";
+        ifstream archivo(archivoRuta);
+        string asiento;
+        int count = 0;
+
+        if (!archivo.is_open()) {
+            cout << "\t\t\tError al abrir el archivo de asientos para el vuelo " << idVuelo << ".\n";
+            return "";
+        }
+
+        string linea;
+
+        int cantidadLineas = 0;
+
+        while (getline(archivo, linea)) {
+            cantidadLineas++;
+        }
+
+        archivo.clear();                 // Limpia EOF y otros flags
+        archivo.seekg(0, ios::beg);      // Regresa al principio del archivo
+
+        int filaAleatoria = 0;
+        int contadorTemporal = 1;
+
+        while (true) {
+            filaAleatoria = rand() % (cantidadLineas + 1);
+            while (getline(archivo, linea)) {
+
+                if (contadorTemporal == filaAleatoria) {
+
+                    stringstream ss(linea);
+                    while (ss >> asiento) {
+                        if (asiento != "XX") {
+
+                            archivo.close();
+                            return asiento;
+
+                        }
+
+                    }
+                }
+                contadorTemporal++;
+            }
+        }
+        archivo.close();
+        return "";
+    }
 };

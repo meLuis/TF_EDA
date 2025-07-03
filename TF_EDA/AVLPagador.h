@@ -1,9 +1,9 @@
-#pragma once
 #include "Pagador.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <vector>
+#include <iomanip>
 using namespace std;
 
 struct NodoAVL {
@@ -80,7 +80,7 @@ private:
             return resultado;
         }
         else {
-            //  criterio secundario
+
             string idPagador = _obtenerIdentificador(pagador);
             string idNodo = _obtenerIdentificador(nodo->elemento);
 
@@ -94,6 +94,12 @@ private:
                 if (resultado) _balanceo(nodo);
                 return resultado;
             }
+            else {
+
+                bool resultado = _insertar(nodo->izq, pagador);
+                if (resultado) _balanceo(nodo);
+                return resultado;
+            }
         }
     }
 
@@ -101,19 +107,16 @@ private:
         if (nodo == nullptr) return;
         _inOrden(nodo->izq);
 
-        cout << "\t\t\tTotal Pagado: S/. " << nodo->elemento->getTotalPagado()
-            << " | Nombre: " << nodo->elemento->getNombre();
+        string tipoComprobante = (nodo->elemento->getTipoPagador() == persona) ? "Boleta" : "Factura";
+        string apellido = (nodo->elemento->getTipoPagador() == persona) ? nodo->elemento->getApellido() : "--\t";
+        string identificador = (nodo->elemento->getTipoPagador() == persona) ? nodo->elemento->getDni() : nodo->elemento->getRuc();
 
-        if (nodo->elemento->getTipoPagador() == persona) {
-            cout << " " << nodo->elemento->getApellido()
-                << " | DNI: " << nodo->elemento->getDni();
-        }
-        else {
-            cout << " | RUC: " << nodo->elemento->getRuc();
-        }
-
-        cout << " | ID Reserva: " << nodo->elemento->getIdReserva()
-            << " | Tipo: " << (nodo->elemento->getTipoPagador() == persona ? "Persona" : "Organización") << "\n";
+        cout << "\t" << nodo->elemento->getIdReserva() << "\t|  "
+            << tipoComprobante << "    \t| "
+            << nodo->elemento->getNombre() << " \t| "
+            << apellido << "\t| "
+            << identificador << "\t | S/. "
+            << fixed << setprecision(2) << nodo->elemento->getTotalPagado() << "\n";
 
         _inOrden(nodo->der);
     }
@@ -121,22 +124,18 @@ private:
     void _inOrdenFiltrado(NodoAVL* nodo, TipoPagador tipoFiltro) {
         if (nodo == nullptr) return;
         _inOrdenFiltrado(nodo->izq, tipoFiltro);
-
         if (nodo->elemento->getTipoPagador() == tipoFiltro) {
-            cout << "\t\t\tTotal Pagado: S/. " << nodo->elemento->getTotalPagado()
-                << " | Nombre: " << nodo->elemento->getNombre();
+            string tipoComprobante = (nodo->elemento->getTipoPagador() == persona) ? "Boleta" : "Factura";
+            string apellido = (nodo->elemento->getTipoPagador() == persona) ? nodo->elemento->getApellido() : "--";
+            string identificador = (nodo->elemento->getTipoPagador() == persona) ? nodo->elemento->getDni() : nodo->elemento->getRuc();
 
-            if (nodo->elemento->getTipoPagador() == persona) {
-                cout << " " << nodo->elemento->getApellido()
-                    << " | DNI: " << nodo->elemento->getDni();
-            }
-            else {
-                cout << " | RUC: " << nodo->elemento->getRuc();
-            }
-
-            cout << " | ID Reserva: " << nodo->elemento->getIdReserva() << "\n";
+            cout << "\t" << nodo->elemento->getIdReserva() << "\t|  "
+                << tipoComprobante << "    \t| "
+                << nodo->elemento->getNombre() << " \t| "
+                << apellido << "\t| "
+                << identificador << "\t | S/. "
+                << fixed << setprecision(2) << nodo->elemento->getTotalPagado() << "\n";
         }
-
         _inOrdenFiltrado(nodo->der, tipoFiltro);
     }
 
@@ -149,34 +148,6 @@ private:
         }
     }
 
-    void _guardarEnArchivo(NodoAVL* nodo, ofstream& archivo) {
-        if (nodo) {
-            _guardarEnArchivo(nodo->izq, archivo);
-            if (nodo->elemento->getTipoPagador() == persona) {
-                archivo << "ID Reserva: " << nodo->elemento->getIdReserva() << "\n";
-                archivo << "Nombre del Pagador: " << nodo->elemento->getNombre() << "\n";
-                archivo << "Apellido del Pagador: " << nodo->elemento->getApellido() << "\n";
-                archivo << "DNI del Pagador: " << nodo->elemento->getDni() << "\n";
-                archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
-                    << to_string(nodo->elemento->getNumTarjeta()).substr(max(0, (int)to_string(nodo->elemento->getNumTarjeta()).length() - 4)) << "\n";
-                archivo << "Total Pagado: S/. " << nodo->elemento->getTotalPagado() << "\n";
-                archivo << "Tipo: Persona (Boleta)\n";
-                archivo << "-----------------------------------------------\n";
-            }
-            else if (nodo->elemento->getTipoPagador() == organizacion) {
-                archivo << "ID Reserva: " << nodo->elemento->getIdReserva() << "\n";
-                archivo << "Nombre de la organización: " << nodo->elemento->getNombre() << "\n";
-                archivo << "RUC: " << nodo->elemento->getRuc() << "\n";
-                archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
-                    << to_string(nodo->elemento->getNumTarjeta()).substr(max(0, (int)to_string(nodo->elemento->getNumTarjeta()).length() - 4)) << "\n";
-                archivo << "Total Pagado: S/. " << nodo->elemento->getTotalPagado() << "\n";
-                archivo << "Tipo: Organización (Factura)\n";
-                archivo << "-----------------------------------------------\n";
-            }
-            _guardarEnArchivo(nodo->der, archivo);
-        }
-    }
-
     Pagador* _buscarPorDNI(NodoAVL* nodo, const string& dni) {
         if (nodo == nullptr) {
             return nullptr;
@@ -185,7 +156,6 @@ private:
         if (nodo->elemento->getTipoPagador() == persona && nodo->elemento->getDni() == dni) {
             return nodo->elemento;
         }
-
 
         Pagador* encontradoIzq = _buscarPorDNI(nodo->izq, dni);
         if (encontradoIzq != nullptr) {
@@ -200,12 +170,10 @@ private:
             return nullptr;
         }
 
-        
         if (nodo->elemento->getTipoPagador() == organizacion && nodo->elemento->getRuc() == ruc) {
             return nodo->elemento;
         }
 
-       
         Pagador* encontradoIzq = _buscarPorRUC(nodo->izq, ruc);
         if (encontradoIzq != nullptr) {
             return encontradoIzq;
@@ -242,12 +210,83 @@ private:
 
         _obtenerPorTipo(nodo->der, resultado, tipo);
     }
+    void _leerArchivoPagadores(const string& nombreArchivo) {
+        ifstream archivo(nombreArchivo);
+        if (!archivo.is_open()) {
+            cout << "Error: No se pudo abrir el archivo " << nombreArchivo << endl;
+            return;
+        }
+
+        string linea;
+        while (getline(archivo, linea)) {
+            if (linea.find("ID Reserva:") != string::npos) {
+                int idReserva = stoi(linea.substr(linea.find(":") + 2));
+
+                string nombre, apellido = "", dni = "", ruc = "";
+                float totalPagado = 0;
+                TipoPagador tipo;
+
+                
+                getline(archivo, linea);
+                if (linea.find("Nombre del Pagador:") != string::npos) {
+                    nombre = linea.substr(linea.find(":") + 2);
+                    
+                    getline(archivo, linea);
+                    if (linea.find("Apellido del Pagador:") != string::npos)
+                        apellido = linea.substr(linea.find(":") + 2);
+
+                   
+                    getline(archivo, linea);
+                    if (linea.find("DNI del Pagador:") != string::npos)
+                        dni = linea.substr(linea.find(":") + 2);
+                }
+                else if (linea.find("Nombre de la organización:") != string::npos) {
+                    nombre = linea.substr(linea.find(":") + 2);
+                    
+                    getline(archivo, linea);
+                    if (linea.find("RUC:") != string::npos)
+                        ruc = linea.substr(linea.find(":") + 2);
+                }
+
+              
+                getline(archivo, linea);
+
+                
+                getline(archivo, linea);
+                if (linea.find("S/.") != string::npos)
+                    totalPagado = stof(linea.substr(linea.find("S/.") + 4));
+
+               
+                getline(archivo, linea);
+                if (linea.find("Persona") != string::npos) {
+                    tipo = persona;
+                    insertar(Pagador(nombre, apellido, dni, "", totalPagado, idReserva, tipo));
+                }
+                else {
+                    tipo = organizacion;
+                    insertar(Pagador(nombre, ruc, "", totalPagado, idReserva, tipo));
+                }
+
+               
+                getline(archivo, linea);
+            }
+        }
+
+        archivo.close();
+        cout << "Archivo de pagadores cargado exitosamente." << endl;
+    }
+
 
 public:
-    AVLPagadores() : raiz(nullptr) {}
 
+    AVLPagadores(const string& nombreArchivo) : raiz(nullptr) {
+        cargarDesdeArchivo(nombreArchivo);
+    }
     ~AVLPagadores() {
         _destruir(raiz);
+    }
+    void cargarDesdeArchivo(const string& nombreArchivo) {
+        _leerArchivoPagadores(nombreArchivo);
     }
 
     bool insertar(const Pagador& pagador) {
@@ -268,13 +307,11 @@ public:
             cout << "\t\t\tNo hay pagadores registrados.\n";
             return;
         }
-        cout << "\t\t\t========== PAGADORES ORDENADOS POR TOTAL PAGADO ==========\n";
+        cout << "\t========== PAGADORES ORDENADOS POR TOTAL PAGADO ==========\n";
+        cout << "\tIDRESERVA | COMPROBANTE | NOMBRE\t | APELLIDO\t | IDENTIFICADOR | MONTO PAGADO\n";
+        cout << "\t--------------------------------------------------------------------------------\n";
         inOrden();
-        cout << "\t\t\t=========================================================\n";
-    }
 
-    void mostrarPagadoresOrdenados() {
-        mostrar();
     }
 
 
@@ -284,11 +321,26 @@ public:
             return;
         }
 
+
         string tipoStr = (tipo == persona) ? "PERSONAS (BOLETAS)" : "ORGANIZACIONES (FACTURAS)";
-        cout << "\t\t\t========== " << tipoStr << " ==========\n";
+        cout << "\t========== " << tipoStr << " ==========\n";
+        cout << "\tIDRESERVA | COMPROBANTE | NOMBRE\t | APELLIDO\t | IDENTIFICADOR | MONTO PAGADO\n";
+        cout << "\t--------------------------------------------------------------------------------\n";
+
         _inOrdenFiltrado(raiz, tipo);
-        cout << "\t\t\t" << string(tipoStr.length() + 20, '=') << "\n";
+
     }
+    Pagador* buscar(const string& criterio, int tipoBusqueda = 1) {
+        switch (tipoBusqueda) {
+        case 1: return _buscarPorDNI(raiz, criterio);
+        case 2: return _buscarPorCodigoReserva(raiz, criterio);
+        case 3: return _buscarPorRUC(raiz, criterio);
+        default:
+            cout << "\t\t\tTipo de búsqueda no válido.\n";
+            return nullptr;
+        }
+    }
+
 
     int altura() {
         return raiz ? raiz->altura : 0;
@@ -305,34 +357,4 @@ public:
     Pagador* buscarPorCodigoReserva(const string& codigoReserva) {
         return _buscarPorCodigoReserva(raiz, codigoReserva);
     }
-
-    Pagador* buscar(const string& criterio, int tipoBusqueda = 1) {
-        switch (tipoBusqueda) {
-        case 1:
-            return buscarPorDNI(criterio);
-        case 2:
-            return buscarPorCodigoReserva(criterio);
-        case 3:
-            return buscarPorRUC(criterio);
-        default:
-            cout << "\t\t\tTipo de búsqueda no válido.\n";
-            cout << "\t\t\t1: DNI, 2: Código Reserva, 3: RUC\n";
-            return nullptr;
-        }
-    }
-
-    void guardarPagadores() {
-        ofstream archivo("Archivos//pagantes.txt", ios::app);
-        if (!archivo) {
-            cout << "Error al abrir archivo de pagantes." << endl;
-            return;
-        }
-
-        archivo << "========== REGISTRO DE PAGADORES ==========\n";
-        _guardarEnArchivo(raiz, archivo);
-        archivo << "==========================================\n\n";
-        archivo.close();
-    }
-
-
 };
