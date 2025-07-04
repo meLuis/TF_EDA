@@ -338,9 +338,9 @@ public:
                 string criterio;
                 cout << "\t\t\tBuscar por:\n";
                 cout << "\t\t\t1. DNI\n";
-                cout << "\t\t\t2. Código de reserva\n";
+                cout << "\t\t\t2. Codigo de reserva\n";
                 cout << "\t\t\t3. RUC\n";
-                cout << "\t\t\tSeleccione tipo de búsqueda: ";
+                cout << "\t\t\tSeleccione tipo de busqueda: ";
                 cin >> tipo;
                 cin.ignore();
                 cout << "\t\t\tIngrese valor: ";
@@ -377,6 +377,13 @@ public:
         } while (opcion != 0);
     }
     void menuAdministrador(Usuario* user) {
+        Administrador* admin = dynamic_cast<Administrador*>(user);
+        if (!admin) {
+            cout << "\t\t\tError: El usuario no es un administrador." << endl;
+            system("pause>0");
+            return;
+        }
+
         int opcion;
         do {
             system("cls");
@@ -386,11 +393,15 @@ public:
             cout << "\t\t\t------------ MENU ADMINISTRADOR ------------" << endl;
             cout << "  " << endl;
             cout << "\t\t\t            [1] Buscar reserva               " << endl;
-            cout << "\t\t\t            [2] Consultar pagadores" << endl;
-            cout << "\t\t\t            [3] Salir                        " << endl;
+            cout << "\t\t\t            [2] Gestionar vuelos             " << endl;
+            cout << "\t\t\t            [3] Gestionar promociones        " << endl;
+            cout << "\t\t\t            [4] Generar reportes             " << endl;
+            cout << "\t\t\t            [5] Busqueda avanzada de vuelos  " << endl;
+            cout << "\t\t\t            [6] Consultar pagadores          " << endl;
+            cout << "\t\t\t            [7] Salir                        " << endl;
             cout << "\t\t\t " << endl;
             cout << "\t\t\t-------------------------------------------" << endl;
-            cout << "\t\t\t           Seleccione una opción: ";
+            cout << "\t\t\t           Seleccione una opcion: ";
 
             string input;
             getline(cin, input);
@@ -406,16 +417,152 @@ public:
                 buscarReservaPorID();
                 system("pause>0");
                 break;
-            case 2:
+            case 2: {
+                // Submenú de gestión de vuelos
+                int subopcion;
+                do {
+                    system("cls");
+                    cout << "\n\t\t\t=== GESTION DE VUELOS ===\n";
+                    cout << "\t\t\t1. Buscar vuelo por ID\n";
+                    cout << "\t\t\t2. Modificar precio de vuelo\n";
+                    cout << "\t\t\t3. Buscar vuelos por hora de salida\n";
+                    cout << "\t\t\t4. Buscar vuelos por duracion maxima\n";
+                    cout << "\t\t\t5. Buscar vuelos entre paises\n";
+                    cout << "\t\t\t0. Volver al menu principal\n";
+                    cout << "\t\t\tSeleccione una opcion: ";
+                    cin >> subopcion;
+                    cin.ignore(); // Limpiar el buffer después de leer un número
+                    
+                    switch (subopcion) {
+                    case 1:
+                        admin->buscarVuelo();
+                        system("pause>0");
+                        break;
+                    case 2:
+                        admin->modificarPrecioVuelo();
+                        system("pause>0");
+                        break;
+                    case 3: {
+                        // Buscar vuelos por hora de salida
+                        string hora;
+                        cout << "\t\t\tIngrese hora de salida (formato HH:MM): ";
+                        getline(cin, hora);
+                        
+                        auto vuelos = admin->buscarVuelosPorHora(hora);
+                        
+                        cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con salida a las " << hora << ":\n\n";
+                        for (const auto& vuelo : vuelos) {
+                            vuelo.mostrar();
+                            cout << "\n";
+                        }
+                        system("pause>0");
+                        break;
+                    }
+                    case 4: {
+                        // Buscar vuelos por duración máxima
+                        int minutos;
+                        cout << "\t\t\tIngrese duracion maxima en minutos: ";
+                        cin >> minutos;
+                        cin.ignore();
+                        
+                        auto vuelos = admin->buscarVuelosPorDuracion(minutos);
+                        
+                        cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con duracion menor a " 
+                             << minutos << " minutos:\n\n";
+                        for (const auto& vuelo : vuelos) {
+                            vuelo.mostrar();
+                            cout << "\n";
+                        }
+                        system("pause>0");
+                        break;
+                    }
+                    case 5: {
+                        // Buscar vuelos entre países
+                        string pais;
+                        cout << "\t\t\tIngrese pais de origen o destino: ";
+                        getline(cin, pais);
+                        
+                        auto vuelos = admin->buscarVuelosPorPais(pais);
+                        
+                        cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con origen o destino en " 
+                             << pais << ":\n\n";
+                        for (const auto& vuelo : vuelos) {
+                            vuelo.mostrar();
+                            cout << "\n";
+                        }
+                        system("pause>0");
+                        break;
+                    }
+                    case 0:
+                        break;
+                    default:
+                        cout << "\t\t\tOpción invalida.\n";
+                        system("pause>0");
+                    }
+                } while (subopcion != 0);
+                break;
+            }
+            case 3: {
+                // Submenú de gestión de promociones
+                int subopcion;
+                cout << "\n\t\t\t=== GESTIÓN DE PROMOCIONES ===\n";
+                cout << "\t\t\t1. Aplicar descuento a vuelos internacionales\n";
+                cout << "\t\t\t2. Aplicar descuento a vuelos con duración menor a 2 horas\n";
+                cout << "\t\t\t3. Aplicar descuento a vuelos a un país específico\n";
+                cout << "\t\t\tSeleccione una opción: ";
+                cin >> subopcion;
+                cin.ignore();
+                
+                float porcentaje;
+                cout << "\t\t\tIngrese porcentaje de descuento (1-50): ";
+                cin >> porcentaje;
+                cin.ignore(); // Limpiar buffer después de leer número
+                
+                int vuelosAfectados = 0;
+                
+                switch(subopcion) {
+                    case 1:
+                        vuelosAfectados = admin->aplicarDescuentoInternacionales(porcentaje);
+                        break;
+                    case 2:
+                        vuelosAfectados = admin->aplicarDescuentoCortos(porcentaje);
+                        break;
+                    case 3: {
+                        string pais;
+                        cout << "\t\t\tIngrese país: ";
+                        getline(cin, pais);
+                        vuelosAfectados = admin->aplicarDescuentoPorPais(pais, porcentaje);
+                        break;
+                    }
+                    default:
+                        cout << "\t\t\tOpción invalida.\n";
+                }
+                
+                if (subopcion >= 1 && subopcion <= 3) {
+                    cout << "\t\t\tSe aplico descuento del " << porcentaje << "% a " 
+                         << vuelosAfectados << " vuelos." << endl;
+                }
+                system("pause>0");
+                break;
+            }
+            case 4:
+                admin->generarReportes();
+                system("pause>0");
+                break;
+            case 5:
+                admin->busquedaAvanzada();
+                system("pause>0");
+                break;
+            case 6:
                 menuConsultasPagadores();
                 break;
-            case 3:
+            case 7:
                 break;
             default:
                 cout << "\t\t\tOpcion invalida." << endl;
                 system("pause>0");
             }
-        } while (opcion != 2);
+        } while (opcion != 7);
     }
 
 

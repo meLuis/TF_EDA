@@ -143,4 +143,10 @@ public:
         
         return ss.str();
     }
+	// Método para establecer un nuevo precio
+    void setPrecio(float nuevoPrecio) {
+        if (nuevoPrecio >= 0) {
+            this->precio = nuevoPrecio;
+        }
+    }
 };
