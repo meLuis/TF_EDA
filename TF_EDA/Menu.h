@@ -11,6 +11,7 @@
 #include "ABBReserva.h"/*
 #include "ColaPagos.h"*/
 #include "ColaPagos1.h"
+#include "GrafoVuelos.h"
 using namespace std;
 
 class Menu
@@ -27,6 +28,7 @@ private:
     string archivoPasajeros = "Archivos//pasajeros.txt";
     MapaRutas vuelos;
     GestorVuelos gestorVuelos;
+    GrafoVuelos* grafoVuelos;
     int diaActual, mesActual, anioActual;
 
     void obtenerFechaActual() {
@@ -41,9 +43,12 @@ private:
 public:
     Menu() {
         obtenerFechaActual();
+        grafoVuelos = new GrafoVuelos(&vuelos);
     }
 
-    ~Menu() {}
+    ~Menu() {
+        if (grafoVuelos) delete grafoVuelos;
+    }
     void guardarUsuarioArchivo(Usuario& user) {
         ofstream archivo("Archivos//usuarios.txt", ios::app);
         if (!archivo) {
@@ -398,7 +403,8 @@ public:
             cout << "\t\t\t            [4] Generar reportes             " << endl;
             cout << "\t\t\t            [5] Busqueda avanzada de vuelos  " << endl;
             cout << "\t\t\t            [6] Consultar pagadores          " << endl;
-            cout << "\t\t\t            [7] Salir                        " << endl;
+            cout << "\t\t\t            [7] Análisis de grafos de vuelos " << endl;
+            cout << "\t\t\t            [8] Salir                        " << endl;
             cout << "\t\t\t " << endl;
             cout << "\t\t\t-------------------------------------------" << endl;
             cout << "\t\t\t           Seleccione una opcion: ";
@@ -556,13 +562,67 @@ public:
             case 6:
                 menuConsultasPagadores();
                 break;
-            case 7:
+            case 7: {
+                system("cls");
+                cout << "\n\t\t\t=== ANÁLISIS DE GRAFOS DE VUELOS ===\n";
+                cout << "\t\t\t1. Visualizar grafo de conexiones\n";
+                cout << "\t\t\t2. Simular búsqueda de ruta optima\n";
+                cout << "\t\t\t3. Analizar centralidad de aeropuertos\n";
+                cout << "\t\t\t4. Simular interrupción de rutas\n";
+                cout << "\t\t\t5. Analizar eficiencia de la red\n";
+                cout << "\t\t\t6. Sugerir nuevas rutas\n";
+                cout << "\t\t\t0. Volver al menu principal\n";
+                cout << "\t\t\tSeleccione una opción: ";
+                
+                int subopcion;
+                cin >> subopcion;
+                cin.ignore();
+                
+                switch(subopcion) {
+                    case 1:
+                        grafoVuelos->visualizarGrafo();
+                        break;
+                    case 2: {
+                        string origen, destino;
+                        cout << "\t\t\tIngrese codigo de ciudad origen (3 letras): ";
+                        getline(cin, origen);
+                        cout << "\t\t\tIngrese codigo de ciudad destino (3 letras): ";
+                        getline(cin, destino);
+                        
+                        // Convertir a mayúsculas
+                        transform(origen.begin(), origen.end(), origen.begin(), ::toupper);
+                        transform(destino.begin(), destino.end(), destino.begin(), ::toupper);
+                        
+                        grafoVuelos->simularDijkstra(origen, destino);
+                        break;
+                    }
+                    case 3:
+                        grafoVuelos->analizarCentralidad();
+                        break;
+                    case 4:
+                        grafoVuelos->simularInterrupcion();
+                        break;
+                    case 5:
+                        grafoVuelos->analizarEficienciaRed();
+                        break;
+                    case 6:
+                        grafoVuelos->sugerirNuevasRutas();
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        cout << "\t\t\tOpcion invalida.\n";
+                }
+                system("pause>0");
+                break;
+            }
+            case 8:
                 break;
             default:
                 cout << "\t\t\tOpcion invalida." << endl;
                 system("pause>0");
             }
-        } while (opcion != 7);
+        } while (opcion != 8);
     }
 
 
@@ -745,8 +805,8 @@ public:
         cout << "\n\t\t\t==================== OPCIONES DE ORDENAMIENTO ====================" << endl;
         cout << "\t\t\t[1] Ordenar por precio (ascendente)" << endl;
         cout << "\t\t\t[2] Ordenar por precio (descendente)" << endl;
-        cout << "\t\t\t[3] Ordenar por duración (ascendente)" << endl;
-        cout << "\t\t\t[4] Ordenar por duración (descendente)" << endl;
+        cout << "\t\t\t[3] Ordenar por duracion (ascendente)" << endl;
+        cout << "\t\t\t[4] Ordenar por duracion (descendente)" << endl;
         cout << "\t\t\t[5] No ordenar (mostrar como están)" << endl;
         cout << "\t\t\t===================================================================" << endl;
         cout << "\t\t\tSelecciona una opción de ordenamiento: ";
@@ -785,7 +845,7 @@ public:
                 return a.getDuracionEnMinutos() > b.getDuracionEnMinutos();
                 });
             system("cls");
-            cout << "\t\t\t Vuelos ordenados por duración (mayor a menor)" << endl;
+            cout << "\t\t\t Vuelos ordenados por duracion (mayor a menor)" << endl;
             break;
 
         case 5:
@@ -794,7 +854,7 @@ public:
             break;
 
         default:
-            cout << "\t\t\t Opción no válida. Mostrando vuelos sin ordenar." << endl;
+            cout << "\t\t\t Opción no valida. Mostrando vuelos sin ordenar." << endl;
             break;
         }
 
@@ -871,13 +931,13 @@ public:
         cout << "\t\t\t--------------------------------- PROMOCIONES -----------------------------------" << endl;
 
 
-        cout << "\t\t\tTiene un código de descuento (si/no): ";
+        cout << "\t\t\tTiene un codigo de descuento (si/no): ";
         string respuesta;
         cin.ignore();
         getline(cin, respuesta);
 
         if (respuesta == "si") {
-            cout << "\t\t\tIngrese su código de descuento: ";
+            cout << "\t\t\tIngrese su codigo de descuento: ";
             string codigoDescuento;
             getline(cin, codigoDescuento);
 

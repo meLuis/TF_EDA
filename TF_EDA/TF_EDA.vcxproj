@@ -135,6 +135,7 @@
     <ClInclude Include="GestorPasajero.h" />
     <ClInclude Include="GestorAsientos.h" />
     <ClInclude Include="GestorVuelos.h" />
+    <ClInclude Include="GrafoVuelos.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="ListaReservas.h" />
     <ClInclude Include="MapaRutas.h" />
@@ -144,7 +145,6 @@
     <ClInclude Include="Pago1.h" />
     <ClInclude Include="Pasajero.h" />
     <ClInclude Include="Reserva.h" />
-    <ClInclude Include="Ruta.h" />
     <ClInclude Include="Usuario.h" />
     <ClInclude Include="Vuelo.h" />
     <ClInclude Include="VuelosHashTable.h" />
