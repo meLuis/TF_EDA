@@ -1,4 +1,4 @@
-#ifndef __NODO_H__
+﻿#ifndef __NODO_H__
 #define __NODO_H__
 
 template<class T>

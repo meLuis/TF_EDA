@@ -1,7 +1,4 @@
-#pragma once
-#include <iostream>
-#include <fstream>
-#include <vector>
+﻿#pragma once
 #include "Vuelo.h"
 #include "Reserva.h"
 #include "GestorPasajero.h"
@@ -28,7 +25,8 @@ public:
         const Vuelo& vuelo, const Pagador& pagador, float total, float precioSinDescuento, float montoDescuento, string codigoDescuento,
         int idReserva, const string& tipo = "Boleta")
         : pasajeros(pasajeros), reserva(reserva), vueloSeleccionado(vuelo),
-        pagador(pagador), total(total), precioSinDescuento(precioSinDescuento), montoDescuento(montoDescuento), codigoDescuento(codigoDescuento), idReserva(idReserva), tipoComprobante(tipo) {}
+        pagador(pagador), total(total), precioSinDescuento(precioSinDescuento), montoDescuento(montoDescuento), codigoDescuento(codigoDescuento), idReserva(idReserva), tipoComprobante(tipo) {
+    }
 
     // Getters
     float getTotal() const { return total; }

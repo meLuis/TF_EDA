@@ -1,18 +1,12 @@
 ﻿#pragma once
-#include <iostream>
-#include <vector>
-#include <ctime>
 #include "ListaReservas.h"
 #include "Administrador.h"
-#include "GestorVuelos.h"/*
-#include "ArbolAVLPasajero.h"*/
+#include "GestorVuelos.h"
 #include "GestorPasajero.h"
 #include "Cliente.h"
-#include "ABBReserva.h"/*
-#include "ColaPagos.h"*/
-#include "ColaPagos1.h"
+#include "ABBReserva.h"
+#include "ColaPagos.h"
 #include "GrafoVuelos.h"
-using namespace std;
 
 class Menu
 {
@@ -55,7 +49,7 @@ public:
             cout << "Error al abrir el archivo." << endl;
             return;
         }
-        archivo <<endl<< user.getNombre() << "|" << user.getApellido() << "|"
+        archivo << endl << user.getNombre() << "|" << user.getApellido() << "|"
             << user.getEmail() << "|"
             << user.getContraseña() << "|"
             << user.getTipo() << endl;
@@ -257,17 +251,8 @@ public:
         archivoEscritura.close();
     }
     void buscarReservaPorID() {
-        vector<Reserva> reservas = Reserva::leerReservasDesdeArchivo(archivoReservas);
-
-        if (reservas.empty()) {
-            cout << "\t\t\tNo hay reservas registradas." << endl;
-            return;
-        }
-
         ABBReserva arbol;
-        for (const auto& r : reservas) {
-            arbol.insertar(r);
-        }
+        arbol.cargarDesdeArchivo(archivoReservas); // Cargar reservas desde el archivo
 
         int id;
         cout << "\t\t\tIngrese el ID de la reserva a buscar: ";
@@ -282,24 +267,24 @@ public:
             int opcion;
             cout << "\n\t\t\t1. Anular reserva" << endl;
             cout << "\t\t\t2. Retroceder" << endl;
-            cout << "\t\t\tSeleccione una opcion: ";
+            cout << "\t\t\tSeleccione una opción: ";
             cin >> opcion;
 
             if (opcion == 1) {
                 if (encontrada->getEstado() != "Anulada") {
                     encontrada->setEstado("Anulada");
-                    // Aquí puedes guardar los cambios si quieres reflejarlo en el archivo.
+                    arbol.guardarEnArchivo(archivoReservas); // Guardar el árbol actualizado
                     cout << "\t\t\tReserva anulada correctamente." << endl;
                 }
                 else {
-                    cout << "\t\t\tLa reserva ya esta anulada." << endl;
+                    cout << "\t\t\tLa reserva ya está anulada." << endl;
                 }
             }
             else if (opcion == 2) {
                 cout << "\t\t\tRetrocediendo..." << endl;
             }
             else {
-                cout << "\t\t\tOpción invalida." << endl;
+                cout << "\t\t\tOpción inválida." << endl;
             }
         }
         else {
@@ -308,8 +293,9 @@ public:
 
         system("pause>0");
     }
+
     void menuConsultasPagadores() {
-        AVLPagadores arbol ("Archivos//pagantes.txt");
+        AVLPagadores<Pagador> arbol("Archivos//pagantes.txt");
 
         int opcion;
         do {
@@ -321,7 +307,7 @@ public:
             cout << "\t\t\t       [1]. Mostrar todos los pagadores\n";
             cout << "\t\t\t       [2]. Mostrar solo personas (Boletas)\n";
             cout << "\t\t\t       [3]. Mostrar solo organizaciones (Facturas)\n";
-            cout << "\t\t\t       [4].Buscar pagador específico\n";
+            cout << "\t\t\t       [4]. Buscar pagador específico\n";
             cout << "\t\t\t       [0]. Volver al menú anterior\n";
             cout << "  " << endl;
             cout << "\t\t\t        Seleccione opción: ";
@@ -341,11 +327,15 @@ public:
             case 4: {
                 int tipo;
                 string criterio;
-                cout << "\t\t\tBuscar por:\n";
-                cout << "\t\t\t1. DNI\n";
-                cout << "\t\t\t2. Codigo de reserva\n";
-                cout << "\t\t\t3. RUC\n";
-                cout << "\t\t\tSeleccione tipo de busqueda: ";
+                cout << " " << endl;
+                cout << "\t\t\t    Buscar por:\n";
+                cout << " " << endl;
+                cout << "\t\t\t    [1]. DNI\n";
+                cout << "\t\t\t    [2]. Codigo de reserva\n";
+                cout << "\t\t\t    [3]. RUC\n";
+                cout << "\t\t\t    [4]. Retornar\n";
+                cout << " " << endl;
+                cout << "\t\t\t    Seleccione tipo de busqueda: ";
                 cin >> tipo;
                 cin.ignore();
                 cout << "\t\t\tIngrese valor: ";
@@ -383,11 +373,6 @@ public:
     }
     void menuAdministrador(Usuario* user) {
         Administrador* admin = dynamic_cast<Administrador*>(user);
-        if (!admin) {
-            cout << "\t\t\tError: El usuario no es un administrador." << endl;
-            system("pause>0");
-            return;
-        }
 
         int opcion;
         do {
@@ -401,13 +386,13 @@ public:
             cout << "\t\t\t            [2] Gestionar vuelos             " << endl;
             cout << "\t\t\t            [3] Gestionar promociones        " << endl;
             cout << "\t\t\t            [4] Generar reportes             " << endl;
-            cout << "\t\t\t            [5] Busqueda avanzada de vuelos  " << endl;
+            cout << "\t\t\t            [5] Búsqueda avanzada de vuelos  " << endl;
             cout << "\t\t\t            [6] Consultar pagadores          " << endl;
             cout << "\t\t\t            [7] Análisis de grafos de vuelos " << endl;
             cout << "\t\t\t            [8] Salir                        " << endl;
             cout << "\t\t\t " << endl;
             cout << "\t\t\t-------------------------------------------" << endl;
-            cout << "\t\t\t           Seleccione una opcion: ";
+            cout << "\t\t\t           Seleccione una opción: ";
 
             string input;
             getline(cin, input);
@@ -415,7 +400,7 @@ public:
                 opcion = stoi(input);
             }
             catch (...) {
-                opcion = -1; // Valor inválido
+                opcion = -1;
             }
 
             switch (opcion) {
@@ -424,21 +409,22 @@ public:
                 system("pause>0");
                 break;
             case 2: {
-                // Submenú de gestión de vuelos
                 int subopcion;
                 do {
                     system("cls");
-                    cout << "\n\t\t\t=== GESTION DE VUELOS ===\n";
-                    cout << "\t\t\t1. Buscar vuelo por ID\n";
-                    cout << "\t\t\t2. Modificar precio de vuelo\n";
-                    cout << "\t\t\t3. Buscar vuelos por hora de salida\n";
-                    cout << "\t\t\t4. Buscar vuelos por duracion maxima\n";
-                    cout << "\t\t\t5. Buscar vuelos entre paises\n";
-                    cout << "\t\t\t0. Volver al menu principal\n";
-                    cout << "\t\t\tSeleccione una opcion: ";
+                    cout << "\n\t\t\t------------ GESTION DE VUELOS ------------\n";
+                    cout << "  " << endl;
+                    cout << "\t\t\t        [1]. Buscar vuelo por ID\n";
+                    cout << "\t\t\t        [2]. Modificar precio de vuelo\n";
+                    cout << "\t\t\t        [3]. Buscar vuelos por hora de salida\n";
+                    cout << "\t\t\t        [4]. Buscar vuelos por duracion maxima\n";
+                    cout << "\t\t\t        [5]. Buscar vuelos entre paises\n";
+                    cout << "\t\t\t        [0]. Volver al menu anterior\n";
+                    cout << "  " << endl;
+                    cout << "\t\t\t           Seleccione una opcion: ";
                     cin >> subopcion;
-                    cin.ignore(); // Limpiar el buffer después de leer un número
-                    
+                    cin.ignore();
+
                     switch (subopcion) {
                     case 1:
                         admin->buscarVuelo();
@@ -449,15 +435,17 @@ public:
                         system("pause>0");
                         break;
                     case 3: {
-                        // Buscar vuelos por hora de salida
+
                         string hora;
                         cout << "\t\t\tIngrese hora de salida (formato HH:MM): ";
                         getline(cin, hora);
-                        
+
                         auto vuelos = admin->buscarVuelosPorHora(hora);
-                        
+
                         cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con salida a las " << hora << ":\n\n";
                         for (const auto& vuelo : vuelos) {
+
+                            cout << "\t\t\t";
                             vuelo.mostrar();
                             cout << "\n";
                         }
@@ -465,17 +453,18 @@ public:
                         break;
                     }
                     case 4: {
-                        // Buscar vuelos por duración máxima
+
                         int minutos;
                         cout << "\t\t\tIngrese duracion maxima en minutos: ";
                         cin >> minutos;
                         cin.ignore();
-                        
+
                         auto vuelos = admin->buscarVuelosPorDuracion(minutos);
-                        
-                        cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con duracion menor a " 
-                             << minutos << " minutos:\n\n";
+
+                        cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con duracion menor a "
+                            << minutos << " minutos:\n\n";
                         for (const auto& vuelo : vuelos) {
+                            cout << "\t\t\t";
                             vuelo.mostrar();
                             cout << "\n";
                         }
@@ -483,16 +472,17 @@ public:
                         break;
                     }
                     case 5: {
-                        // Buscar vuelos entre países
+
                         string pais;
                         cout << "\t\t\tIngrese pais de origen o destino: ";
                         getline(cin, pais);
-                        
+
                         auto vuelos = admin->buscarVuelosPorPais(pais);
-                        
-                        cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con origen o destino en " 
-                             << pais << ":\n\n";
+
+                        cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos con origen o destino en "
+                            << pais << ":\n\n";
                         for (const auto& vuelo : vuelos) {
+                            cout << "\t\t\t";
                             vuelo.mostrar();
                             cout << "\n";
                         }
@@ -509,44 +499,43 @@ public:
                 break;
             }
             case 3: {
-                // Submenú de gestión de promociones
                 int subopcion;
-                cout << "\n\t\t\t=== GESTIÓN DE PROMOCIONES ===\n";
-                cout << "\t\t\t1. Aplicar descuento a vuelos internacionales\n";
-                cout << "\t\t\t2. Aplicar descuento a vuelos con duración menor a 2 horas\n";
-                cout << "\t\t\t3. Aplicar descuento a vuelos a un país específico\n";
-                cout << "\t\t\tSeleccione una opción: ";
+                system("cls");
+                cout << "\n\t\t\t------------ GESTION DE PROMOCIONES ------------\n";
+                cout << "  " << endl;
+                cout << "\t\t\t       [1]. Aplicar descuento a vuelos internacionales\n";
+                cout << "\t\t\t       [2]. Aplicar descuento a vuelos a un país especifico\n";
+                cout << "\t\t\t       [0]. Volver al menu anterior\n";
+                cout << "  " << endl;
+                cout << "\t\t\t           Seleccione una opcion: ";
                 cin >> subopcion;
                 cin.ignore();
-                
+                if (subopcion == 0) { break; }
                 float porcentaje;
                 cout << "\t\t\tIngrese porcentaje de descuento (1-50): ";
                 cin >> porcentaje;
-                cin.ignore(); // Limpiar buffer después de leer número
-                
+                cin.ignore();
+
                 int vuelosAfectados = 0;
-                
-                switch(subopcion) {
-                    case 1:
-                        vuelosAfectados = admin->aplicarDescuentoInternacionales(porcentaje);
-                        break;
-                    case 2:
-                        vuelosAfectados = admin->aplicarDescuentoCortos(porcentaje);
-                        break;
-                    case 3: {
-                        string pais;
-                        cout << "\t\t\tIngrese país: ";
-                        getline(cin, pais);
-                        vuelosAfectados = admin->aplicarDescuentoPorPais(pais, porcentaje);
-                        break;
-                    }
-                    default:
-                        cout << "\t\t\tOpción invalida.\n";
+
+                switch (subopcion) {
+                case 1:
+                    vuelosAfectados = admin->aplicarDescuentoInternacionales(porcentaje);
+                    break;
+                case 2: {
+                    string pais;
+                    cout << "\t\t\tIngrese país: ";
+                    getline(cin, pais);
+                    vuelosAfectados = admin->aplicarDescuentoPorPais(pais, porcentaje);
+                    break;
                 }
-                
+                default:
+                    cout << "\t\t\tOpción invalida.\n";
+                }
+
                 if (subopcion >= 1 && subopcion <= 3) {
-                    cout << "\t\t\tSe aplico descuento del " << porcentaje << "% a " 
-                         << vuelosAfectados << " vuelos." << endl;
+                    cout << "\t\t\t\tSe aplico descuento del " << porcentaje << "% a "
+                        << vuelosAfectados << " vuelos." << endl;
                 }
                 system("pause>0");
                 break;
@@ -556,6 +545,8 @@ public:
                 system("pause>0");
                 break;
             case 5:
+                system("cls");
+                cout << "\t\t\t ------------BUSQUEDA AVANZADA------------\t\t\t\n";
                 admin->busquedaAvanzada();
                 system("pause>0");
                 break;
@@ -564,54 +555,32 @@ public:
                 break;
             case 7: {
                 system("cls");
-                cout << "\n\t\t\t=== ANÁLISIS DE GRAFOS DE VUELOS ===\n";
-                cout << "\t\t\t1. Visualizar grafo de conexiones\n";
-                cout << "\t\t\t2. Simular búsqueda de ruta optima\n";
-                cout << "\t\t\t3. Analizar centralidad de aeropuertos\n";
-                cout << "\t\t\t4. Simular interrupción de rutas\n";
-                cout << "\t\t\t5. Analizar eficiencia de la red\n";
-                cout << "\t\t\t6. Sugerir nuevas rutas\n";
-                cout << "\t\t\t0. Volver al menu principal\n";
-                cout << "\t\t\tSeleccione una opción: ";
-                
+                cout << "\n\t\t\t------------ ANÁLISIS DE GRAFOS DE VUELOS ------------\n";
+                cout << "  " << endl;
+                cout << "\t\t\t            [1]. Visualizar grafo de conexiones\n";
+                cout << "\t\t\t            [2]. Analizar centralidad de aeropuertos\n";
+                cout << "\t\t\t            [3]. Analizar eficiencia de la red\n";
+                cout << "\t\t\t            [0]. Volver al menu anterior\n";
+                cout << "  " << endl;
+                cout << "\t\t\t           Seleccione una opcion: ";
                 int subopcion;
                 cin >> subopcion;
                 cin.ignore();
-                
-                switch(subopcion) {
-                    case 1:
-                        grafoVuelos->visualizarGrafo();
-                        break;
-                    case 2: {
-                        string origen, destino;
-                        cout << "\t\t\tIngrese codigo de ciudad origen (3 letras): ";
-                        getline(cin, origen);
-                        cout << "\t\t\tIngrese codigo de ciudad destino (3 letras): ";
-                        getline(cin, destino);
-                        
-                        // Convertir a mayúsculas
-                        transform(origen.begin(), origen.end(), origen.begin(), ::toupper);
-                        transform(destino.begin(), destino.end(), destino.begin(), ::toupper);
-                        
-                        grafoVuelos->simularDijkstra(origen, destino);
-                        break;
-                    }
-                    case 3:
-                        grafoVuelos->analizarCentralidad();
-                        break;
-                    case 4:
-                        grafoVuelos->simularInterrupcion();
-                        break;
-                    case 5:
-                        grafoVuelos->analizarEficienciaRed();
-                        break;
-                    case 6:
-                        grafoVuelos->sugerirNuevasRutas();
-                        break;
-                    case 0:
-                        break;
-                    default:
-                        cout << "\t\t\tOpcion invalida.\n";
+
+                switch (subopcion) {
+                case 1:
+                    grafoVuelos->visualizarGrafo();
+                    break;
+                case 2:
+                    grafoVuelos->analizarCentralidad();
+                    break;
+                case 3:
+                    grafoVuelos->analizarEficienciaRed();
+                    break;
+                case 0:
+                    break;
+                default:
+                    cout << "\t\t\tOpcion invalida.\n";
                 }
                 system("pause>0");
                 break;
@@ -654,7 +623,7 @@ public:
             case 0:
                 cout << "\t\t\t------------------------- RESERVA -------------------------  " << endl;
                 if (!validarFecha(_fecha)) return;
-				this->fecha = _fecha;
+                this->fecha = _fecha;
                 origen = seleccionarOrigen();
                 if (origen == -1) return;
                 system("pause>0");
@@ -682,7 +651,7 @@ public:
 
             case 1:
                 vueloSeleccionado = seleccionarVuelo(origen, destino);
-                if (confirmarDatos("\t Los datos ingresados son correctos?")){
+                if (confirmarDatos("\t Los datos ingresados son correctos?")) {
                     cd = true;
                     system("pause>0");
                     system("cls");
@@ -737,7 +706,7 @@ public:
         }
     }
 
- 
+
     bool validarFecha(string& fecha) {
         auto validar = [this](string& fecha) {
             if (fecha.length() != 10 || fecha[2] != '/' || fecha[5] != '/') {
@@ -802,14 +771,17 @@ public:
         gestorVuelos.cargarDesdeArchivo("Archivos//vuelos.txt", claveVuelo);
 
         // Mostrar opciones de ordenamiento
-        cout << "\n\t\t\t==================== OPCIONES DE ORDENAMIENTO ====================" << endl;
-        cout << "\t\t\t[1] Ordenar por precio (ascendente)" << endl;
-        cout << "\t\t\t[2] Ordenar por precio (descendente)" << endl;
-        cout << "\t\t\t[3] Ordenar por duracion (ascendente)" << endl;
-        cout << "\t\t\t[4] Ordenar por duracion (descendente)" << endl;
-        cout << "\t\t\t[5] No ordenar (mostrar como están)" << endl;
-        cout << "\t\t\t===================================================================" << endl;
-        cout << "\t\t\tSelecciona una opción de ordenamiento: ";
+        cout << "" << endl;
+        cout << "\n\t\t\t------------------------- OPCIONES DE ORDENAMIENTO ------------------------- " << endl;
+        cout << "" << endl;
+        cout << "\t\t\t                      [1] Ordenar por precio (ascendente)" << endl;
+        cout << "\t\t\t                      [2] Ordenar por precio (descendente)" << endl;
+        cout << "\t\t\t                      [3] Ordenar por duracion (ascendente)" << endl;
+        cout << "\t\t\t                      [4] Ordenar por duracion (descendente)" << endl;
+        cout << "\t\t\t                      [5] No ordenar (mostrar como están)" << endl;
+        cout << "" << endl;
+        cout << "\t\t\t------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t                    Selecciona una opción de ordenamiento: ";
 
         int opcionOrdenamiento;
         cin >> opcionOrdenamiento;
@@ -832,7 +804,7 @@ public:
             cout << "\t\t\t Vuelos ordenados por precio (mayor a menor)" << endl;
             break;
 
-        case 3: 
+        case 3:
             gestorVuelos.bubbleSegunCriterio([](Vuelo& a, Vuelo& b) {
                 return a.getDuracionEnMinutos() < b.getDuracionEnMinutos();
                 });
@@ -840,7 +812,7 @@ public:
             cout << "\t\t\t Vuelos ordenados por duración (menor a mayor)" << endl;
             break;
 
-        case 4: 
+        case 4:
             gestorVuelos.bubbleSegunCriterio([](Vuelo& a, Vuelo& b) {
                 return a.getDuracionEnMinutos() > b.getDuracionEnMinutos();
                 });
@@ -860,7 +832,7 @@ public:
 
         gestorVuelos.imprimirVuelos();
 
-   
+
         int opcionVuelo;
         cin >> opcionVuelo;
 
@@ -908,6 +880,7 @@ public:
     }
 
     void registrarPasajeros(vector<Pasajero>& pasajeros) {
+        cout << "" << endl;
         cout << "\t\t\t----------------------------- Registro Pasajeros -------------------------------" << endl;
         for (int i = 0; i < pasajeros.size(); i++) {
             cout << "\n\t\t\tPasajero " << i + 1 << ": " << endl;
@@ -927,8 +900,10 @@ public:
         listaReservas.agregarReserva(nuevaReserva);
 
         Pago pago(precioTotal, pasajeros, nuevaReserva, vueloSeleccionado, nuevaReserva.getIdReserva());
+        cout << "" << endl;
 
         cout << "\t\t\t--------------------------------- PROMOCIONES -----------------------------------" << endl;
+        cout << "" << endl;
 
 
         cout << "\t\t\tTiene un codigo de descuento (si/no): ";
@@ -944,7 +919,9 @@ public:
             pago.aplicarDescuento(codigoDescuento);
         }
         system("cls");
+        cout << "" << endl;
         cout << "\t\t\t--------------------------------- PAGO -----------------------------------" << endl;
+        cout << "" << endl;
         pago.ingresarDatosPagador();
 
         colaPagos.enqueue(pago);
@@ -979,10 +956,11 @@ public:
         cout << " " << endl;
         cout << "\t\t\t      Seleccione una opcion: ";
     }
+
     void deseasRegistrarte() {
         system("cls");
         cout << "\t\t\t" << endl;
-        cout << "\t\t\t" << endl;   
+        cout << "\t\t\t" << endl;
         cout << "\t\t\t" << endl;
         cout << "\t\t\t" << endl;
         cout << "\t\t\t" << endl;
@@ -998,5 +976,7 @@ public:
 
         cout << "\t\t\t    SI/NO: ";
     }
-
 };
+
+
+

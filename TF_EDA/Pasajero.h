@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include <iostream>
-#include <vector>
 #include <algorithm>
 #include <cctype>
 #include "Reserva.h"

@@ -1,11 +1,6 @@
-#pragma once
-#include <iostream>
-#include "Reserva.h"
+﻿#pragma once
 #include "Nodo.h"
-#include <fstream>
-#include <string>
-#include <vector>
-#include <set>
+#include "Reserva.h"
 
 using namespace  std;
 

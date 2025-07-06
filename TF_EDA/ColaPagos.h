@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include "Nodo.h"
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <thread>
-#include "Pago1.h"
+#include "Pago.h"
 using namespace std;
 
 template <typename T>
@@ -39,7 +39,7 @@ public:
 
     T dequeue() {
         if (esVacia()) {
-            throw runtime_error("La cola de pagos está vacía");
+            throw runtime_error("La cola de pagos estÃ¡ vacÃ­a");
         }
         T dato = inicio->dato;
         Nodo<T>* temp = inicio;
@@ -99,7 +99,7 @@ public:
     }
 
     void mostrarEstadisticasPagadores() const {
-        cout << "\n\t\t\t========== ESTADÍSTICAS DE PAGADORES ==========\n";
+        cout << "\n\t\t\t========== ESTADÃSTICAS DE PAGADORES ==========\n";
         T::mostrarPagadoresOrdenados();
     }
 };

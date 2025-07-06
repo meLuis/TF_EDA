@@ -1,6 +1,5 @@
-#pragma once
+﻿#pragma once
 #include "Pasajero.h"
-#include <fstream>
 
 class GestorPasajero {
 private:

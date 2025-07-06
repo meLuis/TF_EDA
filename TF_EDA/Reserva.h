@@ -1,7 +1,4 @@
-#pragma once
-#include <iostream>
-#include <fstream>
-#include <sstream>
+﻿#pragma once
 #include "MapaRutas.h"
 
 using namespace std;

@@ -17,9 +17,9 @@ private:
         Node(const K& k, const V& v) : key(k), value(v) {}
     };
 
-    std::vector<std::list<Node>> buckets;
+    vector<list<Node>> buckets;
     size_t count;
-    std::function<size_t(const K&)> hashFunc;
+    function<size_t(const K&)> hashFunc;
     float maxLoadFactor;
 
     size_t getBucketIndex(const K& key) const {
@@ -28,7 +28,7 @@ private:
 
     void rehash() {
         size_t newSize = buckets.size() * 2;
-        std::vector<std::list<Node>> newBuckets(newSize);
+        vector<list<Node>> newBuckets(newSize);
 
         for (const auto& bucket : buckets) {
             for (const auto& node : bucket) {
@@ -37,14 +37,14 @@ private:
             }
         }
 
-        buckets = std::move(newBuckets);
+        buckets = move(newBuckets);
     }
 
 public:
     HashTable(
         size_t initialSize = 100,
-        std::function<size_t(const K&)> hasher = [](const K& key) {
-            return std::hash<K>{}(key);
+        function<size_t(const K&)> hasher = [](const K& key) {
+            return hash<K>{}(key);
         },
         float loadFactor = 0.75f
     ) : buckets(initialSize), count(0), hashFunc(hasher), maxLoadFactor(loadFactor) {
@@ -112,8 +112,8 @@ public:
         return find(key) != nullptr;
     }
 
-    std::vector<K> keys() const {
-        std::vector<K> result;
+    vector<K> keys() const {
+        vector<K> result;
         result.reserve(count);
 
         for (const auto& bucket : buckets) {
@@ -125,8 +125,8 @@ public:
         return result;
     }
 
-    std::vector<V> values() const {
-        std::vector<V> result;
+    vector<V> values() const {
+        vector<V> result;
         result.reserve(count);
 
         for (const auto& bucket : buckets) {
@@ -138,7 +138,7 @@ public:
         return result;
     }
 
-    void forEach(std::function<void(V&)> func) {
+    void forEach(function<void(V&)> func) {
         for (auto& bucket : buckets) {
             for (auto& node : bucket) {
                 func(node.value);
@@ -146,8 +146,8 @@ public:
         }
     }
 
-    std::vector<V> filter(std::function<bool(const V&)> predicate) const {
-        std::vector<V> result;
+    vector<V> filter(function<bool(const V&)> predicate) const {
+        vector<V> result;
 
         for (const auto& bucket : buckets) {
             for (const auto& node : bucket) {
@@ -195,24 +195,7 @@ public:
     }
 
     void imprimirEstadisticas() const {
-        std::cout << "Estadísticas de la Tabla Hash:" << std::endl;
-        std::cout << "- Elementos: " << count << std::endl;
-        std::cout << "- Buckets: " << buckets.size() << std::endl;
-        std::cout << "- Factor de carga: " << loadFactor() << std::endl;
-
-        size_t bucketsVacios = 0;
-        size_t tamanioBucketMaximo = 0;
-        for (const auto& bucket : buckets) {
-            if (bucket.empty()) {
-                bucketsVacios++;
-            }
-            else {
-                tamanioBucketMaximo = std::max(tamanioBucketMaximo, bucket.size());
-            }
-        }
-
-        std::cout << "- Buckets vacíos: " << bucketsVacios << " ("
-            << (static_cast<float>(bucketsVacios) / buckets.size() * 100) << "%)" << std::endl;
-        std::cout << "- Tamaño máximo de bucket: " << tamanioBucketMaximo << std::endl;
+        cout << "Estadísticas de la Tabla Hash:" << endl;
+        cout << "- Elementos: " << count << endl;
     }
 };

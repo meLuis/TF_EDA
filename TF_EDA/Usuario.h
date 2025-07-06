@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,17 +12,17 @@ protected:
 	string nombre;
 	string apellido;
 	string eMail;
-	string contraseña;
+	string contraseÃ±a;
 public:
 	Usuario() {}
-	Usuario(string nom, string a, string e, string c) : nombre(nom), apellido(a), eMail(e), contraseña(c) {}
+	Usuario(string nom, string a, string e, string c) : nombre(nom), apellido(a), eMail(e), contraseÃ±a(c) {}
 
 	~Usuario() {}
 
 	string getEmail() { return eMail; }
 	string getNombre() { return nombre; }
 	string getApellido() { return apellido; }
-	string getContraseña() { return contraseña; }
+	string getContraseÃ±a() { return contraseÃ±a; }
 
 	virtual string getTipo() { return "sin definir"; };
 	virtual void mostrarBienvenida() {

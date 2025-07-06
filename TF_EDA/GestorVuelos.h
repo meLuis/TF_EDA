@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include "Vuelo.h"
-#include <fstream>
 #include <functional>
-#include <sstream>
 #include "GestorAsientos.h"
 
 class GestorVuelos {

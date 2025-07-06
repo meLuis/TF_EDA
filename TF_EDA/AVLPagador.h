@@ -1,31 +1,31 @@
-#include "Pagador.h"
-#include <iostream>
+Ôªø#include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <vector>
 #include <iomanip>
 using namespace std;
 
+template <typename T>
 struct NodoAVL {
-    Pagador* elemento;
+    T* elemento;
     NodoAVL* izq;
     NodoAVL* der;
     int altura;
 
-    NodoAVL(Pagador* pag) : elemento(pag), izq(nullptr), der(nullptr), altura(1) {}
+    NodoAVL(T* elem) : elemento(elem), izq(nullptr), der(nullptr), altura(1) {}
 };
 
+template <typename T>
 class AVLPagadores {
 private:
-    NodoAVL* raiz;
+    NodoAVL<T>* raiz;
 
-    // MÈtodos privados
-    int _altura(NodoAVL* nodo) {
+    int _altura(NodoAVL<T>* nodo) {
         return nodo ? nodo->altura : 0;
     }
 
-    void _rotarDerecha(NodoAVL*& nodo) {
-        NodoAVL* p = nodo->izq;
+    void _rotarDerecha(NodoAVL<T>*& nodo) {
+        NodoAVL<T>* p = nodo->izq;
         nodo->izq = p->der;
         p->der = nodo;
         nodo->altura = 1 + max(_altura(nodo->izq), _altura(nodo->der));
@@ -33,8 +33,8 @@ private:
         nodo = p;
     }
 
-    void _rotarIzquierda(NodoAVL*& nodo) {
-        NodoAVL* p = nodo->der;
+    void _rotarIzquierda(NodoAVL<T>*& nodo) {
+        NodoAVL<T>* p = nodo->der;
         nodo->der = p->izq;
         p->izq = nodo;
         nodo->altura = 1 + max(_altura(nodo->izq), _altura(nodo->der));
@@ -42,7 +42,7 @@ private:
         nodo = p;
     }
 
-    void _balanceo(NodoAVL*& nodo) {
+    void _balanceo(NodoAVL<T>*& nodo) {
         int fb = _altura(nodo->der) - _altura(nodo->izq);
 
         if (fb > 1) {
@@ -60,13 +60,13 @@ private:
         nodo->altura = 1 + max(_altura(nodo->izq), _altura(nodo->der));
     }
 
-    string _obtenerIdentificador(const Pagador* pagador) {
+    string _obtenerIdentificador(const T* pagador) {
         return (pagador->getTipoPagador() == persona) ? pagador->getDni() : pagador->getRuc();
     }
 
-    bool _insertar(NodoAVL*& nodo, Pagador* pagador) {
+    bool _insertar(NodoAVL<T>*& nodo, T* pagador) {
         if (nodo == nullptr) {
-            nodo = new NodoAVL(pagador);
+            nodo = new NodoAVL<T>(pagador);
             return true;
         }
         else if (pagador->getTotalPagado() < nodo->elemento->getTotalPagado()) {
@@ -80,7 +80,6 @@ private:
             return resultado;
         }
         else {
-
             string idPagador = _obtenerIdentificador(pagador);
             string idNodo = _obtenerIdentificador(nodo->elemento);
 
@@ -95,7 +94,6 @@ private:
                 return resultado;
             }
             else {
-
                 bool resultado = _insertar(nodo->izq, pagador);
                 if (resultado) _balanceo(nodo);
                 return resultado;
@@ -103,7 +101,7 @@ private:
         }
     }
 
-    void _inOrden(NodoAVL* nodo) {
+    void _inOrden(NodoAVL<T>* nodo) {
         if (nodo == nullptr) return;
         _inOrden(nodo->izq);
 
@@ -121,7 +119,7 @@ private:
         _inOrden(nodo->der);
     }
 
-    void _inOrdenFiltrado(NodoAVL* nodo, TipoPagador tipoFiltro) {
+    void _inOrdenFiltrado(NodoAVL<T>* nodo, TipoPagador tipoFiltro) {
         if (nodo == nullptr) return;
         _inOrdenFiltrado(nodo->izq, tipoFiltro);
         if (nodo->elemento->getTipoPagador() == tipoFiltro) {
@@ -139,7 +137,7 @@ private:
         _inOrdenFiltrado(nodo->der, tipoFiltro);
     }
 
-    void _destruir(NodoAVL* nodo) {
+    void _destruir(NodoAVL<T>* nodo) {
         if (nodo) {
             _destruir(nodo->izq);
             _destruir(nodo->der);
@@ -148,7 +146,7 @@ private:
         }
     }
 
-    Pagador* _buscarPorDNI(NodoAVL* nodo, const string& dni) {
+    T* _buscarPorDNI(NodoAVL<T>* nodo, const string& dni) {
         if (nodo == nullptr) {
             return nullptr;
         }
@@ -157,7 +155,7 @@ private:
             return nodo->elemento;
         }
 
-        Pagador* encontradoIzq = _buscarPorDNI(nodo->izq, dni);
+        T* encontradoIzq = _buscarPorDNI(nodo->izq, dni);
         if (encontradoIzq != nullptr) {
             return encontradoIzq;
         }
@@ -165,7 +163,7 @@ private:
         return _buscarPorDNI(nodo->der, dni);
     }
 
-    Pagador* _buscarPorRUC(NodoAVL* nodo, const string& ruc) {
+    T* _buscarPorRUC(NodoAVL<T>* nodo, const string& ruc) {
         if (nodo == nullptr) {
             return nullptr;
         }
@@ -174,7 +172,7 @@ private:
             return nodo->elemento;
         }
 
-        Pagador* encontradoIzq = _buscarPorRUC(nodo->izq, ruc);
+        T* encontradoIzq = _buscarPorRUC(nodo->izq, ruc);
         if (encontradoIzq != nullptr) {
             return encontradoIzq;
         }
@@ -182,7 +180,7 @@ private:
         return _buscarPorRUC(nodo->der, ruc);
     }
 
-    Pagador* _buscarPorCodigoReserva(NodoAVL* nodo, const string& codigoReserva) {
+    T* _buscarPorCodigoReserva(NodoAVL<T>* nodo, const string& codigoReserva) {
         if (nodo == nullptr) {
             return nullptr;
         }
@@ -191,7 +189,7 @@ private:
             return nodo->elemento;
         }
 
-        Pagador* encontradoIzq = _buscarPorCodigoReserva(nodo->izq, codigoReserva);
+        T* encontradoIzq = _buscarPorCodigoReserva(nodo->izq, codigoReserva);
         if (encontradoIzq != nullptr) {
             return encontradoIzq;
         }
@@ -199,7 +197,7 @@ private:
         return _buscarPorCodigoReserva(nodo->der, codigoReserva);
     }
 
-    void _obtenerPorTipo(NodoAVL* nodo, vector<Pagador*>& resultado, TipoPagador tipo) {
+    void _obtenerPorTipo(NodoAVL<T>* nodo, vector<T*>& resultado, TipoPagador tipo) {
         if (nodo == nullptr) return;
 
         _obtenerPorTipo(nodo->izq, resultado, tipo);
@@ -210,6 +208,7 @@ private:
 
         _obtenerPorTipo(nodo->der, resultado, tipo);
     }
+
     void _leerArchivoPagadores(const string& nombreArchivo) {
         ifstream archivo(nombreArchivo);
         if (!archivo.is_open()) {
@@ -221,53 +220,61 @@ private:
         while (getline(archivo, linea)) {
             if (linea.find("ID Reserva:") != string::npos) {
                 int idReserva = stoi(linea.substr(linea.find(":") + 2));
-
                 string nombre, apellido = "", dni = "", ruc = "";
                 float totalPagado = 0;
                 TipoPagador tipo;
 
-                
                 getline(archivo, linea);
                 if (linea.find("Nombre del Pagador:") != string::npos) {
                     nombre = linea.substr(linea.find(":") + 2);
-                    
+
                     getline(archivo, linea);
                     if (linea.find("Apellido del Pagador:") != string::npos)
                         apellido = linea.substr(linea.find(":") + 2);
 
-                   
                     getline(archivo, linea);
                     if (linea.find("DNI del Pagador:") != string::npos)
                         dni = linea.substr(linea.find(":") + 2);
                 }
-                else if (linea.find("Nombre de la organizaciÛn:") != string::npos) {
+                else if (linea.find("Nombre de la organizaci√≥n:") != string::npos) {
                     nombre = linea.substr(linea.find(":") + 2);
-                    
+
                     getline(archivo, linea);
                     if (linea.find("RUC:") != string::npos)
                         ruc = linea.substr(linea.find(":") + 2);
                 }
 
-              
+
                 getline(archivo, linea);
 
-                
+
                 getline(archivo, linea);
-                if (linea.find("S/.") != string::npos)
+                if (linea.find("Total Pagado: S/.") != string::npos)
                     totalPagado = stof(linea.substr(linea.find("S/.") + 4));
 
-               
+
                 getline(archivo, linea);
-                if (linea.find("Persona") != string::npos) {
+                if (linea.find("Tipo: Persona") != string::npos) {
                     tipo = persona;
-                    insertar(Pagador(nombre, apellido, dni, "", totalPagado, idReserva, tipo));
+                    insertar(T(nombre, apellido, dni, "", totalPagado, idReserva, tipo));
+                }
+                else if (linea.find("Tipo: Organizacion") != string::npos || linea.find("Tipo: Organizaci√≥n") != string::npos) {
+                    tipo = organizacion;
+                    insertar(T(nombre, ruc, "", totalPagado, idReserva, tipo));
                 }
                 else {
-                    tipo = organizacion;
-                    insertar(Pagador(nombre, ruc, "", totalPagado, idReserva, tipo));
+
+                    if (!dni.empty()) {
+                        tipo = persona;
+                        insertar(T(nombre, apellido, dni, "", totalPagado, idReserva, tipo));
+                    }
+                    else if (!ruc.empty()) {
+                        tipo = organizacion;
+                        insertar(T(nombre, ruc, "", totalPagado, idReserva, tipo));
+                    }
                 }
 
-               
+
                 getline(archivo, linea);
             }
         }
@@ -276,25 +283,25 @@ private:
         cout << "Archivo de pagadores cargado exitosamente." << endl;
     }
 
-
 public:
-
     AVLPagadores(const string& nombreArchivo) : raiz(nullptr) {
         cargarDesdeArchivo(nombreArchivo);
     }
+
     ~AVLPagadores() {
         _destruir(raiz);
     }
+
     void cargarDesdeArchivo(const string& nombreArchivo) {
         _leerArchivoPagadores(nombreArchivo);
     }
 
-    bool insertar(const Pagador& pagador) {
-        Pagador* nuevoPagador = new Pagador(pagador);
+    bool insertar(const T& pagador) {
+        T* nuevoPagador = new T(pagador);
         return _insertar(raiz, nuevoPagador);
     }
 
-    void agregarPagador(const Pagador& pagador) {
+    void agregarPagador(const T& pagador) {
         insertar(pagador);
     }
 
@@ -311,9 +318,7 @@ public:
         cout << "\tIDRESERVA | COMPROBANTE | NOMBRE\t | APELLIDO\t | IDENTIFICADOR | MONTO PAGADO\n";
         cout << "\t--------------------------------------------------------------------------------\n";
         inOrden();
-
     }
-
 
     void mostrarPorTipo(TipoPagador tipo) {
         if (!raiz) {
@@ -321,40 +326,38 @@ public:
             return;
         }
 
-
         string tipoStr = (tipo == persona) ? "PERSONAS (BOLETAS)" : "ORGANIZACIONES (FACTURAS)";
         cout << "\t========== " << tipoStr << " ==========\n";
         cout << "\tIDRESERVA | COMPROBANTE | NOMBRE\t | APELLIDO\t | IDENTIFICADOR | MONTO PAGADO\n";
         cout << "\t--------------------------------------------------------------------------------\n";
 
         _inOrdenFiltrado(raiz, tipo);
-
     }
-    Pagador* buscar(const string& criterio, int tipoBusqueda = 1) {
+
+    T* buscar(const string& criterio, int tipoBusqueda = 1) {
         switch (tipoBusqueda) {
         case 1: return _buscarPorDNI(raiz, criterio);
         case 2: return _buscarPorCodigoReserva(raiz, criterio);
         case 3: return _buscarPorRUC(raiz, criterio);
         default:
-            cout << "\t\t\tTipo de b˙squeda no v·lido.\n";
+            cout << "\t\t\tTipo de b√∫squeda no v√°lido.\n";
             return nullptr;
         }
     }
-
 
     int altura() {
         return raiz ? raiz->altura : 0;
     }
 
-    Pagador* buscarPorDNI(const string& dni) {
+    T* buscarPorDNI(const string& dni) {
         return _buscarPorDNI(raiz, dni);
     }
 
-    Pagador* buscarPorRUC(const string& ruc) {
+    T* buscarPorRUC(const string& ruc) {
         return _buscarPorRUC(raiz, ruc);
     }
 
-    Pagador* buscarPorCodigoReserva(const string& codigoReserva) {
+    T* buscarPorCodigoReserva(const string& codigoReserva) {
         return _buscarPorCodigoReserva(raiz, codigoReserva);
     }
 };

@@ -130,7 +130,7 @@
     <ClInclude Include="Administrador.h" />
     <ClInclude Include="AVLPagador.h" />
     <ClInclude Include="Cliente.h" />
-    <ClInclude Include="ColaPagos1.h" />
+    <ClInclude Include="ColaPagos.h" />
     <ClInclude Include="Comprobante.h" />
     <ClInclude Include="GestorPasajero.h" />
     <ClInclude Include="GestorAsientos.h" />
@@ -142,7 +142,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Nodo.h" />
     <ClInclude Include="Pagador.h" />
-    <ClInclude Include="Pago1.h" />
+    <ClInclude Include="Pago.h" />
     <ClInclude Include="Pasajero.h" />
     <ClInclude Include="Reserva.h" />
     <ClInclude Include="Usuario.h" />

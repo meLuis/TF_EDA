@@ -44,6 +44,7 @@ public:
         Vuelo* vuelo = vuelosHash.buscarVueloPorID(id);
         if (vuelo) {
             cout << "\n\t\t\tVuelo encontrado:\n";
+            cout << "\t\t\t";
             vuelo->mostrar();
         }
         else {
@@ -70,10 +71,11 @@ public:
 
     void generarReportes() {
         int opcion;
-        cout << "\n\t\t\t=== GENERACIÓN DE REPORTES ===\n";
-        cout << "\t\t\t1. Reporte por país\n";
-        cout << "\t\t\t2. Reporte por rango de precio\n";
-        cout << "\t\t\t3. Estadísticas generales\n";
+        cout << "\n\t\t\t--------- GENERACIÓN DE REPORTES ---------\n";
+        cout << "\t\t\t[1] Reporte por país\n";
+        cout << "\t\t\t[2] Reporte por rango de precio\n";
+        cout << "\t\t\t[3] Estadísticas generales\n";
+        cout << "\t\t\t[0] Regresar al menu anterior\n";
         cout << "\t\t\tSeleccione una opción: ";
         cin >> opcion;
 
@@ -86,6 +88,8 @@ public:
             break;
         case 3:
             vuelosHash.mostrarEstadisticas();
+            break;
+        case 0:
             break;
         default:
             cout << "\t\t\tOpción inválida.\n";
@@ -129,12 +133,12 @@ public:
 
         cout << "\n\t\t\tSe encontraron " << vuelos.size() << " vuelos:\n\n";
         for (const auto& vuelo : vuelos) {
+            cout << "\t\t";
             vuelo.mostrar();
             cout << "\n";
         }
     }
 
-    // Métodos para búsquedas especializadas
     std::vector<Vuelo> buscarVuelosPorHora(const std::string& hora) {
         return vuelosHash.buscarVuelosPorHora(hora);
     }
@@ -147,7 +151,6 @@ public:
         return vuelosHash.buscarVuelosPorPais(pais);
     }
 
-    // Métodos para aplicar descuentos
     int aplicarDescuentoInternacionales(float porcentaje) {
         return vuelosHash.aplicarDescuento(
             [](const Vuelo& v) { return v.getEsInternacional(); },
@@ -155,12 +158,6 @@ public:
         );
     }
 
-    int aplicarDescuentoCortos(float porcentaje) {
-        return vuelosHash.aplicarDescuento(
-            [](const Vuelo& v) { return v.getDuracionEnMinutos() < 120; },
-            porcentaje
-        );
-    }
 
     int aplicarDescuentoPorPais(const std::string& pais, float porcentaje) {
         return vuelosHash.aplicarDescuento(

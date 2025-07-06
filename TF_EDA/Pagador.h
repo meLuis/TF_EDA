@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <string>
 using namespace std;
 enum TipoPagador {
@@ -22,10 +22,12 @@ public:
     Pagador(const string& nombre, const string& apellido, const string& dni,
         string numTarjeta, float totalPagado, int idReserva, TipoPagador tipopagador)
         : nombre(nombre), apellido(apellido), dni(dni), numTarjeta(numTarjeta),
-        totalPagado(totalPagado), idReserva(idReserva), tipoPagador(tipopagador) {}
+        totalPagado(totalPagado), idReserva(idReserva), tipoPagador(tipopagador) {
+    }
 
     Pagador(const string& nombre, const string& ruc, string numTarjeta, float totalPagado, int idReserva, TipoPagador tipopagador)
-        : nombre(nombre), ruc(ruc), numTarjeta(numTarjeta), totalPagado(totalPagado), idReserva(idReserva), tipoPagador(tipopagador) {}
+        : nombre(nombre), ruc(ruc), numTarjeta(numTarjeta), totalPagado(totalPagado), idReserva(idReserva), tipoPagador(tipopagador) {
+    }
 
     string getNombre() const { return nombre; }
     string getApellido() const { return apellido; }

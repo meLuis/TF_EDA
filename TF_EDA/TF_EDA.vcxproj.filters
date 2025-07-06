@@ -71,10 +71,10 @@
     <ClInclude Include="Comprobante.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Pago1.h">
+    <ClInclude Include="Pago.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="ColaPagos1.h">
+    <ClInclude Include="ColaPagos.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="HashTable.h">

@@ -1,6 +1,5 @@
-
+ï»¿
 #pragma once
-//Esto es para usar un árbol binario para organizar en Administrador y buscar objetos de tipo Reserva.
 #include "Reserva.h"
 
 class ABBReserva {
@@ -14,6 +13,7 @@ private:
     };
 
     NodoReserva* raiz;
+    bool datosCargados = false;
 
     NodoReserva* insertar(NodoReserva* nodo, const Reserva& r) {
         if (!nodo) return new NodoReserva(r);
@@ -42,16 +42,44 @@ private:
         delete nodo;
     }
 
+    void guardarReservas(NodoReserva* nodo, ofstream& archivo) {
+        if (!nodo) return;
+        guardarReservas(nodo->izquierda, archivo);
+        nodo->reserva.guardarEnArchivo(archivo);
+        guardarReservas(nodo->derecha, archivo);
+    }
+
 public:
     ABBReserva() : raiz(nullptr) {}
     ~ABBReserva() { liberar(raiz); }
 
-    void insertar(const Reserva& r) {
-        raiz = insertar(raiz, r);
+
+    void cargarDesdeArchivo(const string& nombreArchivo) {
+        if (datosCargados) {
+            cerr << "Las reservas ya fueron cargadas desde el archivo.\n";
+            return;
+        }
+
+        vector<Reserva> reservas = Reserva::leerReservasDesdeArchivo(nombreArchivo);
+        for (const Reserva& r : reservas) {
+            raiz = insertar(raiz, r);
+        }
+
+        datosCargados = true;
     }
+
 
     Reserva* buscar(int id) {
         return buscar(raiz, id);
     }
-};
 
+    void guardarEnArchivo(const string& nombreArchivo) {
+        ofstream archivo(nombreArchivo);
+        if (!archivo.is_open()) {
+            cerr << "No se pudo abrir el archivo para guardar: " << nombreArchivo << endl;
+            return;
+        }
+        guardarReservas(raiz, archivo);
+        archivo.close();
+    }
+};

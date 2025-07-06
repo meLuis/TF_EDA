@@ -1,6 +1,4 @@
-#pragma once
-#include <iostream>
-#include <vector>
+ï»¿#pragma once
 #include <algorithm>
 #include <cctype>
 #include "Vuelo.h"
@@ -33,7 +31,8 @@ public:
         : total(total), precioSinDescuento(total), montoDescuento(0.0f),
         pasajeros(pasajeros), reserva(reserva),
         vueloSeleccionado(vueloSeleccionado), idReserva(idReserva),
-        tipoComprobante("Boleta") {}
+        tipoComprobante("Boleta") {
+    }
 
     float getTotal() const { return total; }
     int getIdReserva() const { return idReserva; }
@@ -44,7 +43,7 @@ public:
     Pagador getPagador() const { return pagador; }
 
 
-  
+
     bool aplicarDescuento(const string& codigo) {
         ifstream archivo("Archivos//promociones.txt");
         if (!archivo.is_open()) {
@@ -81,7 +80,7 @@ public:
         cout << "\t\t\tTipo de comprobante:\n";
         cout << "\t\t\t1. Boleta\n";
         cout << "\t\t\t2. Factura\n";
-        cout << "\t\t\tSeleccione opción: ";
+        cout << "\t\t\tSeleccione opciÃ³n: ";
 
 
         cin >> opcionComprobante;
@@ -95,7 +94,7 @@ public:
 
         }
         else {
-            cout << "\t\t\tOpción inválida. Seleccione 1 o 2.\n";
+            cout << "\t\t\tOpciÃ³n invÃ¡lida. Seleccione 1 o 2.\n";
         }
 
 
@@ -110,11 +109,11 @@ public:
 
 
             do {
-                cout << "\t\t\tDNI (8 dígitos): ";
+                cout << "\t\t\tDNI (8 dÃ­gitos): ";
                 cin >> dni;
 
                 if (dni.length() != 8 || !all_of(dni.begin(), dni.end(), ::isdigit)) {
-                    cout << "\t\t\tDNI inválido. Debe contener exactamente 8 dígitos numéricos.\n";
+                    cout << "\t\t\tDNI invÃ¡lido. Debe contener exactamente 8 dÃ­gitos numÃ©ricos.\n";
                 }
                 else {
                     break;
@@ -122,11 +121,11 @@ public:
             } while (true);
 
             do {
-                cout << "\t\t\tTarjeta (15-16 dígitos): ";
+                cout << "\t\t\tTarjeta (15-16 dÃ­gitos): ";
                 cin >> numTarjeta;
 
                 if (numTarjeta.length() != 15 && numTarjeta.length() != 16 || !all_of(numTarjeta.begin(), numTarjeta.end(), ::isdigit)) {
-                    cout << "\t\t\tNúmero de tarjeta inválido. Debe contener 15 o 16 dígitos.\n";
+                    cout << "\t\t\tNÃºmero de tarjeta invÃ¡lido. Debe contener 15 o 16 dÃ­gitos.\n";
                 }
                 else {
                     break;
@@ -138,15 +137,15 @@ public:
             cin.ignore();
             apellido = "";
             cout << "\n\t\t\tIngrese los datos del pagador:\n";
-            cout << "\t\t\tNombre de organización: ";
+            cout << "\t\t\tNombre de organizaciÃ³n: ";
             getline(cin, nombre);
 
             do {
-                cout << "\t\t\tRUC (11 dígitos): ";
+                cout << "\t\t\tRUC (11 dÃ­gitos): ";
                 cin >> ruc;
 
                 if (ruc.length() != 11 || !all_of(ruc.begin(), ruc.end(), ::isdigit)) {
-                    cout << "\t\t\tRUC invalido. Debe contener exactamente 11 dígitos numéricos.\n";
+                    cout << "\t\t\tRUC invalido. Debe contener exactamente 11 dÃ­gitos numÃ©ricos.\n";
                 }
                 else {
                     break;
@@ -158,7 +157,7 @@ public:
                 cin >> numTarjeta;
 
                 if (numTarjeta.length() != 15 && numTarjeta.length() != 16 || !all_of(numTarjeta.begin(), numTarjeta.end(), ::isdigit)) {
-                    cout << "\t\t\tNúmero de tarjeta inválido. Debe contener 15 o 16 dígitos.\n";
+                    cout << "\t\t\tNÃºmero de tarjeta invÃ¡lido. Debe contener 15 o 16 dÃ­gitos.\n";
                 }
                 else {
                     break;
@@ -192,7 +191,7 @@ public:
             archivo << "Nombre del Pagador: " << pagador.getNombre() << "\n";
             archivo << "Apellido del Pagador: " << pagador.getApellido() << "\n";
             archivo << "DNI del Pagador: " << pagador.getDni() << "\n";
-            archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
+            archivo << "Tarjeta (Ãºltimos 4 dÃ­gitos): **** **** **** "
                 << pagador.getNumTarjeta().substr(pagador.getNumTarjeta().length() - 4) << "\n";
             archivo << "Total Pagado: S/. " << pagador.getTotalPagado() << "\n";
             archivo << "Tipo: Persona (Boleta)\n";
@@ -200,17 +199,17 @@ public:
         }
         else if (pagador.getTipoPagador() == organizacion) {
             archivo << "ID Reserva: " << pagador.getIdReserva() << "\n";
-            archivo << "Nombre de la organización: " << pagador.getNombre() << "\n";
+            archivo << "Nombre de la organizaciÃ³n: " << pagador.getNombre() << "\n";
             archivo << "RUC: " << pagador.getRuc() << "\n";
-            archivo << "Tarjeta (últimos 4 dígitos): **** **** **** "
+            archivo << "Tarjeta (Ãºltimos 4 dÃ­gitos): **** **** **** "
                 << pagador.getNumTarjeta().substr(pagador.getNumTarjeta().length() - 4) << "\n";
             archivo << "Total Pagado: S/. " << pagador.getTotalPagado() << "\n";
-            archivo << "Tipo: Organización (Factura)\n";
+            archivo << "Tipo: OrganizaciÃ³n (Factura)\n";
             archivo << "-----------------------------------------------\n";
         }
         archivo.close();
     }
 
-    
+
 };
 

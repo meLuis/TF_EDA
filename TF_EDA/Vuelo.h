@@ -1,15 +1,11 @@
 ﻿#pragma once
-#include <iostream>
-#include <string>
 #include <iomanip>
-#include <sstream>
 #include <cmath>
 #include "MapaRutas.h"
-using namespace std;
 
 class Vuelo {
 private:
-    // Atributos según el formato del archivo
+
     string id;
     string codigoOrigen;
     string codigoDestino;
@@ -24,24 +20,24 @@ private:
     float precio;
 
 public:
-    // Constructor predeterminado
-    Vuelo() : 
+
+    Vuelo() :
         id(""), codigoOrigen(""), codigoDestino(""),
-        ciudadOrigen(""), ciudadDestino(""), 
+        ciudadOrigen(""), ciudadDestino(""),
         paisOrigen(""), paisDestino(""),
-        esInternacional(false), 
+        esInternacional(false),
         horaInicio(""), horaFin(""), duracion(""),
         precio(0.0f) {
     }
-    
-    // Constructor con todos los parámetros
-    Vuelo(const string& id, 
-          const string& codigoOrigen, const string& codigoDestino,
-          const string& ciudadOrigen, const string& ciudadDestino,
-          const string& paisOrigen, const string& paisDestino,
-          bool esInternacional,
-          const string& horaInicio, const string& horaFin, 
-          const string& duracion, float precio) :
+
+
+    Vuelo(const string& id,
+        const string& codigoOrigen, const string& codigoDestino,
+        const string& ciudadOrigen, const string& ciudadDestino,
+        const string& paisOrigen, const string& paisDestino,
+        bool esInternacional,
+        const string& horaInicio, const string& horaFin,
+        const string& duracion, float precio) :
         id(id), codigoOrigen(codigoOrigen), codigoDestino(codigoDestino),
         ciudadOrigen(ciudadOrigen), ciudadDestino(ciudadDestino),
         paisOrigen(paisOrigen), paisDestino(paisDestino),
@@ -49,8 +45,8 @@ public:
         horaInicio(horaInicio), horaFin(horaFin), duracion(duracion),
         precio(precio) {
     }
-    
-    // Getters
+
+
     string getID() const { return id; }
     string getCodigoOrigen() const { return codigoOrigen; }
     string getCodigoDestino() const { return codigoDestino; }
@@ -63,8 +59,7 @@ public:
     string getHoraFin() const { return horaFin; }
     string getDuracion() const { return duracion; }
     float getPrecio() const { return precio; }
-    
-    // Convertir duración a minutos para facilitar ordenamiento
+
     int getDuracionEnMinutos() const {
         int posH = duracion.find('h');
         int posM = duracion.find('m');
@@ -72,18 +67,17 @@ public:
         int minutos = stoi(duracion.substr(posH + 1, posM - posH - 1));
         return horas * 60 + minutos;
     }
-    
-    // Mostrar información del vuelo
+
     void mostrar() const {
         cout << horaInicio << " - " << horaFin;
         cout << " | Duracion: " << duracion;
         cout << " | Precio: $" << fixed << setprecision(2) << precio << endl;
-        
+
         cout << "\t\t\t\t" << ciudadOrigen << " (" << codigoOrigen << ") ---> "
-             << ciudadDestino << " (" << codigoDestino << ")" << endl << endl;
+            << ciudadDestino << " (" << codigoDestino << ")" << endl << endl;
     }
-    
-    // Deserializar una cadena en formato de archivo a un objeto Vuelo
+
+
     static Vuelo deserializar(const string& datos) {
         stringstream ss(datos);
         string id, codigoOrigen, codigoDestino;
@@ -91,7 +85,7 @@ public:
         string horaInicio, horaFin, duracion, esIntStr;
         float precio = 0.0f;
         bool esInternacional;
-        
+
         getline(ss, id, '|');
         getline(ss, codigoOrigen, '|');
         getline(ss, codigoDestino, '|');
@@ -103,7 +97,7 @@ public:
         getline(ss, horaInicio, '|');
         getline(ss, horaFin, '|');
         getline(ss, duracion, '|');
-        
+
         // Lectura segura del precio
         string precioStr;
         getline(ss, precioStr);
@@ -114,36 +108,37 @@ public:
                     precio = 0.0f;
                 }
             }
-        } catch (...) {
+        }
+        catch (...) {
             precio = 0.0f;
         }
-        
+
         esInternacional = (esIntStr == "1");
-        
+
         return Vuelo(id, codigoOrigen, codigoDestino, ciudadOrigen, ciudadDestino,
-                     paisOrigen, paisDestino, esInternacional, horaInicio, horaFin,
-                     duracion, precio);
+            paisOrigen, paisDestino, esInternacional, horaInicio, horaFin,
+            duracion, precio);
     }
-    
-    // Serializar el objeto Vuelo a una cadena en formato de archivo
+
+
     string serializar() const {
         stringstream ss;
         ss << id << "|"
-           << codigoOrigen << "|"
-           << codigoDestino << "|"
-           << ciudadOrigen << "|"
-           << ciudadDestino << "|"
-           << paisOrigen << "|"
-           << paisDestino << "|"
-           << (esInternacional ? "1" : "0") << "|"
-           << horaInicio << "|"
-           << horaFin << "|"
-           << duracion << "|"
-           << precio;
-        
+            << codigoOrigen << "|"
+            << codigoDestino << "|"
+            << ciudadOrigen << "|"
+            << ciudadDestino << "|"
+            << paisOrigen << "|"
+            << paisDestino << "|"
+            << (esInternacional ? "1" : "0") << "|"
+            << horaInicio << "|"
+            << horaFin << "|"
+            << duracion << "|"
+            << precio;
+
         return ss.str();
     }
-	// Método para establecer un nuevo precio
+
     void setPrecio(float nuevoPrecio) {
         if (nuevoPrecio >= 0) {
             this->precio = nuevoPrecio;
