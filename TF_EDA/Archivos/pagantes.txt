@@ -1,1 +1,9 @@
 
+ID Reserva: 7982
+Nombre del Pagador: qweqfw
+Apellido del Pagador: etr
+DNI del Pagador: 12345678
+Tarjeta (últimos 4 dígitos): **** **** **** 3456
+Total Pagado: S/. 723.457
+Tipo: Persona (Boleta)
+-----------------------------------------------

@@ -7,7 +7,7 @@
 #include "ABBReserva.h"
 #include "ColaPagos.h"
 #include "GrafoVuelos.h"
-
+#include "GestorClientes.h"
 class Menu
 {
 private:
@@ -24,7 +24,7 @@ private:
     GestorVuelos gestorVuelos;
     GrafoVuelos* grafoVuelos;
     int diaActual, mesActual, anioActual;
-
+    GestorClientes gestorClientes;
     void obtenerFechaActual() {
         time_t tiempoActual = time(nullptr);
         tm tiempoLocal;
@@ -85,8 +85,8 @@ public:
         dni = leerCampo("\t\t\tDNI: ");
         email = leerCampo("\t\t\tEmail: ");
         contraseña = leerCampo("\t\t\tContrasena: ");
-        Cliente cliente(nombre, apellido, email, contraseña);
-        guardarUsuarioArchivo(cliente);
+        Cliente nuevoCliente = gestorClientes.agregarCliente(nombre, apellido, email, contraseña);
+        cout << "Usuario registrado con éxito con ID: " << nuevoCliente.getIdOriginal() << endl;
 
     }
     Usuario* iniciarSesion() {
@@ -113,6 +113,13 @@ public:
             }
         } while (contrasenaIngresada.empty());
 
+        // Intentar encontrar un cliente
+        Cliente* cliente = gestorClientes.buscarClientePorEmail(emailIngresado);
+        if (cliente && cliente->getContraseña() == contrasenaIngresada) {
+            return new Cliente(*cliente);
+        }
+
+        // Si no es cliente, buscar si es admin (los admins siguen con el formato original)
         ifstream archivo("Archivos//usuarios.txt");
         if (!archivo) {
             cout << "No hay usuarios registrados." << endl;
@@ -120,32 +127,29 @@ public:
         }
 
         string linea;
-        while (getline(archivo, linea)) {
-            size_t pos1 = linea.find('|');
-            size_t pos2 = linea.find('|', pos1 + 1);
-            size_t pos3 = linea.find('|', pos2 + 1);
-            size_t pos4 = linea.find('|', pos3 + 1);
+        for (int i = 0; i < 3; i++) { // Solo leer las primeras 3 líneas (admins)
+            if (getline(archivo, linea)) {
+                size_t pos1 = linea.find('|');
+                size_t pos2 = linea.find('|', pos1 + 1);
+                size_t pos3 = linea.find('|', pos2 + 1);
+                size_t pos4 = linea.find('|', pos3 + 1);
 
-            if (pos1 != string::npos && pos2 != string::npos && pos3 != string::npos && pos4 != string::npos) {
-                string nombre = linea.substr(0, pos1);
-                string apellido = linea.substr(pos1 + 1, pos2 - pos1 - 1);
-                string emailArchivo = linea.substr(pos2 + 1, pos3 - pos2 - 1);
-                string contrasenaArchivo = linea.substr(pos3 + 1, pos4 - pos3 - 1);
-                string tipo = linea.substr(pos4 + 1);
+                if (pos1 != string::npos && pos2 != string::npos && pos3 != string::npos && pos4 != string::npos) {
+                    string nombre = linea.substr(0, pos1);
+                    string apellido = linea.substr(pos1 + 1, pos2 - pos1 - 1);
+                    string emailArchivo = linea.substr(pos2 + 1, pos3 - pos2 - 1);
+                    string contrasenaArchivo = linea.substr(pos3 + 1, pos4 - pos3 - 1);
+                    string tipo = linea.substr(pos4 + 1);
 
-                if (emailIngresado == emailArchivo && contrasenaIngresada == contrasenaArchivo) {
-                    if (tipo == "Cliente") {
-                        Cliente* cliente = new Cliente(nombre, apellido, emailArchivo, contrasenaArchivo);
-                        return cliente;
-                    }
-                    else if (tipo == "Administrador") {
-                        Administrador* admin = new Administrador(nombre, apellido, emailArchivo, contrasenaArchivo);
-                        return admin;
+                    if (emailIngresado == emailArchivo && contrasenaIngresada == contrasenaArchivo && tipo == "Administrador") {
+                        archivo.close();
+                        return new Administrador(nombre, apellido, emailArchivo, contrasenaArchivo);
                     }
                 }
             }
         }
 
+        archivo.close();
         cout << "Usuario no encontrado, intente nuevamente.\n";
         return nullptr;
     }

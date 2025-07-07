@@ -1,2 +1,34 @@
 
 
+			--------------------- COMPROBANTE DE PAGO ---------------------
+			Tipo: Boleta
+			ID Reserva: 7982
+				--------------------------------------------------
+			Datos del Pagador:
+			Nombre: qweqfw
+			Apellido: etr
+			DNI: 12345678
+				--------------------------------------------------
+
+			Fecha: 12/12/2025
+			Origen: Lima	 Destino: Cartagena de Indias
+			Hora Salida: 22:00	Hora llegada: 0:11
+			Detalles de Pasajeros:
+				--------------------------------------------------
+			Nombre: ewgre
+			Apellido: ewgr
+			DNI: 12345678
+			Asiento: 6A
+			Precio Ruta: S/. 397
+			Equipaje de Bodega: S/. 102.54
+			Precio Asiento: S/. 50
+			Impuesto General a la Venta (18%): S/. 98.9172
+			Cargo Administrativo: S/. 45.00
+			Cargo Tarifa unificada de uso de aeropuerto: S/.30
+			Precio Total: S/. 723.457
+				\--------------------------------------------------
+			Total a Pagar: S/. 723.457
+			Gracias por su compra!
+
+
+

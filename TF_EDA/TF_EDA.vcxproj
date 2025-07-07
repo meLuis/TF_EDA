@@ -126,12 +126,14 @@
     <ClCompile Include="TF_EDA.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ABB.h" />
     <ClInclude Include="ABBReserva.h" />
     <ClInclude Include="Administrador.h" />
     <ClInclude Include="AVLPagador.h" />
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="ColaPagos.h" />
     <ClInclude Include="Comprobante.h" />
+    <ClInclude Include="GestorClientes.h" />
     <ClInclude Include="GestorPasajero.h" />
     <ClInclude Include="GestorAsientos.h" />
     <ClInclude Include="GestorVuelos.h" />

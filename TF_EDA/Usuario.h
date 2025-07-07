@@ -19,10 +19,10 @@ public:
 
 	~Usuario() {}
 
-	string getEmail() { return eMail; }
-	string getNombre() { return nombre; }
-	string getApellido() { return apellido; }
-	string getContraseña() { return contraseña; }
+	string getEmail() const { return eMail; }
+	string getNombre() const { return nombre; }
+	string getApellido() const { return apellido; }
+	string getContraseña() const { return contraseña; }
 
 	virtual string getTipo() { return "sin definir"; };
 	virtual void mostrarBienvenida() {

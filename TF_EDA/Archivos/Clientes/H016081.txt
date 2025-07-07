@@ -1,0 +1,5 @@
+Nombre=wegr
+Apellido=wger
+Email=wgr
+VuelosRealizados=0
+PuntosAcumulados=0
